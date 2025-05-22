@@ -225,7 +225,7 @@ WHERE  (SecreteKey = '"+strKey+"') AND (Dis IS NULL)";
             string strData = JsonHelper.BuildJsonFromNVC(objVC);
             byte[] utf8bytes = Encoding.UTF8.GetBytes(strData);
             byte[] iso8859bytes = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding("iso-8859-1"), utf8bytes);
-            string strToken = @"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6Ijc3ZjdkNzliYjkxNTBjNzMyYzdiNzEyNmI1YzM3MjllNTcyNDlhMThiZDcwZTUyYjRlNjJkOGE1YjA4YTY4OTYwZWQ2ZDBmYmNjY2M3OTU1ZWY3Y2Q4OTQ3OGQ4ZWQ4MWU0Njg2MzU4NTFkZjQwYmM5YzFjNGUwOGFiMDJlOGIxN2ZjYWU1NDAyNTkzY2Q2ZTZjZDkwNGE4ZDI1YWE1ODUiLCJpYXQiOjE3MDU0ODg4MjksImV4cCI6MzI4MzM2ODgyOX0.hcQIxs88fWOzEU-Es5P-hLSqGqRmwz06NqQYr2t2rgc";
+            string strToken = System.Configuration.ConfigurationManager.AppSettings["CeqTok"];  
             //request.ContentLength = strData.Length;
 
             string strTempCredintial = strToken;
