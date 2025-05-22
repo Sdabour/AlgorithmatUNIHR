@@ -1,0 +1,790 @@
+﻿
+@using SharpVision.HR.HRBusiness;
+@using AlgorithmatMVC.Controllers.HRController;
+@using System.Linq;
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/templatemo-style.css" rel="stylesheet" />
+<html>
+<head>
+    <style>
+    .form-check-label {
+    align-content: center;
+    justify-content: center;
+    font-size: small;
+    max-width: auto;
+    width: 120px;
+    }
+    </style>
+    <title>ApplicantWorkerEstimation</title>
+    @{
+        #region
+        ApplicantWorkerEstimationStatementBiz _StatementBiz = (ApplicantWorkerEstimationStatementBiz)ViewBag.EstimationStatement;
+        ApplicantEstimationStatementElementSingle[] _ElementCol = (from objElementBiz in _StatementBiz.EstimationStatementElementCol.Cast<ApplicantWorkerEstimationStatementElementBiz>()
+                                                                   select new ApplicantEstimationStatementElementSingle() { Statement = 0, ElementDesc = objElementBiz.ElementBiz.Name, ElementID = objElementBiz.ElementBiz.ID, ElementValue = objElementBiz.ElementValue, EstimationValue = objElementBiz.EstimationValue,Group=objElementBiz.Group.ToString(),GroupOrder=objElementBiz.GroupOrder,GroupPerc=objElementBiz.GroupPerc ,ElementWeight=objElementBiz.Weight,GroupName=objElementBiz.GroupNameA}).ToArray();
+        string strElement = Json.Encode(_ElementCol);
+        string _Dir  = "rtl";
+        
+        if (!_StatementBiz.EstimationStatementElementCol.IsAr)
+        {
+            _Dir = "ltr";
+        }
+        ApplicantWorkerAttendanceStatementCol _AttendanceStatementCol = _StatementBiz.AttendanceStatementCol;
+        #endregion
+
+    }
+    
+    <link href="~/Content/Modal.css" rel="stylesheet" />
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/ApplicantControl.js"></script>
+
+    <script src="~/Scripts/Applicant.js"></script>
+    <script type="text/javascript">
+        function ShowValueDiv(strFuzzyValueRadioID, intID) {
+
+
+            if (document.getElementById(strFuzzyValueRadioID).checked) {
+
+                document.getElementById('dvFuzzy' + intID).style.display = "none";
+                document.getElementById('dvValue' + intID).style.display = "block";
+
+            }
+            else {
+                document.getElementById('dvValue' + intID).style.display = "none";
+                document.getElementById('dvFuzzy' + intID).style.display = "block";
+            }
+
+        }
+        $(document).ready(function () {
+
+
+            var modal = document.getElementById("myTempElementModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myTempElementBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("TempElementClose");
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+                return false;
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+
+
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                //if (event.target == modal) {
+                //    modal.style.display = "none";
+                //}
+
+            }
+
+
+        });
+        function AddNewRowToTableFlexable() {
+            var vrRowIndex = 0;
+            vrRowIndex = document.getElementById("lblFlexableElementCount").value;
+            vrRowIndex = parseInt(vrRowIndex);
+            vrRowIndex += 1;
+            document.getElementById("lblFlexableElementCount").value = vrRowIndex;
+            var vrTable = document.getElementById("tblFlexableElement");
+            var vrInner = vrTable.innerHTML;
+            // txtFlexableEstimationValue
+            //txtFlexableElementValue
+            var vrEstimationValue = "txtFlexableEstimationValue" + vrRowIndex;
+            var vrElementValue = "txtFlexableElementValue" + vrRowIndex;
+            var vrElementWeight = "txtFlexableElementWeight" + vrRowIndex;
+            var vrElement = "<tr>" +
+                "<td>";
+            vrElement += "<input type=\"hidden\" id=\"lblFlexableTempElement" + vrRowIndex + "\" name=\"lblFlexableTempElement" + vrRowIndex + "\" />";
+
+            vrElement += "<input type=\"hidden\" id=\"txtFlexableTempElementDesc" + vrRowIndex + "\" name=\"txtFlexableTempElementDesc" + vrRowIndex + "\" />";
+            var vrElementTemp = "<textarea class=\"form-control\" placeholder=\"وصف العنصر" +
+                "\" id=\"txtFlexableEstimationDesc" + vrRowIndex + "\" name = \"txtFlexableEstimationDesc" + vrRowIndex + "\" rows = 1 ></textarea >";
+            vrElement += "<label id=\"txtFlexableEstimationDesc" + vrRowIndex + "\" name = \"txtFlexableEstimationDesc" + vrRowIndex + "\"></label >";
+            vrElement += "</td>";
+            vrElement += "<td align=\"center\">" +
+                "<input type=\"text\" value=\"\" id=\"" + vrEstimationValue + "\" name=\"" + vrEstimationValue + "\" style=\"text-align:center;width:40px\" onchange=\"SetEstimationTotals();\"" +
+                " onkeyup=\"this.onchange();\" " +
+                " onpaste=\"this.onchange();\" " + " oninput=\"this.onchange();\" /> " +
+                " </td> "
+            vrElement += "<td align=\"center\">" +
+                "<input type=\"text\" value=\"\" id=\"" + vrElementValue + "\" name=\"" + vrElementValue + "\" style=\"text-align:center;width:40px\" onchange=\"SetEstimationTotals();\"" +
+                " onkeyup=\"this.onchange();\" " +
+                " onpaste=\"this.onchange();\" " + " oninput=\"this.onchange();\" /> " +
+                "</td>";
+            " </td> "
+            vrElement += "<td align=\"center\">" +
+                "<input type=\"text\" value=\"\" id=\"" + vrElementWeight + "\" name=\"" + vrElementWeight + "\" style=\"text-align:center;width:40px\"  /> " +
+                "</td>";
+            var vrPerc = "lblFlexablePerc" + vrRowIndex;// + objElementBiz.ElementBiz.ID.ToString();
+
+            vrElement += "<td align=\"center\">" +
+                "<label id=\"" + vrPerc + "\">0</label>" +
+                "</td>";
+
+            vrElement += "</tr>";
+            vrInner += vrElement;
+            vrTable.innerHTML = vrInner;
+            // return false;
+        }
+
+    </script>
+
+</head>
+<body dir="@_Dir">
+
+    <div dir="rtl" style="max-width:100%;height:auto;">
+        <input type="hidden" id="lblElementCol" value="@strElement" />
+        <div style="max-width:100%;height:auto;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">
+
+                        <table class="container" style="max-width:100%;height:auto;">
+                            <tr>
+                                <td><label id="lblEstimationStatement" name="lblEstimationStatement">@_StatementBiz.EstimationStatementBiz.EstimationStatementDesc</label></td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td><label id="lblApplicantCode" name="lblApplicantCode">@_StatementBiz.ApplicantWorkerBiz.Code</label></td>
+
+                                <td>
+                                    <label id="lblApplicantName" name="lblApplicantName">@_StatementBiz.ApplicantWorkerBiz.Name</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="lblApplicantJob" name="lblApplicantJob">@_StatementBiz.ApplicantWorkerBiz.CurrentSubSectorBiz.JobNatureTypeBiz.Name</label>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+
+                                
+
+                            </tr>
+                            <tr>
+                                <td><label id="lblTotalValue" name="lblTotalValue"></label></td>
+                                <td><label id="lblTotalPerc" name="lblTotalPerc"></label></td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    @if (_StatementBiz.ApplicantWorkerBiz.ImageBiz.ImageID != 0)
+                    {
+                        <div class="col">
+                            @{
+                                byte[] byteData = new Byte[0];
+                                try
+                                {
+                                    byteData = System.IO.File.ReadAllBytes(_StatementBiz.ApplicantWorkerBiz.ImageBiz.FullPath);
+                                }
+                                catch { }
+                                //Convert byte arry to base64string
+                                string imreBase64Data = Convert.ToBase64String(byteData);
+                                string imgDataURL = string.Format("data:image/jpg;base64,{0}", imreBase64Data);
+                            }
+                            <img src="@imgDataURL" style="height:300px;width:200px" class="card" />
+                        </div>
+                    }
+                    <div class="col">
+                        @{
+                            string strQR = SharpVision.SystemBase.SysUtility.GenerateBarcode(_StatementBiz.ApplicantWorkerBiz.QRStr);
+                           string imgQRURL = string.Format("data:image/jpg;base64,{0}", strQR);
+                        }
+                        <img src="@imgQRURL" style="height:300px;width:200px" class="card" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("", "", FormMethod.Post))
+    {
+        double dblFreeElementPerc = _StatementBiz.EstimationStatementBiz.FreeElementPerc;
+        
+        <input type="hidden" id="lblStatementFreePerc" name="lblStatementFreePerc" value="@_StatementBiz.EstimationStatementBiz.FreeElementPerc.ToString()" />
+        <div class="form-row">
+            <div class="col">
+                <table class="container" dir="@_Dir" align="left">
+                    <tr>
+                        <td style="padding:5px;">
+
+                            <table align="center" class="ListTable" dir="rtl" style="width:100%;">
+                                <tr style="line-height:8px;">
+                                    <td style="padding:5px;">
+                                        @{
+                                            string strChecked = !_StatementBiz.EstimationStatementIsSum ? "checked" : "";
+
+                                            string strCheck = !_StatementBiz.EstimationStatementIsSum ? @"checked=""""" : "";
+                                            string strSpanClass = !_StatementBiz.EstimationStatementIsSum ? "" : @"class=""checked""";
+
+                                        }
+                                        <span lang="ar-eg">&#1578;&#1601;&#1589;&#1610;&#1604;&#1609;</span>
+                                    </td>
+                                    <td>
+
+
+                                        <div class="form-group pt-2">
+
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+
+                                                    <span @strSpanClass>
+
+                                                        <input type="radio" class="form-check-input-styled" name="rdSummary" id="rdSummaryDetailed" value="0" @strCheck data-fouc="">
+                                                    </span>
+
+                                                </label>
+                                            </div>
+
+
+
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <span lang="ar-eg">&#1578;&#1580;&#1605;&#1610;&#1593;&#1609;</span>
+                                    </td>
+                                    <td>
+
+
+                                        @{
+                                            strCheck = _StatementBiz.EstimationStatementIsSum ? @"checked=""""" : "";
+                                            strSpanClass = _StatementBiz.EstimationStatementIsSum ? "" : @"class=""checked""";
+                                        }
+                                        <div class="form-group pt-2">
+
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+
+                                                    <span   @strSpanClass>
+                                                        
+                                                        <input type="radio" class="form-check-input-styled" name="rdSummary" id="rdSummarySummary" value="0" @strCheck data-fouc="">
+                                                    </span>
+
+                                                </label>
+                                            </div>
+
+
+
+
+                                        </div>
+
+
+                                    </td>
+
+
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="container">
+                                <tr>
+                                    <td align="center">
+                                        <label>&#1575;&#1604;&#1606;&#1587;&#1576;&#1577;</label>
+                                    </td>
+                                    <td align="right">
+                                        @{
+                                            string strTotalPerc = _StatementBiz.EstimationStatementIsSum ? _StatementBiz.EstimationValue.ToString() : "100";
+                                        }
+                                        <input type=text name="txtSummaryTotalPerc" id="txtSummaryTotalPerc" value=@strTotalPerc>
+                                        %
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-teal-400 text-white header-elements-inline">
+                <h6 class="card-title">حضور وانصراف</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive" style="text-align:center">
+                    @{
+                        string strTable = SharpVision.SystemBase.SysUtility.GetHTMLTableFromDataTable(_AttendanceStatementCol.GetAttendanceStatementWorkDayPivotTable());
+                    }
+                    @(new HtmlString(strTable))
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-teal-400 text-white header-elements-inline">
+                <h6 class="card-title">معايير التقييم</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <table id="tblElement" name="tblElement" class="ListTable" style="max-width:100%;height:auto;">
+                    @{
+                        int intIndex = 1;
+                        string strTxtID = "";
+                        double dblPerc = 0;
+                    }
+                    @{
+                        var objGroup = from objElement in _StatementBiz.EstimationStatementElementCol.Cast<ApplicantWorkerEstimationStatementElementBiz>()
+                                       orderby objElement.GroupOrder
+                                       where objElement.ElementBiz.ID > 0
+                                       group objElement by new { objElement.Group, objElement.GroupNameA, objElement.GroupNameE, objElement.GroupOrder, objElement.GroupPerc } into objGroupBiz
+                                       select objGroupBiz;
+                        string strGroupID = @"lblGroupValue";
+                    }
+                    @foreach (var objGroupBiz1 in objGroup)
+                    {
+                        if (objGroupBiz1.Key.Group != 0)
+                        {
+
+                            <tr>
+
+                                <td colspan="7" style="max-width:100%; background-color:gainsboro;font-size:larger;font-weight:bold;text-align:center;">
+                                    <div class="row">
+                                        <div class="col">
+                                            @objGroupBiz1.Key.GroupNameA
+                                        </div>
+                                        <div class="col">
+                                            @objGroupBiz1.Key.GroupPerc
+                                        </div>
+                                        <div class="col">
+                                            @{ strGroupID = "lblGroupValue" + objGroupBiz1.Key.Group.ToString();}
+                                            <label id="@strGroupID" name="@strGroupID">0</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+
+
+                        foreach (ApplicantWorkerEstimationStatementElementBiz objElementBiz in objGroupBiz1.ToList<ApplicantWorkerEstimationStatementElementBiz>())
+                        {
+                            <tr>
+
+
+
+                                <td width="5%" align="center">@intIndex.ToString()</td>
+                                <td width="30%" align="right">
+                                    @objElementBiz.ElementBiz.Name
+                                </td>
+                                @{strTxtID = "txtEstimationValue" + objElementBiz.ElementBiz.ID.ToString(); }
+                                @{ string strFuzzyRadioName = "rdFuzzy" + objElementBiz.ElementBiz.ID.ToString();
+                                    string strFuzzyFuzzyRadioID = "rdFuzzyFuzzy" + objElementBiz.ElementBiz.ID.ToString();
+                                    string strFuzzyValueRadioID = "rdFuzzyValue" + objElementBiz.ElementBiz.ID.ToString();
+                                }
+
+                                <td width="50%">
+                                    @{string strDvFuzzyID = "dvFuzzy" + objElementBiz.ElementBiz.ID.ToString();
+                                        string strDvValueID = "dvValue" + objElementBiz.ElementBiz.ID.ToString();
+                                        string strFuzzyDisplay = objElementBiz.IsFuzzyValue ? "block" : "none";
+                                        string strValueDisplay = !objElementBiz.IsFuzzyValue ? "block" : "none";
+                                    }
+                                    <div id="@strDvFuzzyID" style="display:@strFuzzyDisplay">
+                                        <div class="form-group mb-3 mb-md-2">
+
+                                            <div class="form-check form-check-inline form-check-right">
+                                                @{
+                                                    strFuzzyRadioName = "rdFuzzyDegree" + objElementBiz.ElementBiz.ID.ToString();
+                                                    string strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Distinctive ? @"class=""checked""" : "";
+                                                    string strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Distinctive ? @"checked=""""" : "";
+                                                }
+                                                <label class="form-check-label">
+                                                    متميز
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" value="6" @strRdChecked data-fouc=""></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline form-check-right">
+                                                <label class="form-check-label">
+                                                    جيد حدا
+                                                    @{
+                                                        strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Good ? @"class=""checked""" : "";
+                                                        strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.VeryGood ? @"checked=""""" : "";
+                                                    }
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" data-fouc="" @strRdChecked value="5"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline form-check-right">
+                                                <label class="form-check-label">
+                                                    جيد
+                                                    @{
+                                                        strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Good ? @"class=""checked""" : "";
+                                                        strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Good ? @"checked=""""" : "";
+                                                    }
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" data-fouc="" @strRdChecked value="4"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline form-check-right">
+                                                <label class="form-check-label">
+                                                    مقبول
+                                                    @{
+                                                        strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Accepted ? @"class=""checked""" : "";
+                                                        strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Accepted ? @"checked=""""" : "";
+                                                    }
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" data-fouc="" @strRdChecked value="3"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline form-check-right">
+                                                <label class="form-check-label">
+                                                    ضعيف
+                                                    @{
+                                                        strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Poor ? @"class=""checked""" : "";
+                                                        strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Poor ? @"checked=""""" : "";
+                                                    }
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" data-fouc="" @strRdChecked value="2"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-check-inline form-check-right">
+                                                <label class="form-check-label">
+                                                    مرفوض
+                                                    @{
+                                                        strSpanCheck = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Rejected ? @"class=""checked""" : "";
+                                                        strRdChecked = objElementBiz.IsFuzzyValue && objElementBiz.FuzzyValue == EstimationFuzzyValue.Rejected ? @"checked=""""" : "";
+                                                    }
+
+                                                    <span @strSpanCheck><input type="radio" class="form-check-input-styled" name="@strFuzzyRadioName" data-fouc="" @strRdChecked value="1"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="@strDvValueID" style="display:@strValueDisplay">
+                                        <table width="15%">
+                                            <tr>
+                                                <td align="center">
+                                                    <input type="text" value="@objElementBiz.EstimationValue.ToString()" id="@strTxtID" name="@strTxtID" style="text-align:center;width:40px" onchange="SetEstimationTotals(@objElementBiz.ElementBiz.ID);"
+                                                           onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                                @{strTxtID = "txtPerc" + objElementBiz.ElementBiz.ID.ToString(); }
+                                                <td align="center">
+                                                    <label>
+                                                        @objElementBiz.ElementValue.ToString()
+                                                    </label>
+                                                </td>
+                                                @{dblPerc = objElementBiz.EstimationValue == -1 ? 0 : (objElementBiz.EstimationValue / objElementBiz.ElementValue) * 100; }
+                                                <td align="center">
+                                                    <label id="@strTxtID">@dblPerc.ToString("0")</label>
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </td>
+                                @{strTxtID = "chkStopElement" + objElementBiz.ElementBiz.ID.ToString(); }
+                                <td align="center" width="10%">
+
+                                    <div class="form-check form-check-inline form-check-right">ايقاف<input type="checkbox" id="@strTxtID" name="@strTxtID" class="form-check-input" /></div>
+                                </td>
+                                @{intIndex++;
+                                }
+
+                            </tr>
+
+                        }
+                    }
+
+                </table>
+            </div>
+        </div>
+
+
+        IEnumerable<ApplicantWorkerEstimationStatementElementBiz>
+            objFelxableCol = from objElementBiz1 in _StatementBiz.EstimationStatementElementCol.Cast<ApplicantWorkerEstimationStatementElementBiz>
+                ()
+                             where objElementBiz1.ElementBiz.ID == 0
+                             select objElementBiz1;
+
+
+        <div class="card">
+            <div class="card-header bg-teal-400 text-white header-elements-inline">
+                <h6 class="card-title">إضافة عناصر</h6>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        @{
+
+
+
+                            Html.RenderPartial("TempEstimationElement");
+                        }
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <label style="align-content:center;background-color:gainsboro;">
+                            2-تقييم الاهداف المحددة
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="button" id="btnAddFlixableElement" value="+" onclick="AddNewRowToTableFlexable()" />
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <input type="hidden" id="lblFlexableElementCount" name="lblFlexableElementCount" value="@objFelxableCol.Count()" />
+                    <table class="table">
+                        <tbody id="tblFlexableElement">
+                            <!--Add AN Empty Dr-->
+                            @{
+                                int intCount = 0;
+                            }
+                            @foreach (ApplicantWorkerEstimationStatementElementBiz objElementBiz in objFelxableCol)
+                            {
+                                intCount++;
+
+                                <tr>
+
+                                    <td>
+                                        @{strTxtID = "lblFlexableTempElement" + intCount;}
+                                        <input type="hidden" id="@strTxtID" name="@strTxtID" value="@objElementBiz.TempElement" />
+                                        @{strTxtID = "txtFlexableTempElementDesc" + intCount;}
+                                        <input type="hidden" id="@strTxtID" name="@strTxtID" value="@objElementBiz.Desc" />
+                                        @{strTxtID = "txtFlexableEstimationDesc" + intCount;}
+                                        <label id="@strTxtID" name="@strTxtID" style="text-align:center;">@objElementBiz.Desc</label>
+                                    </td>
+                                    <td align="center">
+                                        @{strTxtID = "txtFlexableEstimationValue" + intCount;}
+                                        <input type="text" value="@objElementBiz.EstimationValue.ToString()" id="@strTxtID" name="@strTxtID" style="text-align:center;width:40px;" onchange="SetEstimationTotals(@objElementBiz.ElementBiz.ID);"
+                                               onkeyup="this.onchange();"
+                                               onpaste="this.onchange();" oninput="this.onchange();" />
+                                    </td>
+                                    <td>
+                                        @{strTxtID = "txtFlexableElementValue" + intCount;}
+                                        <input type="text" id="@strTxtID" name="@strTxtID" style="text-align:center;width:40px;" value="@objElementBiz.ElementValue" />
+                                    </td>
+                                    <td>
+                                        @{strTxtID = "txtFlexableElementWeight" + intCount;}
+                                        <input type="text" id="@strTxtID" name="@strTxtID" style="text-align:center;width:40px;" value="@objElementBiz.Weight" />
+                                    </td>
+                                    @{strTxtID = "lblFlexablePerc" + intCount;// + objElementBiz.ElementBiz.ID.ToString();
+                                        dblPerc = objElementBiz.EstimationValue == -1 ? 0 : (objElementBiz.EstimationValue / objElementBiz.ElementValue) * 100;
+                                    }
+                                    <td align="center">
+                                        <label id="@strTxtID">@dblPerc</label>
+                                    </td>
+
+                                    <td align="center">
+                                        <label id="@strTxtID">@dblPerc</label>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <label style="text-align:center;background-color:gainsboro;width:100%;">
+                        التخطيط التنموى والتدريب
+                    </label>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                            <a class="list-icons-item" data-action="reload"></a>
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="">
+
+                    <div class="form-row">
+                        <div class="col-6">
+                            <label>الاجراء</label><br>
+                            <textarea id="txtRemarks" name="txtRemarks" class="form-control" placeholder="الاجراء">@_StatementBiz.Remarks</textarea>
+                        </div>
+                        <div class="col-6">
+                            <label>نقاط التطوير ان وجد</label><br>
+                            <textarea id="txtRemarks1" name="txtRemarks1" class="form-control" placeholder="نقاط التطوير ان وجد">@_StatementBiz.Remarks1</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <label style="text-align: center; background-color:gainsboro; width: 100%;">
+                        التخطيط الوظيفى
+                    </label>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                            <a class="list-icons-item" data-action="reload"></a>
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="">
+                    <div class="form-row">
+
+                        <div class="col-6">
+                            <label>المدى الطويل</label><br>
+                            <textarea id="txtRemarks2" name="txtRemarks2" class="form-control" placeholder="المدى الطويل">
+@_StatementBiz.Remarks2 </textarea>
+                        </div>
+                        <div class="col-6">
+                            <label>المدى القصير</label><br>
+                            <textarea id="txtRemarks3" name="txtRemarks3" class="form-control" placeholder="المدى القصير">@_StatementBiz.Remarks3</textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <label style="text-align: center; background-color: gainsboro; width: 100%;">
+                        الملاحظات
+                    </label>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                            <a class="list-icons-item" data-action="reload"></a>
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="">
+
+                    <div class="form-row">
+
+                        <div class="col-6">
+                            <label>المدير المباشر</label><br>
+                            <textarea id="txtRemarks4" name="txtRemarks4" class="form-control" placeholder="المدير المباشر">
+@_StatementBiz.Remarks4 </textarea>
+                        </div>
+                        <div class="col-6">
+                            <label>الموظف</label><br>
+                            <textarea id="txtRemarks5" name="txtRemarks5" class="form-control" placeholder="الموظف">@_StatementBiz.Remarks5</textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <label style="text-align: center; background-color:gainsboro; width: 100%;"> الاعتمادات</label>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                            <a class="list-icons-item" data-action="reload"></a>
+                            <a class="list-icons-item" data-action="remove"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" style="">
+                    <div class="table-responsive">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    </th>
+                                    <th>
+                                        الموظف
+                                    </th>
+                                    <th>
+                                        المدير المباشر
+                                    </th>
+                                    <th>
+                                        مدير الادارة
+                                    </th>
+                                    <th>
+                                        مدير المشروع
+                                    </th>
+                                </tr>>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Name</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Date</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Signature</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+            <div class="col">
+                <input class="btn btn-success" type="submit" value="حفظ" formaction="/ApplicantWorkerEstimation/save" formmethod="post" />
+            </div>
+            <div class="col">
+                <input class="btn btn-success" type="submit" value="طباعة" formaction="/ApplicantWorkerEstimation/Download_EstimationPDF" formmethod="post" />
+            </div>
+            <div class="col">
+                <input class="btn btn-success" type="submit" value="حذف" formaction="/ApplicantWorkerEstimation/Delete" formmethod="post" />
+            </div>
+        </div>
+
+    }
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+@using SharpVision.HR.HRBusiness;
+@using System.Linq;
+@using System.Collections;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HandShakeSearch</title>
+    <style>
+
+        /* The container */
+      
+
+            /* Create a custom checkbox */
+            label span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 25px;
+                width: 25px;
+                background-color: #eee;
+            }
+
+            /* On mouse-over, add a grey background color */
+            label:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            label input:checked ~ span {
+                background-color: #2196F3;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            label:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            label input:checked ~ span:after {
+                display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            label span:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+        .ListTable tr {
+            height: 5px;
+            padding: 2px;
+        }
+
+        .ListTable {
+            padding: 1px;
+        }
+
+            .ListTable td {
+                padding: 2px;
+            }
+
+        .container td {
+            padding: 2px;
+        }
+
+        .container tr {
+            padding: 2px;
+            height: fit-content;
+        }
+
+        td > label {
+            align-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .container {
+            border: none;
+        }
+
+            .container tr {
+                border: none;
+            }
+
+        .form-check-label {
+            align-content: center;
+            justify-content: center;
+            font-size: small;
+            max-width: auto;
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <link href="~/Content/Modal.css" rel="stylesheet" />
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            var modal = document.getElementById("myEmployeeModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myEmployeeBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("CustomerClose");
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+                return false;
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+
+
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                //if (event.target == modal) {
+                //    modal.style.display = "none";
+                //}
+
+            }
+
+
+        });
+    </script>
+    @using (Html.BeginForm("Search", "HandShakeWeb", FormMethod.Post))
+    {
+<div>
+
+    @{
+        string strURL = "";
+        ApplicantHandShakeCol objHandSHakeCol = new ApplicantHandShakeCol();
+        if (Session["HandShakeCol"] != null)
+        {
+            objHandSHakeCol = (ApplicantHandShakeCol)Session["HandShakeCol"];
+        }
+        ApplicantWorkerCol _ApplicantWorkerCol;
+        if (Session["ApplicantCol"] == null)
+        {
+            _ApplicantWorkerCol = new ApplicantWorkerCol(new SectorBiz(), 1, 0);
+
+
+
+            Hashtable hsTemp = EmployeeSectorAssignmentCol.AssignedSectorTable;
+            //EmployeeSectorAssignmentCol.AssignedSectorTable;
+            List<ApplicantWorkerBiz> objApplicantTempCol = (from objApplicant in _ApplicantWorkerCol.Cast<ApplicantWorkerBiz>()
+                                                            where hsTemp[objApplicant.CurrentSubSectorBiz.SubSectorBiz.SectorBiz.ID.ToString()] != null
+                                                            select objApplicant).ToList();
+
+            _ApplicantWorkerCol.Clear();
+            _ApplicantWorkerCol = new ApplicantWorkerCol(true);
+            ApplicantWorkerBiz objBiz;
+            for (int intIndex = 0; intIndex < objApplicantTempCol.Count; intIndex++)
+            {
+                objBiz = objApplicantTempCol[intIndex];
+                _ApplicantWorkerCol.Add(objBiz);
+            }
+            Session["ApplicantCol"] = _ApplicantWorkerCol;
+
+        }
+        else
+        {
+            _ApplicantWorkerCol = (ApplicantWorkerCol)Session["ApplicantCol"];
+        }
+    }
+    <input type="hidden" id="lblApplicantIDs1" name="lblApplicantIDs1" value="@_ApplicantWorkerCol.IDs" />
+    <div class="form-row">
+        <div class="col-1">
+            <label>تاريخ من</label>
+        </div>
+        <div class="col-2">
+            <input type="date" id="dtStartDate" name="dtStartDate" class="form-control form-control-sm" />
+        </div>
+        <div class="col-2"></div>
+        <div class="col-1">
+            <label>تاريخ الى</label>
+        </div>
+        <div class="col-2">
+            <input type="date" id="dtEndDate" name="dtEndDate" class="form-control form-control-sm"  />
+        </div>
+        <div class="col-2">
+
+        </div>
+        <div class="col-2">
+            <input type="submit" id="btnSearch" name="btnSearch" value="Search" />
+        </div>
+    </div>
+    <div class="form-row pt-1">
+        <div class="col">
+
+            @{
+
+
+
+                Html.RenderPartial("EmployeeSearch");
+            }
+        </div>
+    </div>
+    <br />
+
+    <div class="form-row">
+        <div class="col">
+            <div class="form-group mb-3 mb-md-2">
+
+                <div class="row">
+                    <div class="col-2">
+                        <div class="form-check form-check-inline form-check-right">
+                            <label class="form-check-label">
+                                الكل
+                                <span class="checked">
+                                    <input type="radio" class="form-check-input-styled" id="rdOnlineAll" name="rdOnline" value="0" checked="" data-fouc="" />
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check form-check-inline form-check-right">
+                            <label class="form-check-label">
+                                متاح
+                                <span><input type="radio" class="form-check-input-styled" id="rdOnlineOnlyOnline" name="rdOnline" value="1" data-fouc="" /></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-check form-check-inline form-check-right">
+                            <label class="form-check-label">
+                                غير متاح
+                                <span><input type="radio" class="form-check-input-styled" id="rdOnlineOnlyNotOnline" name="rdOnline" value="2" data-fouc="" /></span>
+                            </label>
+                        </div>
+</div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    
+    <div class="content" style="max-height:500px;">
+        <div class="card border-dark">
+            <div class="card-header bg-dark text-white header-elements-inline">
+                <h5 class="card-title"><i class="icon-user-plus mr-2"></i>HandShake</h5>
+                <div class="header-elements">
+                    <div class="list-icons">
+                        <a class="list-icons-item" data-action="collapse"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body mycustom">
+
+                
+                    <div class="table-responsive table table-bordered table table-hover table-striped">
+                        <table class="table">
+                            <thead class="thead-gray">
+
+                            <thead class="thead-gray">
+                                <tr>
+                                    <th>كود</th>
+                                    <th>اسم</th>
+                                    <th>وظيفة</th>
+                                    <th>تاريخ اخر موقع</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var vrCol = (from objHandShake in objHandSHakeCol.Cast<ApplicantHandShakeBiz>()
+                                                
+                                                 orderby objHandShake.Time descending
+                                                 group objHandShake by new { ApplicantCode = objHandShake.ApplicantCode, ApplicantName = objHandShake.ApplicantFirstName, Job = objHandShake.JobNatureNameA } into objApp
+                                                 select objApp);
+                                    foreach (var vrApp in vrCol)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @vrApp.Key.ApplicantCode
+                                            </td>
+                                            <td>
+                                                @vrApp.Key.ApplicantName
+                                            </td>
+                                            <td>
+                                                @vrApp.Key.Job
+                                            </td>
+                                            <td>
+                                                @vrApp.First().Time.ToString("yyyy-MM-dd")
+                                            </td>
+                                            <td>
+                                                @vrApp.First().Time.ToString("HH:mm:ss")
+                                            </td>
+                                            <td>
+                                                @{
+                                                    strURL = "/HandShakeWeb/DisplayDetails?App=" + vrApp.First().ApplicantID;
+
+
+                                                }
+                                                <a href="@strURL" target="_blank" class="media-title font-weight-semibold\"> تفاصيل</a>
+                                            </td>
+                                            <td>
+
+                                                @{
+                                                    strURL = "/LocationAssignPoint/DisplayLocationOnMap?Long=" + vrApp.First().Long + "&Lat=" + vrApp.First().Lat+"&AppName="+vrApp.First().ApplicantFirstName;
+
+
+}
+                                                @if (vrApp.First().Long != "0")
+                                                {
+                                                <a href="@strURL" target="_blank" class="media-title font-weight-semibold\"> عرض</a>}
+                    else 
+                                                {
+                                                <span></span>
+                                                }
+                                            </td>
+
+
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+</div>
+
+                }
+</body>
+</html>

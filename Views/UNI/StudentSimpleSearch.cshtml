@@ -1,0 +1,66 @@
+﻿
+<div id="myStudentModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="StudentClose" class="close" onclick="  document.getElementById('myStudentModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col-2">
+
+                <input type="text" id="txtStudentName" class="form-control form-control-sm" placeholder="Student Code Or Name" />
+            </div>
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchSimpleStudent()" />
+            </div>
+         
+
+        </div>
+      
+        <div class="form-row">
+            <input type="hidden" id="lblStudent" value="" />
+            <div class="col">
+            <div class="table-responsive" id="tblStudent">
+
+
+            </div>
+                </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="button" class="Button" value="طالب" onclick="  document.getElementById('myStudentModal').style.display = 'block'"/>
+
+    </div>
+</div>
+<input type="hidden" id="lblSelectedStudent" value="" />
+<div class="form-row">
+
+    <div class="col-3">
+
+        <label style="background-color:azure;text-align:center;" id="lblStudentCode"></label>
+    </div>
+    <div class="col-3">
+        <label style="background-color:azure;text-align:center;" id="lblStudentName"></label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;">EH</label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;" id="lblStudentEH"></label>
+    </div>
+
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;">CGPA</label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;" id="lblStudentCGPA"></label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;">Level</label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;" id="lblStudentLevel"></label>
+    </div>
+</div>
+ 

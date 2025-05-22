@@ -1,0 +1,113 @@
+﻿
+<div class="form-row">
+    <div class="col-1">
+        <input type="button" value="Exam" onclick="ShowExamModal()" />
+    </div>
+    <div class="col-2">
+        <input type="hidden" id="lblSelectedExam" value="" />
+        <label id="lblSelectedExamCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-4">
+
+        <label id="lblSelectedExamCourseName" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamDate" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamDesc" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamGrade" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+</div>
+<div id="myExamModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="ExamClose" class="close" onclick="  document.getElementById('myExamModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col">
+
+                @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+            </div>
+        </div>
+        <div class="form-row" id="ExamTypeRow">
+            <div class="col-1">Not Specified</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeNotSpecified" value="0" checked />
+
+            </div>
+            <div class="col-1">MidTerm</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeMidterm" value="1" />
+
+            </div>
+            <div class="col-1">Semester Work</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeSemesterWork" value="2" />
+
+            </div>
+            <div class="col-1">Oral</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeOral" value="3" />
+
+            </div>
+            <div class="col-1">Practical</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypePractical" value="4" />
+
+            </div>
+            <div class="col-1">Final</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeFinal" value="5" />
+
+            </div>
+            <div class="col-1">Clinical</div>
+            <div class="col-1">
+                <input type="radio" name="rdExamType" id="rdExamTypeClinical" value="6" />
+
+            </div>
+        </div>
+        <div class="form-row" id="DateRow">
+            <div class="col-2">
+                <input type="date" id="dtExamDate" class="form-control form-control-sm" />
+            </div>
+            <div class="col-2">
+                
+
+                <input type="time" class="form-control form-control-sm" id="dtStartTime" />
+            </div>
+            <div class="col-2">
+                <input type="time" class="form-control form-control-sm" id="dtEndTime" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-2">
+                <input type="text" id="txtExamDesc" class="form-control" placeholder="Desc" />
+            </div>
+            <div class="col-2">
+                <input type="button" id="btnSaveExam" value="Save Exam" class="form-control" onclick="SaveExam()" />
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchExam()" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive" id="tblExam">
+
+        </div>
+
+    </div>
+
+</div>

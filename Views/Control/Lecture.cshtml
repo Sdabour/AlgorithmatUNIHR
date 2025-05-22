@@ -1,0 +1,43 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+
+@{
+    ViewBag.Title = "Lecture";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/CourseJS.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<h2>Lecture</h2>
+ 
+<div class="form-row">
+    <div class="col">
+        @*@{ Html.RenderPartial("../control/LectureAddEdit");}*@
+    </div>
+</div>
+<br />
+ 
+
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">طلبة مسجلين</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+        <div class="table-responsive" id="dvRegisteredStudent">
+
+        </div>
+    </div>
+</div>

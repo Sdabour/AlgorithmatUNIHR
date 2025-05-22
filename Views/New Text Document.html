@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Algorithmat Real EState</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet"/>
+<link href="/Content/site.css" rel="stylesheet"/>
+
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+   
+   
+</head>
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Algorithmat</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                       ÂÌﬂ· «·„‘—Ê⁄« 
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                       <li>
+                            <a href="/unit/index">«·»ÕÀ ›Ï «·ÊÕœ«  </a>
+                        </li>
+                       <li>
+                            <a href="">«»—«Ã</a>
+                        </li>
+                       <li>
+                            <a href="/Reservation/Index">«·»ÕÀ ›Ï «·ÕÃÊ“« </a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav> 
+    <div class="container body-content">
+        
+
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="/Content/bootstrap.css" rel="stylesheet" />
+ <style>
+    table {
+        border-collapse: collapse;
+        direction:rtl;
+        width:100%;
+       
+    }
+     tr {
+         border:hidden;
+     }
+     th {
+         direction:rtl;
+         height:30px;
+     }
+     td {
+         height:30px;
+     }
+</style>
+
+
+
+<link href="/Content/Modal.css" rel="stylesheet" />
+<body dir="rtl">
+    
+ 
+
+
+    <script src="/Scripts/JqueryLatest.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script>
+        
+    
+        function OnCheckAllChanged1(strCheckAllName, strCheckPrefix, strIDsName) {
+            var objCheckAll = document.getElementById(strCheckAllName);
+            var strCheckName;
+            var objIDCol = [];
+            var strIDs = document.getElementById(strIDsName).value;
+            if (strIDs != null && strIDs != "") {
+                objIDCol = JSON.parse(strIDs);
+            }
+            var blChecked = document.getElementById(strCheckAllName).checked;
+            for (var intIndex = 0; intIndex < objIDCol.length; intIndex++) {
+                strCheckName = strCheckPrefix + objIDCol[intIndex];
+                document.getElementById(strCheckName).checked = blChecked;
+
+            }
+
+
+        }
+       
+          
+    
+    </script>
+    <script src="/Scripts/ControlScript.js"></script>
+    <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+  
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <td>
+
+
+<form action="/unit/search" method="post">                                <div style="width:520px; height:642px">
+                                    <p>
+                                        <table> <tr><td><input type="submit" formaction="../unit/Search" value="Search" tabindex="-1" /></td></tr></table>
+                                        &#1575;&#1604;&#1603;&#1604;<input type="radio" value="0" id="rdTowerDeliveredAll" checked name="rdTowerDelivered">&#1578;&#1605;
+                                        &#1578;&#1587;&#1604;&#1610;&#1605; &#1575;&#1604;&#1576;&#1585;&#1580;<input type="radio" id="rdTowerDeliveredOnlyDelivered" value="1" name="rdTowerDelivered">
+                                        &#1604;&#1605; &#1610;&#1578;&#1605; &#1578;&#1587;&#1604;&#1610;&#1605; &#1575;&#1604;&#1576;&#1585;&#1580;<input type="radio" id="rdTowerDeliveredOnlyNotDelivered" value="2" checked name="rdTowerDelivered">
+                                    </p>
+
+                                    <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+                                    <p>
+                                        <span lang="ar-eg">&#1605;&#1587;&#1578;&#1608;&#1609; &#1575;&#1604;&#1583;&#1608;&#1585;</span>
+                                        <select id="cmbFloor" size="1" name="cmbFloor">
+
+                                            <option selected value="0">&#1594;&#1610;&#1585; &#1605;&#1581;&#1583;&#1583;</option>
+                                            <option value="1">&#1575;&#1604;&#1571;&#1585;&#1590;&#1609;</option>
+                                            <option value="2">&#1575;&#1604;&#1571;&#1608;&#1604;</option>
+                                            <option value="3">&#1575;&#1604;&#1579;&#1575;&#1606;&#1609;</option>
+                                            <option value="4">&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;</option>
+                                            <option value="5">&#1575;&#1604;&#1585;&#1575;&#1576;&#1593;</option>
+                                            <option value="6">&#1575;&#1604;&#1582;&#1575;&#1605;&#1587;</option>
+                                            <option value="7">&#1575;&#1604;&#1587;&#1575;&#1583;&#1587;</option>
+                                            <option value="9">&#1575;&#1604;&#1579;&#1575;&#1605;&#1606;</option>
+                                            <option value="11">&#1575;&#1604;&#1593;&#1575;&#1588;&#1585;</option>
+                                            <option value="12">&#1575;&#1604;&#1581;&#1575;&#1583;&#1609; &#1593;&#1588;&#1585;</option>
+                                            <option value="13">&#1575;&#1604;&#1579;&#1575;&#1606;&#1609; &#1593;&#1588;&#1585;</option>
+                                            <option value="14">&#1575;&#1604;&#1579;&#1575;&#1604;&#1579; &#1593;&#1588;&#1585;</option>
+
+                                        </select>&nbsp; <span lang="ar-eg">&#1575;&#1585;&#1602;&#1575;&#1605; &#1575;&#1604;&#1575;&#1583;&#1608;&#1575;&#1585; </span>
+                                        <input type=text id="txtFloorOrder" name="txtFloorOrder" size="24" /> <span lang="ar-eg">
+                                            &nbsp;
+                                        </span>
+                                    </p>
+
+
+
+                                    <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div id="DivMultipleFloor" class="DivMultipleChecked" style="">
+
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" id="FloorCheckedCol" name="FloorCheckedCol" value="" />
+                                                                <input style="width:195px" type="text"
+                                                                       onchange="OnTxtFloorChanged('txtFloorFilter','tblFloor','chkFloor','FloorCheckedCol');"
+                                                                       id="txtFloorFilter" name="txtFloorFilter" onkeyup="this.onchange();"
+                                                                       onpaste="this.onchange();" oninput="this.onchange();" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                                        <table style="height: 90%" id="tblFloor" Runat="server" CheckedObjectCol="" ObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;B3&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„ «·À«·À&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;B2&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„ «·À«‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;B&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;GL&quot;,&quot;Name&quot;:&quot;«·«—÷Ï „‰Œ›÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;G&quot;,&quot;Name&quot;:&quot;«·«—÷Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;1st&quot;,&quot;Name&quot;:&quot;«·«Ê·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;2nd&quot;,&quot;Name&quot;:&quot;«·À«‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;3th&quot;,&quot;Name&quot;:&quot;«·À«·À&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;4th&quot;,&quot;Name&quot;:&quot;«·—«»⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;5th&quot;,&quot;Name&quot;:&quot;«·Œ«„”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;6th&quot;,&quot;Name&quot;:&quot;«·”«œ”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;7th&quot;,&quot;Name&quot;:&quot;«·”«»⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;8th&quot;,&quot;Name&quot;:&quot;«·À«„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:14,&quot;Code&quot;:&quot;9th&quot;,&quot;Name&quot;:&quot;«· «”⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;10th&quot;,&quot;Name&quot;:&quot;«·⁄«‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;11th&quot;,&quot;Name&quot;:&quot;«·Õ«œÏ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;12th&quot;,&quot;Name&quot;:&quot;«·À«‰Ï ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;13th&quot;,&quot;Name&quot;:&quot;«·À«·À ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;14th&quot;,&quot;Name&quot;:&quot;«·—«»⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;15th&quot;,&quot;Name&quot;:&quot;«·Œ«„” ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;16th&quot;,&quot;Name&quot;:&quot;«·”«œ” ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;17th&quot;,&quot;Name&quot;:&quot;«·”«»⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;18th&quot;,&quot;Name&quot;:&quot;«·À«„‰ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;19th&quot;,&quot;Name&quot;:&quot;«· «”⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;20th&quot;,&quot;Name&quot;:&quot;«·⁄‘—Ì‰&quot;,&quot;ForeignKey&quot;:0}]" SelectedObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;B3&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„ «·À«·À&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;B2&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„ «·À«‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;B&quot;,&quot;Name&quot;:&quot;«·»œ—Ê„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;GL&quot;,&quot;Name&quot;:&quot;«·«—÷Ï „‰Œ›÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;G&quot;,&quot;Name&quot;:&quot;«·«—÷Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;1st&quot;,&quot;Name&quot;:&quot;«·«Ê·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;2nd&quot;,&quot;Name&quot;:&quot;«·À«‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;3th&quot;,&quot;Name&quot;:&quot;«·À«·À&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;4th&quot;,&quot;Name&quot;:&quot;«·—«»⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;5th&quot;,&quot;Name&quot;:&quot;«·Œ«„”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;6th&quot;,&quot;Name&quot;:&quot;«·”«œ”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;7th&quot;,&quot;Name&quot;:&quot;«·”«»⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;8th&quot;,&quot;Name&quot;:&quot;«·À«„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:14,&quot;Code&quot;:&quot;9th&quot;,&quot;Name&quot;:&quot;«· «”⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;10th&quot;,&quot;Name&quot;:&quot;«·⁄«‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;11th&quot;,&quot;Name&quot;:&quot;«·Õ«œÏ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;12th&quot;,&quot;Name&quot;:&quot;«·À«‰Ï ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;13th&quot;,&quot;Name&quot;:&quot;«·À«·À ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;14th&quot;,&quot;Name&quot;:&quot;«·—«»⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;15th&quot;,&quot;Name&quot;:&quot;«·Œ«„” ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;16th&quot;,&quot;Name&quot;:&quot;«·”«œ” ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;17th&quot;,&quot;Name&quot;:&quot;«·”«»⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;18th&quot;,&quot;Name&quot;:&quot;«·À«„‰ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;19th&quot;,&quot;Name&quot;:&quot;«· «”⁄ ⁄‘—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;20th&quot;,&quot;Name&quot;:&quot;«·⁄‘—Ì‰&quot;,&quot;ForeignKey&quot;:0}]">
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor0"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor0','tblFloor','0','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>€Ì— „Õœœ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor1"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor1','tblFloor','1','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·»œ—Ê„ «·À«·À</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor2"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor2','tblFloor','2','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·»œ—Ê„ «·À«‰Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor3"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor3','tblFloor','3','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·»œ—Ê„</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor4"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor4','tblFloor','4','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·«—÷Ï „‰Œ›÷</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor5"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor5','tblFloor','5','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·«—÷Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor6"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor6','tblFloor','6','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·«Ê·</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor7"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor7','tblFloor','7','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«‰Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor8"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor8','tblFloor','8','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«·À</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor9"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor9','tblFloor','9','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·—«»⁄</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor10"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor10','tblFloor','10','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Œ«„”</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor11"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor11','tblFloor','11','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·”«œ”</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor12"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor12','tblFloor','12','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·”«»⁄</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor13"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor13','tblFloor','13','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«„‰</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor14"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor14','tblFloor','14','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«· «”⁄</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor15"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor15','tblFloor','15','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·⁄«‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor16"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor16','tblFloor','16','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Õ«œÏ ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor17"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor17','tblFloor','17','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«‰Ï ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor18"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor18','tblFloor','18','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«·À ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor19"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor19','tblFloor','19','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·—«»⁄ ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor20"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor20','tblFloor','20','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Œ«„” ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor21"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor21','tblFloor','21','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·”«œ” ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor22"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor22','tblFloor','22','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·”«»⁄ ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor23"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor23','tblFloor','23','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·À«„‰ ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor24"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor24','tblFloor','24','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«· «”⁄ ⁄‘—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkFloor25"
+                                                               type=checkbox onchange="OnCheckChanged('chkFloor25','tblFloor','25','FloorCheckedCol')" />
+                                                    </td>
+                                                    <td>«·⁄‘—Ì‰</td>
+                                                </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div id="DivMultipleProject" class="DivMultipleChecked" style="">
+
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <input type="hidden" id="ProjectCheckedCol" name="ProjectCheckedCol" value="" />
+                                                                <input style="width:195px" type="text"
+                                                                       onchange="OnTxtFloorChanged('txtProjectFilter','tblProject','chkProject','ProjectCheckedCol');"
+                                                                       id="txtProjectFilter" onkeyup="this.onchange();"
+                                                                       onpaste="this.onchange();" oninput="this.onchange();" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                                        <table style="height: 90%" id="tblProject" Runat="server" CheckedObjectCol="" ObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;BVT&quot;,&quot;Name&quot;:&quot;„œÌ‰… «·»«›«—ÌÂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;GRC&quot;,&quot;Name&quot;:&quot;«·Ã—«‰œ ”Ì Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;RHR&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ —ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;DGV&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;CRP&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ ﬂ—Ì” «· »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;MT&quot;,&quot;Name&quot;:&quot;«·‘»«»&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;OKN1&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ1&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;OKN2&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ2&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;HAM&quot;,&quot;Name&quot;:&quot;«·Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;NOR&quot;,&quot;Name&quot;:&quot;«·‰Ê—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;YAS&quot;,&quot;Name&quot;:&quot;«·Ì«”„Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;HAS&quot;,&quot;Name&quot;:&quot;«·Õ”‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;DGTO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;SAF&quot;,&quot;Name&quot;:&quot;«·’›«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;FAR&quot;,&quot;Name&quot;:&quot;«·›Ì—Ê“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;NAD&quot;,&quot;Name&quot;:&quot;«·‰œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;DGTH&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;DP&quot;,&quot;Name&quot;:&quot;œÃ·… »«·„“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;RAM&quot;,&quot;Name&quot;:&quot;»—Ã —«„«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;DGFO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;DGON&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;DG0&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «· Ã«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;PORT&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;RHP&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;VIL1&quot;,&quot;Name&quot;:&quot;›Ì·« «··«”·ﬂÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;GRCG&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;DT&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ DT&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;RA&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… «›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;LM&quot;,&quot;Name&quot;:&quot;œÃ·… ·«‰œ „«—ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;LF&quot;,&quot;Name&quot;:&quot;Lake Front&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;KG&quot;,&quot;Name&quot;:&quot;ﬁÿ«„Ì… ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;S&quot;,&quot;Name&quot;:&quot;Sky Line&quot;,&quot;ForeignKey&quot;:0}]" SelectedObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;BVT&quot;,&quot;Name&quot;:&quot;„œÌ‰… «·»«›«—ÌÂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;GRC&quot;,&quot;Name&quot;:&quot;«·Ã—«‰œ ”Ì Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;RHR&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ —ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;DGV&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;CRP&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ ﬂ—Ì” «· »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;MT&quot;,&quot;Name&quot;:&quot;«·‘»«»&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;OKN1&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ1&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;OKN2&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ2&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;HAM&quot;,&quot;Name&quot;:&quot;«·Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;NOR&quot;,&quot;Name&quot;:&quot;«·‰Ê—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;YAS&quot;,&quot;Name&quot;:&quot;«·Ì«”„Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;HAS&quot;,&quot;Name&quot;:&quot;«·Õ”‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;DGTO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;SAF&quot;,&quot;Name&quot;:&quot;«·’›«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;FAR&quot;,&quot;Name&quot;:&quot;«·›Ì—Ê“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;NAD&quot;,&quot;Name&quot;:&quot;«·‰œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;DGTH&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;DP&quot;,&quot;Name&quot;:&quot;œÃ·… »«·„“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;RAM&quot;,&quot;Name&quot;:&quot;»—Ã —«„«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;DGFO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;DGON&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;DG0&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «· Ã«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;PORT&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;RHP&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;VIL1&quot;,&quot;Name&quot;:&quot;›Ì·« «··«”·ﬂÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;GRCG&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;DT&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ DT&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;RA&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… «›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;LM&quot;,&quot;Name&quot;:&quot;œÃ·… ·«‰œ „«—ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;LF&quot;,&quot;Name&quot;:&quot;Lake Front&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;KG&quot;,&quot;Name&quot;:&quot;ﬁÿ«„Ì… ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;S&quot;,&quot;Name&quot;:&quot;Sky Line&quot;,&quot;ForeignKey&quot;:0}]">
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject0"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject0','tblProject','0','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>€Ì— „Õœœ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject1"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject1','tblProject','1','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>„œÌ‰… «·»«›«—ÌÂ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject2"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject2','tblProject','2','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Ã—«‰œ ”Ì Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject3"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject3','tblProject','3','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>„‘—Ê⁄ —ÌÕ«‰Â</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject4"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject4','tblProject','4','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>„‘—Ê⁄ œÃ·… ›ÌÊ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject5"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject5','tblProject','5','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>„‘—Ê⁄ ﬂ—Ì” «· »·«“«</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject6"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject6','tblProject','6','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·‘»«»</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject7"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject7','tblProject','7','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>Ê«‰ ﬁÿ«„Ì… ﬁ1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject8"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject8','tblProject','8','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>Ê«‰ ﬁÿ«„Ì… ﬁ2</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject9"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject9','tblProject','9','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Õ„œ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject10"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject10','tblProject','10','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·‰Ê—</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject11"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject11','tblProject','11','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Ì«”„Ì‰</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject12"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject12','tblProject','12','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·Õ”‰</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject13"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject13','tblProject','13','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject15"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject15','tblProject','15','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·’›«</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject16"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject16','tblProject','16','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·›Ì—Ê“</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject17"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject17','tblProject','17','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>«·‰œÏ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject18"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject18','tblProject','18','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject19"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject19','tblProject','19','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… »«·„“</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject20"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject20','tblProject','20','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>»—Ã —«„«</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject21"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject21','tblProject','21','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject22"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject22','tblProject','22','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject23"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject23','tblProject','23','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… Ã«—œ‰“ «· Ã«—Ï</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject24"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject24','tblProject','24','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>»Ê— ”⁄Ìœ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject25"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject25','tblProject','25','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>—ÌÕ«‰… »·«“«</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject26"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject26','tblProject','26','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>›Ì·« «··«”·ﬂÌ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject27"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject27','tblProject','27','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>Ã—«‰œ ÃÌ </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject28"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject28','tblProject','28','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>„‘—Ê⁄ DT</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject30"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject30','tblProject','30','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>—ÌÕ«‰… «›Ì‰ÌÊ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject31"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject31','tblProject','31','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>œÃ·… ·«‰œ „«—ﬂ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject32"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject32','tblProject','32','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>Lake Front</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject33"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject33','tblProject','33','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>ﬁÿ«„Ì… ÃÌ </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input id="chkProject34"
+                                                               type=checkbox onchange="OnCheckChanged('chkProject34','tblProject','34','ProjectCheckedCol')" />
+                                                    </td>
+                                                    <td>Sky Line</td>
+                                                </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table width="411">
+                                        <tr>
+                                            <td width="56" rowspan="2">&#1603;&#1608;&#1583; &#1603;&#1575;&#1605;&#1604;</td>
+                                            <td width="110" rowspan="2">
+                                                <input id="txtUnitFullName" name="txtUnitFullName" type=text size="12">
+                                            </td>
+                                            <td width="95">&#1580;&#1586;&#1571; &#1605;&#1606; &#1575;&#1604;&#1603;&#1608;&#1583;</td>
+                                            <td>
+                                                &nbsp;<input type=text id="txtUnitName" name="txtUnitName" size="14">
+                                            </td>
+                                            &#1585;&#1602;&#1602;&#1605;
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td rowspan="2">
+                                                &#1585;&#1602;&#1605;
+                                                &#1575;&#1604;&#1608;&#1581;&#1583;&#1577;
+                                            </td>
+                                            <td>
+                                                <input type=text id="txtFlatOrder" name="txtFlatOrder" size="13" />
+                                            </td>
+                                            <td rowspan="2">
+                                                <span lang="ar-eg">&#1575;&#1604;&#1605;&#1587;&#1575;&#1581;&#1577; &#1576;&#1610;&#1606;</span>
+                                                <input type=text id="txtSurveyStart" value="0" name="txtSurveyStart" size="8" />
+                                            </td>
+                                            <td width="106" rowspan="2">
+                                                <span lang="ar-eg">&#1608;</span><input type=text id="txtSurveyEnd" value="0" name="txtSurveyEnd" size="9" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+
+                                        <tr>
+                                            <td width="160">
+                                                &#1575;&#1604;&#1605;&#1604;&#1581;&#1602;&#1575;&#1578;
+                                                <select id="cmbPeripheral" name="cmbPeripheral" hiddenValue="" size="1">
+                                                    <option value=0 selected> &#1594;&#1610;&#1585; &#1605;&#1581;&#1583;&#1583; </option>
+                                        <option value=2> Roof </option>
+                                        <option value=3> Penthouse </option>
+                                        <option value=4> „”«Õ… Œ«—ÃÌ… </option>
+                                        <option value=5> ÕœÌﬁ… </option>
+                                        <option value=6> under ground area </option>
+                                        <option value=7> Double Height </option>
+                                        <option value=8> „Ì“«‰Ì‰ </option>
+                                        <option value=9> Single Height </option>
+                                        <option value=10>  —«” Œ«—ÃÌ </option>
+                                        <option value=11> single height 5 m </option>
+                                        <option value=12> single height 2.45 </option>
+                                        <option value=13> single height 3.8 </option>
+                                        <option value=14> single height 4.9 </option>
+                                        <option value=15> ⁄œ«œ </option>
+                                        <option value=16> Single Height - 2.40 </option>
+                                        <option value=17> single height 1.6 </option>
+                                        <option value=18> single height 2.44 </option>
+                                        <option value=19> single height 4.33 </option>
+                                        <option value=20> single height 3.4 </option>
+                                        <option value=21> single height 2.35 </option>
+                                        <option value=22> single height 2.42 </option>
+                                        <option value=23> single height 3.14 </option>
+                                        <option value=24> single height 2.44 </option>
+                                        <option value=25> ground area </option>
+                                        <option value=26> under ground area height 2.5 </option>
+                                        <option value=27> Clinic </option>
+                                        <option value=28> Medical Center </option>
+                                        <option value=29> double height 4.95 </option>
+                                        <option value=30> single height 2.33 </option>
+                                        <option value=31> single height 2.58 </option>
+                                        <option value=32> single height 2.30 </option>
+                                        <option value=33> under ground area height 2.75 </option>
+                                        <option value=34>  ﬂ·›… »Ì«÷  Œ‘Ì‰ </option>
+                                        <option value=35> Double Height 6M </option>
+                                        <option value=36> «— ›«⁄ 4.95 </option>
+                                        <option value=37> «— ›«⁄ 4.35 </option>
+                                        <option value=38> lower ground area 2.90 </option>
+                                        <option value=39> single height 3 </option>
+                                        <option value=40> double height 5.3 </option>
+                                        <option value=41> double height 5.4 </option>
+                                        <option value=42> Free Space </option>
+                                        <option value=43> single height 3.35 </option>
+                                        <option value=44> Double Height 5.35 </option>
+                                        <option value=45> Double Height 5.33 </option>
+                                        <option value=46> Double Height 5.73 </option>
+                                        <option value=47> Double Height 5.45 </option>
+                                        <option value=48> double Height 5.34 </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                &nbsp;&#1605;&#1587;&#1575;&#1581;&#1577;&#1575;&#1604;&#1605;&#1604;&#1581;&#1602; &#1576;&#1610;&#1606;
+                                            </td>
+                                            <td>
+                                                <input type=text id="txtPeripheralSurveyStart" name="txtPeripheralSurveyStart" value="0" size="9" />
+                                            </td>
+                                            <td>
+                                                &#1608;
+                                                <input type=text id="txtPeripheralSurveyEnd" name="txtPeripheralSurveyEnd" value="0" size="13" />
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td width="49">
+                                                &#1575;&#1604;&#1606;&#1608;&#1593;
+                                            </td>
+                                            <td>
+                                                <select id="cmbType" hiddenValue="" size="1" name="cmbType">
+                                                    <option selected value=0> €Ì— „Õœœ </option>
+                                        <option value=1> ”ﬂ‰Ì </option>
+                                        <option value=2>  Ã«—Ì </option>
+                                        <option value=3> «ﬁ ’«œÌ </option>
+                                        <option value=4> «œ«—Ì </option>
+
+
+
+                                                </select>
+                                            </td>
+                                            <td width="122">
+                                                &#1575;&#1604;&#1606;&#1608;&#1593; &#1581;&#1587;&#1576; &#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+                                            </td>
+                                            <td>
+                                                <select id="cmbUsageType" hiddenValue="" size="1" name="cmbUsageType">
+                                                    <option selected value=0> €Ì— „Õœœ </option>
+                                        <option value=1> ‘ﬁ… </option>
+                                        <option value=2> „ﬂ » </option>
+                                        <option value=3> „Õ· </option>
+                                        <option value=4> „ÿ⁄„ </option>
+                                        <option value=5> Paint House </option>
+                                        <option value=6> Warehouse </option>
+                                        <option value=7> Hospital </option>
+                                        <option value=8> School </option>
+                                        <option value=9> Occasions HALL </option>
+                                        <option value=10> Bank </option>
+                                        <option value=11> Workshop </option>
+                                        <option value=12> Advertising space </option>
+                                        <option value=13> Parking SPACE </option>
+                                        <option value=14> Garden SPACE </option>
+                                        <option value=15> Pharmacy </option>
+                                        <option value=16> Roof </option>
+                                        <option value=17> Health CLUB </option>
+                                        <option value=18> Nursery </option>
+                                        <option value=19> Games CENTER </option>
+                                        <option value=20> Caf&#233; </option>
+                                        <option value=21> Villa </option>
+                                        <option value=22> Utility SPACE </option>
+                                        <option value=23> Park </option>
+                                        <option value=24> Out Area </option>
+                                        <option value=25> Medical Center </option>
+                                        <option value=26> Clinic </option>
+                                        <option value=27> Waiting Area </option>
+                                                </select>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td width="56">
+                                                &#1575;&#1604;&#1606;&#1605;&#1608;&#1586;&#1580;
+                                            </td>
+                                            <td>
+                                                <select id="cmbModel" hiddenValue="" size="1" name="cmbModel">
+                                                    <option selected value=0> €Ì— „Õœœ </option>
+                                        <option value=156> f4-ÕœÌﬁ… 50 „ — </option>
+                                        <option value=155> ‰„Ê“Ã » —«” Ê„”«Õ… Õœ„«  «÷«›Ï </option>
+                                        <option value=154> ‰„Ê“Ã » —«” </option>
+                                        <option value=153> ‰„Ê“Ã »„”«Õ… «÷«›Ì… ÕœÌﬁ… </option>
+                                        <option value=152> B7* </option>
+                                        <option value=151> B8* </option>
+                                        <option value=150> F4 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=149> f1 - ÕœÌﬁ… 30 „ — (80„) </option>
+                                        <option value=146> f12 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=145> f11 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=144> f10 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=143> f9 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=142> f8 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=141> f7 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=140> f6 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=139> f5 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=138> f12 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=137> f11 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=136> f10 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=135> f9 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=134> f8 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=133> f7 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=132> f6 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=131> f5 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=130> f12 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=129> f11 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=128> f10 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=127> f9 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=126> f8 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=125> f7 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=124> f6 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=123> f5 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=122> f12 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=121> f11 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=120> f10 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=119> f9 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=118> f8 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=117> f7 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=116> f6 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=115> f5 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=114> ‰„Ê–Ã »ÕœÌﬁ… 50 „ — </option>
+                                        <option value=113> f4 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=112> f3 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=111> f2 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=110> f1 - ÕœÌﬁ… 50 „ — </option>
+                                        <option value=109> f4 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=108> f3 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=107> f2 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=106> f1 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=105> ‰„Ê–Ã »ÕœÌﬁ… 30 „ — </option>
+                                        <option value=104> ‰„Ê“Ã »ÕœÌﬁ… 40 „ — </option>
+                                        <option value=103> ‰„Ê“Ã »ÕœÌ›… 60 „ — </option>
+                                        <option value=102> ‰„Ê“Ã »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=101> f4 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=100> f4 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=99> f3 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=98> f3 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=97> f2 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=96> f2 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=95> f1 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=94> f1 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=93> f4 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=92> f3 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=91> f2 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=90> f1 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=89> B9 </option>
+                                        <option value=88> B8 </option>
+                                        <option value=87> B7 </option>
+                                        <option value=86> B6 </option>
+                                        <option value=85> B5 </option>
+                                        <option value=84> B4 </option>
+                                        <option value=83> B3 </option>
+                                        <option value=82> B2 </option>
+                                        <option value=81> B14 </option>
+                                        <option value=80> B13 </option>
+                                        <option value=79> B12 </option>
+                                        <option value=78> B11 </option>
+                                        <option value=77> B10 </option>
+                                        <option value=76> B1 </option>
+                                        <option value=75> A9 </option>
+                                        <option value=74> A8 </option>
+                                        <option value=73> A7 </option>
+                                        <option value=72> A6 </option>
+                                        <option value=71> A5 </option>
+                                        <option value=70> A4 </option>
+                                        <option value=69> A3 </option>
+                                        <option value=68> A2 </option>
+                                        <option value=67> A10 </option>
+                                        <option value=66> A1 </option>
+                                        <option value=65> ‰„Ê“Ã »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=64> ‰„Ê“Ã »ÕœÌﬁ… 30 „ — </option>
+                                        <option value=63> ‰„Ê“Ã »ÕœÌﬁ… 40 „ — </option>
+                                        <option value=62> ‰„Ê“Ã »ÕœÌ›… 60 „ — </option>
+                                        <option value=61> f3 - ÕœÌﬁ… 30 „ — (80„) </option>
+                                        <option value=60> F2 - ÕœÌﬁ… 30 „ — </option>
+                                        <option value=59> f4 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=58> f4 - ÕœÌﬁ… 60 „ —1 </option>
+                                        <option value=57> f3 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=56> f3 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=55> f2 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=54> f2 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=53> f1 - ÕœÌﬁ… 60 „ — </option>
+                                        <option value=52> f1 - ÕœÌﬁ… 40 „ — </option>
+                                        <option value=50> f4 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=49> f3 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=48> f2 - »œÊ‰ ÕœÌﬁ… </option>
+                                        <option value=47> f1 - »œÊ‰ ÕœÌﬁ… </option>
+                                                </select>
+                                            </td>
+
+                                            <td width="54">
+                                                &#1575;&#1604;&#1587;&#1593;&#1585; &#1576;&#1610;&#1606;
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtPriceStart" value="0" name="txtPriceStart" size="14" />
+                                            </td>
+                                            <td width="10">
+                                                &#1608;
+                                            </td>
+                                            <td>
+                                                <input type="text" id="txtPriceEnd" value="0" name="txtPriceEnd" size="16" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table>
+                                        <tr>
+                                            <td width="27">
+
+                                                &#1575;&#1604;&#1603;&#1604;
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="0" id="rdDeliveredAll" checked name="rdDelivered">
+                                            </td>
+                                            <td width="51">
+                                                &#1578;&#1605;
+                                                <span lang="ar-eg">&#1575;&#1604;&#1578;&#1587;&#1604;&#1610;&#1605;</span>
+                                            </td>
+                                            <td>
+                                                <input type="radio" id="rdDeliveredOnlyDelivered" value="1" name="rdDelivered">
+                                            </td>
+                                            <td width="61">
+                                                &#1604;&#1605; &#1610;&#1578;&#1605; <span lang="ar-eg">&#1575;&#1604;&#1578;&#1587;&#1604;&#1610;&#1605;</span>
+                                            </td>
+                                            <td>
+                                                <input type="radio" id="rdDeliveredOnlyNotDelivered" value="2" checked name="rdDelivered">
+
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    </table>
+
+                                    <table>
+                                        <tr>
+
+                                            <td>«·ﬂ·</td>
+                                            <td><input type="radio" value="0" id="rdReservedAll" checked name="rdReserved"></td>
+                                            <td>›«—€…</td>
+                                            <td><input type="radio" value="1" id="rdReservedFree" checked name="rdReserved"></td>
+                                            <td>„€·ﬁ… »‘ﬂ· œ«∆„</td>
+                                            <td><input type="radio" value="3" id="rdReservedClosedPermanent" checked name="rdReserved"></td>
+                                            <td>„€·ﬁ… »‘ﬂ· „ƒﬁ </td>
+                                            <td>
+                                                <input type="radio" value="4" id="rdReservedClosedTemp" checked name="rdReserved">
+                                            </td>
+                                            <td>„»«⁄…</td>
+                                            <td><input type="radio" value="2" id="rdReservedSold" checked name="rdReserved"></td>
+
+                                        </tr>
+
+                                    </table>
+                                  
+                                    
+                                </div>
+                                <input type="hidden" id="SelectedCustomerCol" name="SelectedCustomerCol" value="" />
+</form>                        </td>
+                    </tr>
+                    <tr>
+                        <!--
+                        Customer Modal     
+                        -->
+                        <td>
+                            <button id="myBtn">«·⁄„·«¡</button>
+                            <div id="myModal" class="modal" tabindex="-1">
+
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <iframe id="CustomerFrame" width="100%" height="100%" src="../Customer/SubCustomer" seamless></iframe>
+                                </div>
+
+                            </div>
+                            <script>
+                                var modal = document.getElementById("myModal");
+
+                                // Get the button that opens the modal
+                                var btn = document.getElementById("myBtn");
+
+                                // Get the <span> element that closes the modal
+                                var span = document.getElementsByClassName("close")[0];
+
+                                // When the user clicks on the button, open the modal
+                                btn.onclick = function () {
+                                    modal.style.display = "block";
+                                }
+
+                                // When the user clicks on <span> (x), close the modal
+                                span.onclick = function () {
+                                    modal.style.display = "none";
+                                    FillSelectedCustomer();
+
+                                }
+
+                                // When the user clicks anywhere outside of the modal, close it
+                                window.onclick = function (event) {
+                                    //if (event.target == modal) {
+                                    //    modal.style.display = "none";
+                                    //}
+
+                                }
+
+                                var btnCloseCustomer = document.getElementById("btnCloseCustomer");
+                                if (btnCloseCustomer != null) {
+                                    btnCloseCustomer.onclick = function () {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                          
+                            </script>
+                            <div>
+
+                                <table id="tblSelectedCustomer"  
+                                       class="table-hover" 
+                                       align="right" dir="rtl" height="54" width="350" >
+                                    
+                                </table>
+                                
+                                
+                                
+                            </div>
+                        </td>
+                        <td>
+
+                        </td>
+                        
+                    </tr>
+                </table>
+            </td>
+            
+
+            <td>
+                <div dir="rtl" style="overflow: scroll;max-height:500px ; width: 100%;">
+
+                </div>
+            </td>
+        </tr>
+    </table>
+   
+</body>
+
+
+
+        <hr />
+        <footer>
+          
+        </footer>
+    </div>
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+
+    <script src="/Scripts/bootstrap.js"></script>
+<script src="/Scripts/respond.js"></script>
+
+    
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/JqueryLatest.js"></script>
+
+    <script src="https://fabmisr.gateway.mastercard.com/checkout/version/60/checkout.js" data-error="errorcallback" data-cancel="cancelcallback" data-complete="completecallback"></script>
+    <script src="~/Scripts/ControlScript.js"></script>
+</head>
+<body>
+    <script>
+        function errorcallback(error) {
+            var vrError = JSON.stringify(error);
+            alert( vrError);
+            console.log(vrError);
+            window.close();
+        }
+        function cancelcallback() {
+            alert("Cancellation");
+            console.log("transaction canceled");
+          
+            window.close();
+        }
+        function completecallback(object) {
+            var vrResponseObject = document.getElementById("lblResponse").value;
+            var vrResponse = JSON.parse(vrResponseObject);
+           // alert("Before Performing");
+            PerformAPayment(vrResponse.TransactionID, object);
+            //alert("After Performing");
+            window.close();
+
+        }
+       
+        $(document).ready(function () {
+            var vrCredit = document.getElementById("lblCredit").value;
+            var vrCondition = document.getElementById("lblCondition").value;
+            var vrValue = document.getElementById("lblValue").value;
+            var vrDesc = document.getElementById("lblDesc").value;
+            var vrRO = document.getElementById("lblRO").value;
+            var vrTransaction = document.getElementById("lblTransactionID").value;
+            var vrResponse = PayATransaction(vrTransaction);
+           
+            //if (vrResponse.SessionID != "")
+            //{
+            //    document.getElementById("lblResponse").setAttribute("value", JSON.stringify(vrResponse));
+            //    ConfigureCheckOut(vrResponse.Merchant, vrResponse.SessionID);
+            //    Checkout.showLightbox();
+            //}
+            
+        });
+
+    </script>
+    <div>
+        @{ 
+            string strToken = "";
+            if (ViewBag.Token != null)
+            { strToken = ViewBag.Token; }
+        }
+        <input type="hidden" id="lblToken" value="@strToken"/>
+        <input type="hidden" id="lblCredit" value="@ViewBag.Credit" />
+        <input type="hidden" id="lblCondition" value="@ViewBag.Condition" />
+        <input type="hidden" id="lblValue" value="@ViewBag.Value" />
+        <input type="hidden" id="lblDesc" value="@ViewBag.Desc" />
+        <input type="hidden" id="lblRO" value="@ViewBag.RO" />
+        <input type="hidden" id="lblTransactionID" value="@ViewBag.Transaction" />
+        <input type="hidden" id="lblToken" value="@ViewBag.Token" />
+        <input type="hidden" id="lblResponse" value="" />
+    </div>
+</body>
+</html>

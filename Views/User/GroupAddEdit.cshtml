@@ -1,0 +1,87 @@
+﻿@using SharpVision.UMS.UMSBusiness;
+@using SharpVision.Base.BaseBusiness;
+@model SharpVision.UMS.UMSBusiness.GroupBiz
+@{
+    ViewBag.Title = "GroupAddEdit";
+    Layout = "~/Views/Shared/_LayoutYoussef.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/UMS/Group.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+       
+        FillFunctionInstantTable();
+
+    });
+</script>
+<h2>GroupAddEdit</h2>
+<form id="myForm" method="post" action="~/User/AddEditSaveGroup">
+    <div class="card" style="max-height:500px;scroll-behavior:auto;">
+        <div class="card-header bg-teal-400 text-white header-elements-inline">
+            <h6 class="card-title">المجموعة</h6>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="content">
+
+                <div class="row form-row">
+
+                    <div class="col-2 m-2">
+                        <input type="hidden" id="ID" name="ID" value="@Model.ID" />
+                        @Html.EJS().Button("btnSave").HtmlAttributes(new Dictionary<string, object>() { { "Action", "User/AddEditSaveGroup" }, { "Type", "submit" }, { "onClick", "return CheckGroupValidation()" } }).Content("حفظ").CssClass("e-info").Render()
+
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-4 m-1">
+                        @Html.EJS().TextBoxFor(Model => Model.NameA).Placeholder("Group Name").FloatLabelType(Syncfusion.EJ2.Inputs.FloatLabelType.Auto).Render()
+                    </div>
+                    </div>
+                  <div class="form-row">
+                    @{
+                        List<SerializableBiz> objGroupLst = GroupTypeCol.CacheTypeCol.Cast<GroupTypeBiz>().Select(x => new SerializableBiz() { ID = x.ID, Name = x.Name }).ToList();
+
+                    }
+                    <div class="col-4">
+                        <select class="form-control form-control-uniform multiselect-filter" id="GroupTypeID" name="GroupTypeID">
+
+                            @foreach (SerializableBiz objBiz in objGroupLst)
+                            {
+                                <option value="@objBiz.ID">@objBiz.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="scroll-behavior:auto;">
+        <div class="card-header bg-teal-400 text-white header-elements-inline">
+            <h6 class="card-title">صلاحيات</h6>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse"></a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            @{
+                ViewBag.FunctionInstant = Model.GroupFunctionInstantCol.Cast<GroupFunctionInstantBiz>().Select(x => x.GetFunctionInstant()).ToList();
+                Html.RenderPartial("../User/FunctionInstant");
+            }
+        </div>
+    </div>
+
+    
+</form>

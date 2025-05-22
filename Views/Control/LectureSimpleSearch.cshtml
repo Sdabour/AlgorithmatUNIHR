@@ -1,0 +1,70 @@
+﻿
+
+<div class="form-row">
+    <div class="col-1">
+        <input type="button" value="Lecture" onclick="ShowLectureModal()" />
+    </div>
+    <div class="col-2">
+        <input type="hidden" id="lblSelectedLecture" value="" />
+        <label id="lblSelectedLectureCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-4">
+
+        <label id="lblSelectedLectureCourseName" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedLectureDate" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+     
+    
+</div>
+<div id="myLectureModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="LectureClose" class="close" onclick="  document.getElementById('myLectureModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col">
+
+                @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="col-2">
+                <input type="date" id="dtLectureDate" class="form-control form-control-sm" />
+            </div>
+            <div class="col-2">
+
+
+                <input type="time" class="form-control form-control-sm" id="dtStartTime" />
+            </div>
+            <div class="col-2">
+                <input type="time" class="form-control form-control-sm" id="dtEndTime" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-2">
+                <input type="text" id="txtLectureDesc" class="form-control" placeholder="Desc" />
+            </div>
+            <div class="col-2">
+                <input type="button" id="btnSaveLecture" value="Save Lecture" class="form-control" onclick="SaveLecture()" />
+            </div>
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchLecture()" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive" id="tblLecture">
+
+        </div>
+
+    </div>
+
+</div>

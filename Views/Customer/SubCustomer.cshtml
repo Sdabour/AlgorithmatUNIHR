@@ -1,0 +1,165 @@
+﻿@using SharpVision.CRM.CRMBusiness
+@using SharpVision.SystemBase
+@using SharpVision.UMS.UMSBusiness
+@using System.Web.Script.Serialization
+@using SharpVision.Base.BaseBusiness;
+@using System.Linq;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+
+<head>
+    <meta http-equiv="Content-Language" content="en-us">
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1256">
+    <title>كود</title>
+    
+    
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/ControlScript.js"></script>
+
+   <script type="text/javascript">
+       $(document).ready(function () {
+           $('#btnCustomer').click(OnCustomer);
+       })
+   </script>
+</head>
+
+<body>
+    @{
+
+        #region IntializeConnection
+        int intLanguage = 0;
+        string strLang = Request["Lang"];
+        string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+        string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+        SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+        UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+        SysData.Language = intLanguage;
+        #endregion
+        #region
+       
+       
+       
+        string _TempName;
+        ProjectCol _ProjectCol = new ProjectCol(false);
+        IEnumerable<SerializableBiz> objProjectCol = from objBiz in _ProjectCol.Cast<ProjectBiz>()
+                                                     select objBiz.SerializableObject;
+
+        string strSerializeProject = Json.Encode(objProjectCol);
+        string strCheck;
+        bool _SelectEnabled = true;
+        #endregion
+
+
+    }
+
+    @{
+      
+    }
+
+    <table border="0" width="100%" height="81">
+        <tr>
+            <td>
+                <div class="content" width="587">
+                    <div class="row">
+                        <div class="col">
+                            <table border="0" width="100%">
+                                <tr>
+                                    <td width="32"><span lang="ar-eg">الاسم</span></td>
+                                    <td>
+                                        <input type=text id="txtCustomerName" name="txtCustomerName" size="31" tabindex="1" />
+                                    </td>
+                                    <td width="45"><span lang="ar-eg">التليفون</span></td>
+                                    <td>
+                                        <input type=text id=txtCustomerPhone name=txtCustomerPhone size="35" tabindex="2" />
+                                    </td>
+                                    <td width="64">
+                                        <input type="button" value="بحث" id="btnCustomer" name="btnCustomer" dir="rtl" tabindex="5" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <tr>
+                        <td>
+                            <table><tr><td>كود الوحدة</td><td><input type=text id="txtCustomerUnitCode" name="txtCustomerUnitCode" tabindex="3"></td></tr></table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="DivMultipleCustomerProject" class="DivMultipleChecked" style="">
+
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" id="CustomerProjectCheckedCol" name="CustomerProjectCheckedCol" value="" />
+                                            <input style="width:195px" type="text"
+                                                   onchange="OnTxtFloorChanged('txtCustomerProjectFilter','tblCustomerProject','chkCustomerProject','CustomerProjectCheckedCol');"
+                                                   id="txtCustomerProjectFilter" onkeyup="this.onchange();"
+                                                   onpaste="this.onchange();" oninput="this.onchange();" tabindex="4" />
+                                        </td>
+                                    </tr>
+                                </table>
+                                <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                    <table style="height: 90%" id="tblCustomerProject" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeProject" SelectedObjectCol="@strSerializeProject">
+                                        @foreach (ProjectBiz objProject in _ProjectCol)
+                                        {
+                                            _TempName = "chkCustomerProject" + objProject.ID.ToString();
+                                            <tr>
+                                                <td>
+                                                    <input id="@_TempName"
+                                                           type=checkbox onchange="OnCheckChanged('@_TempName','tblCustomerProject','@objProject.ID','CustomerProjectCheckedCol')" />
+                                                </td>
+                                                <td>@objProject.Name</td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <div class="row"><div class="col"><input type=button id="btnCloseCustomer" value="خروج"></div></div>
+                </div>
+            </td>
+            <td width="519">
+                <table  id="tblCustomerDisplay" border="1" align="right" dir="rtl" height="54" width="519">
+                    <tr height=10>
+                        <th width="23">
+                            <input type=checkbox id="chkAllCustomer" name="chkAllCustomer" onchange="ChkChanged('chkAllCustomer', 'chkCustomer', 'CustomerCheckCol')">
+                        </th>
+                        <th width="38"><span lang="ar-eg">&#1603;&#1608;&#1583;</span></th>
+                        <th width="193"><span lang="ar-eg">&#1575;&#1587;&#1605;</span></th>
+                        <th width="86"><span lang="ar-eg">&#1605;&#1588;&#1585;&#1608;&#1593;</span></th>
+                        <th dir="ltr"><span lang="ar-eg">&#1608;&#1581;&#1583;&#1577;</span></th>
+                    </tr>
+                   
+                        <tr>
+                            <td width="23">
+                                <input type=checkbox id="chkCustomer" name="chkCustomer">
+                            </td>
+                            <td width="38">&nbsp;</td>
+                            <td width="193">&nbsp;</td>
+                            <td width="86">&nbsp;</td>
+                            <td dir="ltr">&nbsp;</td>
+                        </tr>
+
+                    
+                </table>
+                <input type="hidden" id="CustomerCheckCol" name="CustomerCheckCol" value="" />
+                <input type="hidden" id="CustomerCol" name="CustomerCol" value="" />
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</body>
+
+</html>
+

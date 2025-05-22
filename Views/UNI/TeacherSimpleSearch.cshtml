@@ -1,0 +1,70 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+
+<div id="myTeacherModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="TeacherClose" class="close" onclick="  document.getElementById('myTeacherModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+            <div class="col-2">
+                <select id="cmbTeacherType" class="form-control form-control-sm">
+                    @{
+                        int intIndex = 0;
+                        
+                        TeacherTypeCol objTypeCol = new TeacherTypeCol(false);
+
+                    }
+                    @foreach (TeacherTypeBiz objType in objTypeCol)
+                    {
+                        <option value="@objType.ID">@objType.NameA</option>
+                        intIndex++;
+                    }
+                </select>
+            </div>
+            <div class="col-2">
+
+                <input type="text" id="txtTeacherName" class="form-control form-control-sm" placeholder="Teacher Code Or Name" />
+            </div>
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchSimpleTeacher()" />
+            </div>
+
+
+        </div>
+
+        <div class="form-row">
+            <input type="hidden" id="lblTeacher" value="" />
+            <div class="col">
+                <div class="table-responsive" id="tblTeacher">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="button" class="Button" value="Professor" onclick="  document.getElementById('myTeacherModal').style.display = 'block'" />
+
+    </div>
+</div>
+<input type="hidden" id="lblSelectedTeacher" value="" />
+<div class="form-row">
+
+    <div class="col-3">
+
+        <label style="background-color:azure;text-align:center;" id="lblTeacherCode"></label>
+    </div>
+    <div class="col-3">
+        <label style="background-color:azure;text-align:center;" id="lblTeacherName"></label>
+    </div>
+    <div class="col-1">
+      
+    </div>
+    <div class="col-3">
+        <label style="background-color:azure;text-align:center;" id="lblTeacherType"></label>
+    </div>
+
+   
+</div>
+

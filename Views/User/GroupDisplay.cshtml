@@ -1,0 +1,50 @@
+﻿@using SharpVision.UMS.UMSBusiness;
+@{
+    ViewBag.Title = "GroupDisplay";
+    Layout = "~/Views/Shared/_LayoutYoussef.cshtml";
+}
+<script src="~/Scripts/ControlScript.js"></script>
+<script id="template" type="text/x-jsrender">
+    <div>
+        <a rel='nofollow' href='${EditStr}'>تعديل</a>
+    </div>
+</script>
+
+<div class="card">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">المجموعات</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        @{
+            string strIDs = "";
+            GroupCol objGroupCol = new GroupCol();
+            List<GroupSimple> lstGroup = objGroupCol.Cast<GroupBiz>().Select(x => new GroupSimple() { ID = x.ID,Name=x.Name,TypeName=x.GroupTypeBiz.Name }).ToList();
+
+            strIDs = Json.Encode(lstGroup.Select(x => x.ID));
+
+        }
+
+        <input type="hidden" id="lblGidIDs" name="lblGidIDs" value="@strIDs" />
+        <input type="hidden" id="lblGridGroupedIDs" name="lblGridGroupedIDs" value="" />
+        @Html.EJS().Grid("Grid").AllowSelection(true).CheckBoxChange("OnGridRowSelected").DataSource(lstGroup).Columns(col =>
+   {
+       col.Field("").Type("CheckBox").Add();
+       col.Field("ID").HeaderText("ID").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+       col.Field("Name").HeaderText("مجموعة").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+       col.Field("TypeName").HeaderText("نوع").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+        
+       col.Field("EditStr").Template("#template").HeaderText("").TextAlign(Syncfusion.EJ2.Grids.TextAlign.Center).Add();
+       
+   }).AllowFiltering().AllowGrouping().Render()
+
+
+    </div>
+</div>
+
+

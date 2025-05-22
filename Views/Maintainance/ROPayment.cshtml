@@ -1,0 +1,151 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussefPure.cshtml");
+}
+@using SharpVision.CRM.CRMBusiness;
+@using AlgorithmatMN.MN.MNBiz;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RO</title>
+    <style>
+        label {
+            display: block;
+            text-align: center;
+            background-color: snow;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/ControlScript.js"></script>
+    <script src="https://fabmisr.gateway.mastercard.com/checkout/version/60/checkout.js" data-error="errorcallback" data-cancel="cancelcallback" data-complete="completecallback"></script>
+
+    <script type="text/javascript">
+        function errorcallback(error) {
+            var vrError = JSON.stringify(error);
+            alert("Sameh:" + vrError);
+            console.log(vrError);
+        }
+        function cancelcallback() {
+            alert("Sameh says:Cancellation");
+            console.log("transaction canceled");
+        }
+        function completecallback(object) {
+            alert("transaction has been completed " + object);
+            console.log("transaction Complete");
+        }
+      
+        function GetSession() {
+
+            return "";
+        }
+      
+
+    </script>
+    <div>
+
+        <div class="content">
+            @{
+                ROBiz objRo = new ROBiz();
+                if (ViewBag.ROBiz != null)
+                {
+                    objRo = (ROBiz)ViewBag.ROBiz;
+                }
+                string strTemp = "";
+            }
+            <div class="row form-group">
+
+                <div class="col-md-3 mt-1">
+                    <label>@objRo.ProjectCode</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    <label> @objRo.Code</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    <label> @objRo.Customer</label>
+                </div>
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.ID > 0 ? objRo.Area + "م" : "";}
+                    <label>@strTemp</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.ID > 0 ? "تاريخ استلام : " + objRo.DeliveryDate.ToString("yyyy-MM-dd") : "";}
+                    <label>@strTemp</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.ID > 0 ? "الصيانة بالعقد : " + objRo.InitialMaintainanceValue.ToString("0") + " جم " : "";}
+                    <label> @strTemp</label>
+                </div>
+            </div>
+            <div class="row form-group">
+
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.ID > 0 ? "رصيد :" + objRo.Closing.ToString("0") : "";}
+                    <label>@strTemp</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.ID > 0 ? "استكمال صيانة : " + objRo.Required.ToString("0") : "";}
+                    <label>@strTemp</label>
+                </div>
+
+            </div>
+
+        </div>
+        @using (Html.BeginForm("", "Maintainance", FormMethod.Post))
+        {
+            <div class="row form-group">
+                <input type="hidden" id="lblID" name="lblID" value="@objRo.ID" />
+                <input type="hidden" id="lblTransactionID" value="" />
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = "قيمة مرجحة";}
+                    <label>@strTemp</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.Required.ToString("0");}
+                    <label>@strTemp</label>
+                </div>
+                <div class="col-md-3 mt-1">
+                    @{ strTemp = objRo.Required.ToString("0");}
+                    <input type="text" placeholder="المراد سداده" id="txtValue" name="txtValue" value="@strTemp">
+
+                </div>
+                <div class="col mt-1">
+                    <input type="submit" class="form-control btn" value="دفع" />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col mt-1">
+                    <a onclick="return ConstructBankPaymentURL()" id="btnPayAcreditCondition" class="Button btn bg-teal form-control" href="MaintainancePayment/PayACreditCondition">Try Payment</a>
+                 
+                </div>
+              
+            </div>
+        }
+    </div>
+</body>
+</html>
+

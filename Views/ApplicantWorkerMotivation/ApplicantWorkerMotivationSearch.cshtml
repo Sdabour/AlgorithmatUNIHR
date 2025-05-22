@@ -1,0 +1,190 @@
+﻿@using SharpVision.HR.HRBusiness;
+
+
+@using System.Linq;
+
+@using System.Collections;
+@{
+    ViewBag.Title = "ApplicantWorkerMotivationSearch";
+    Layout = "~/Views/Shared/_LayoutYoussef.cshtml";
+}
+
+<h2>الحوافز</h2>
+
+<style>
+    th {
+        background-color: ghostwhite;
+        font-size: 12px;
+        height: min-content;
+    }
+
+    td {
+        font-size: 12px;
+        height: min-content;
+    }
+
+    tr {
+        font-size: 12px;
+        height: min-content;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-top: 1px solid #000;
+        overflow: scroll;
+    }
+
+    .Scrolltd, .Scrollth {
+        margin: 0;
+        border: 1px solid #000;
+        white-space: nowrap;
+        border-top-width: 0px;
+    }
+
+    .tablediv, .table-responsive {
+        width: 100%;
+        overflow-x: scroll;
+        margin-left: 5em;
+        overflow-y: visible;
+        padding: 0;
+    }
+
+    .headcol {
+        position: absolute;
+        left: 0;
+        top: auto;
+        border-top-width: 2px;
+        margin-top: -1px;
+    }
+
+    .headrow {
+        position: absolute;
+        top: auto;
+        margin-top: -1px;
+    }
+
+    .long {
+    }
+
+    input[type=number] {
+        display: block;
+        width: 60px;
+    }
+</style>
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/JqueryLatest.js"></script>
+<script src="~/Scripts/Motivation/MotivationCostCenter.js"></script>
+<script src="~/Scripts/Motivation/ApplicantWorkerMotivation.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/Scripts/Motivation/ApplicantWorkerMotivationJ.js"></script>
+<script src="~/Scripts/Motivation/CostCenter.js"></script>
+<script src="~/Scripts/Motivation/MotivationStatement.js"></script>
+<script src="~/Scripts/SerializableSimple.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+        GetSerializableSimpleTable('CostCenter');
+
+    });
+</script>
+<div class="form-row">
+    <div class="col-2">
+        <button onclick="document.getElementById('myStatementModal').style.display = 'block'">Statement</button>
+    </div>
+    <div class="col-5">
+        <input type="hidden" id="lblCurrentMotivationStatement" value="" />
+        <label id="lblCurrentMotivationStatementDesc" style="background-color:honeydew"></label>
+    </div>
+
+</div>
+<div id="myStatementModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="StatementClose" class="close" onclick="  document.getElementById('myStatementModal').style.display = 'none'">&times;</span>
+
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return FillMotivationStatemenet()" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive" id="tblStatement">
+
+        </div>
+
+    </div>
+
+</div>
+
+<br />
+@{
+    CostCenterHRCol objCol = new CostCenterHRCol();
+
+    List<SharpVision.Base.BaseBusiness.SerializableBiz> lstCostCeneter = objCol.Cast<CostCenterHRBiz>().Select(x => new SharpVision.Base.BaseBusiness.SerializableBiz() { ID = x.ID, Code = x.Code, Name = x.NameA }).ToList();
+    string strCostCenter = "";
+    try
+    {
+        strCostCenter = Json.Encode(lstCostCeneter);
+    }
+    catch { }
+
+}
+
+<div class="row">
+
+    <div class="col-4">
+        <input type="hidden" id="lblAllCostCenter" value="@strCostCenter" />
+        <input type="hidden" id="lblSelectedCostCenter" value="" />
+        <input type="text" id="txtFilterCostCenter" onchange="GetSerializableSimpleTable('CostCenter')" class="form-control" />
+    </div>
+    <div class="col-lg-2">only selected</div>
+    <div class="col-2"><input type="checkbox" id="chkOnlySelectedCostCenter" onchange="GetSerializableSimpleTable('CostCenter')" /></div>
+
+    <div class="col-2"> </div>
+
+</div>
+
+<div class="table-responsive" id="tblCostCenter" style="max-height:100px;max-width:60%;">
+
+</div>
+<div class="form-row" style="max-height:200px;">
+    <div class="col-2">اسم او كود</div>
+    <div class="col-6"><input type="text" id="txtFilterName" class="form-control" onchange="FillApplicantWorkerMotivationTable()" /></div>
+    <div class="col-2">
+        <button onclick="FillApplicantMotivationStatemenet()">Search</button>
+    </div>
+</div>
+<div class="content" style="height:500px;scroll-behavior:auto;">
+    <input type="hidden" id="lblAllApplicantMotivation" value="" />
+    <div class="table-responsive" id="tblApplicantMotivation" style="max-height:90%;"></div>
+</div>
+
+
+<div id="myCostCenterModal" class="modal" tabindex="-1">
+
+    <div class="modal-content">
+        <span id="CostCenterClose" class="close" onclick="  document.getElementById('myCostCenterModal').style.display = 'none'">&times;</span>
+
+
+        <div class="form-row">
+            <div class="col-2">
+                <input type="hidden" id="lblAllCostCenter" value="@strCostCenter" />
+                <input type="hidden" id="lblSelectedCostCenter" value="" />
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return FillFilteredCostCenterTable()" />
+            </div>
+            <div class="col-6">
+                <input type="text" id="txtFilterCostCenter" class="form-control form-control-sm" value="" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive" id="tblCostCenter">
+
+        </div>
+
+    </div>
+
+</div>

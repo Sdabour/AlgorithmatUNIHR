@@ -1,0 +1,153 @@
+﻿@using SharpVision.CRM.CRMBusiness;
+@using SharpVision.SystemBase
+@using SharpVision.UMS.UMSBusiness
+@using System.Web.Script.Serialization
+@using SharpVision.Base.BaseBusiness;
+@using System.Linq;
+
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+}
+@{
+    bool _SelectEnabled =true;
+    string strCheck = "";
+}
+<h2>Reservation Comment</h2>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<body dir="rtl">
+
+
+
+    <script src="~/Scripts/ControlScript.js"></script>
+    <script type="text/javascript">
+        function CheckFormValidation() {
+
+
+            if (document.getElementById("txtComment") == null || document.getElementById("txtComment").value == "")
+            {
+                alert("فضلا حدد التعليق");
+                return false;
+            }
+           
+            return true;
+        }
+    </script>
+    <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+    <script src="~/Scripts/ControlScript.js"></script>
+    <table class="table">
+        <tr>
+            <td>
+                <input type="checkbox" id="chkSelectAllReservation" onchange="ChkChanged('chkSelectAllReservation', 'chkReservation', 'ReservationCheckCol')" />
+            </td>
+          
+        </tr>
+    </table>
+
+    <table>
+        @using (Html.BeginForm("CommentReservation", "Reservation", FormMethod.Post, new { onsubmit = "return CheckFormValidation()" }))
+            {
+            <tr>
+                <td width="245">
+
+
+
+                    <div style="width:245px; height:131px">
+                        &nbsp;
+                        <table width="239" height="91">
+
+                            <tr>
+                                <td>&#1578;&#1593;&#1604;&#1610;&#1602;</td>
+                                <td>
+                                    <input type="text" name="txtComment" id="txtComment" size="24">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="28"></td>
+                                <td height="28">
+                                    <input type="submit" id="btnComment" value="&#1578;&#1593;&#1604;&#1610;&#1602;" />
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </td>
+                <td>
+                    <div dir="rtl" style="overflow: scroll;max-height:500px ; width: 100%;">
+                        @if (ViewBag.ReservationCol != null)
+                        {
+                            IEnumerable<ReservationBiz> objReservationCol = from objReservationBiz in ((ReservationCol)ViewBag.ReservationCol).Cast<ReservationBiz>()
+
+                                                                            select objReservationBiz;
+
+
+
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th></th>
+
+                                        <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</span></th>
+                                        <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1593;&#1605;&#1610;&#1604;</span></th>
+                                        <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1581;&#1575;&#1604;&#1577;</span></th>
+                                        <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1605;&#1588;&#1585;&#1608;&#1593;</span></th>
+                                        <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1601;&#1585;&#1593;</span></th>
+                                        <th align="center">Sales</th>
+                                        <th align="center">User Ins</th>
+                                        <th align="center">Insert Date</th>
+                                        <th align="center">User Update</th>
+                                        <th align="center">Update Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{string strTemp = "";}
+                                    @foreach (ReservationBiz objBiz in ViewBag.ReservationCol)
+                                    {
+                                        <tr>
+                                            @if (_SelectEnabled)
+                                            {
+                                                strCheck = "chkReservation" + objBiz.ID;
+                                                <td><input type="checkbox" name="@strCheck" id="@strCheck" /></td>
+                                            }
+                                            <td align="center">@objBiz.DirectUnitCodeStr</td>
+                                            <td>@objBiz.DirectCustomerStr;</td>
+                                            <td>@objBiz.DirectStatusStr</td>
+                                            <td>@objBiz.DirectProjectName</td>
+                                            <td>@objBiz.BranchBiz.Name</td>
+                                            <td>@objBiz.DirectSalesStr</td>
+                                            @{
+                                                strTemp = objBiz.UserIns.EmployeeBiz.ID == 0 ? objBiz.UserIns.FullName : objBiz.UserIns.EmployeeBiz.Name;
+                                            }
+                                            <td>@strTemp</td>
+                                            <td>@objBiz.TimeIns.ToString("yyyy-MM-dd hh:mm ")</td>
+                                            @{
+                                                strTemp = objBiz.UserUpd.EmployeeBiz.ID == 0 ? objBiz.UserUpd.FullName : objBiz.UserUpd.EmployeeBiz.Name;
+                                            }
+                                            <td>@strTemp</td>
+                                            <td>@objBiz.TimeUpd.ToString("yyyy-MM-dd hh:mm")</td>
+                                        </tr>
+                                                }
+
+                                </tbody>
+                            </table>
+                            <input type="hidden" id="ReservationCheckCol" name="ReservationCheckCol" value="@ViewBag.ReservationIDs" />
+                                                }
+                    </div>
+                </td>
+            </tr>
+                                                }
+    </table>
+
+
+
+
+
+
+
+
+</body>

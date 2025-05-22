@@ -1,0 +1,251 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussefPure.cshtml");
+}
+@using SharpVision.CRM.CRMBusiness;
+@using AlgorithmatMN.MN.MNBiz;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RO</title>
+    <style>
+        label {
+            display: block;
+            text-align:center;
+            background-color:snow;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        @using (Html.BeginForm("ROSearch", "Maintainance", FormMethod.Post))
+        {
+            <div class="row form-group">
+                @{
+                    ProjectCol objProjectCol = new ProjectCol(false);
+                }
+                <div class="col-md-3 mt-1">
+                    <select class="form-control form-control-uniform multiselect-filter" name="cmbProject" id="cmbProject">
+                        @foreach (ProjectBiz objProject in objProjectCol)
+                        {
+                            <option value="@objProject.Code">@objProject.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-3 mt-1">
+                   
+                </div>
+
+                <div class="col-md-3 mt-1">
+                    <input type="text" id="txtRO" class="form-control" name="txtRO" placeholder="وحدة" />
+                </div>
+                <div class="col-md-1 mt-1"></div>
+                <div class="col mt-1">
+                    <input type="submit" class="form-control btn" value="Search" />
+                </div>
+            </div>
+
+        }
+    <div class="content">
+        @{
+            ROBiz objRo = new ROBiz();
+            if (ViewBag.ROBiz != null)
+            {
+                objRo = (ROBiz)ViewBag.ROBiz;
+            }
+            string strTemp = "";
+        }
+        <div class="row form-group">
+
+            <div class="col-md-3 mt-1">
+                <label>@objRo.ProjectCode</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                <label> @objRo.Code</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                <label> @objRo.Customer</label>
+            </div>
+        </div>
+
+        <div class="row form-group">
+
+            <div class="col-md-3 mt-1">
+                @{ strTemp = objRo.ID > 0 ? objRo.Area + "م" : "";}
+                <label>@strTemp</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                @{ strTemp = objRo.ID > 0 ? "تاريخ استلام : " + objRo.DeliveryDate.ToString("yyyy-MM-dd") : "";}
+                <label>@strTemp</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                @{ strTemp = objRo.ID > 0 ? "الصيانة بالعقد : " + objRo.InitialMaintainanceValue.ToString("0") + " جم " : "";}
+                <label> @strTemp</label>
+            </div>
+        </div>
+        <div class="row form-group">
+
+            <div class="col-md-3 mt-1">
+                @{ strTemp = objRo.ID > 0 ? "رصيد :" + objRo.Closing.ToString("0") : "";}
+                <label>@strTemp</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                @{ strTemp = objRo.ID > 0 ? "استكمال صيانة : " + objRo.Required.ToString("0") : "";}
+                <label>@strTemp</label>
+            </div>
+            <div class="col-md-3 mt-1">
+                @if (objRo.ID != 0)
+                {
+                    using (Html.BeginForm("ROPayment", "Maintainance", FormMethod.Post))
+                    {
+                        // strTemp = Json.Encode(objRo);
+
+                        <input type="hidden" value="@objRo.Code" name="lblROCode" />
+                        <input type="hidden" value="@objRo.ProjectCode" name="lblProjectCode" />
+                        <input type="submit" value="سداد" />
+                    }
+                }
+            </div>
+        </div>
+        @if (objRo.ID != 0)
+        {
+            <div class="card">
+                <div class="card-header bg-teal-400 text-white header-elements-inline">
+                    <h6 class="card-title">مستحقات</h6>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table table-bordered table table-hover table-striped">
+                        <table class="table">
+                            <thead class="thead-gray">
+                                <tr>
+                                    <th>وصف</th>
+                                    <th>تاريخ استحقاق</th>
+                                    <th>قيمة</th>
+                                    <th>سماح</th>
+                                    <th>نسبة الخصم</th>
+                                    <th>اجمالى المدفوع</th>
+                                    <th>اجمالى المخصوم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (CreditConditionBiz objCondition in objRo.ConditionCol)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @objCondition.Desc
+                                        </td>
+                                        <td>
+                                            @objCondition.DueDate.ToString("yyyy-MM-dd")
+                                        </td>
+                                        <td>
+                                            @objCondition.Value.ToString("0")
+                                        </td>
+                                        <td>
+                                            @objCondition.Allowance.ToString()
+                                        </td>
+                                        <td>
+                                            @objCondition.DiscountPerc
+                                        </td>
+                                        <td>
+                                            @objCondition.TotalPaidValue.ToString()
+                                        </td>
+                                        <td>
+                                            @objCondition.TotalDiscountValue.ToString()
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    </div></div>
+                    <br />
+                    <div class="card">
+                        <div class="card-header bg-teal-400 text-white header-elements-inline">
+                            <h6 class="card-title">التسويات</h6>
+                            <div class="header-elements">
+                                <div class="list-icons">
+                                    <a class="list-icons-item" data-action="collapse"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive table table-bordered table table-hover table-striped">
+                                <table class="table">
+                                    <thead class="thead-gray">
+                                        <tr>
+                                            <th></th>
+                                            <th>سنة</th>
+                                            <th>رصيد افتتاحى</th>
+                                            <th>مدفوعات</th>
+                                            <th>خصومات</th>
+                                            <th>مصروفات</th>
+                                            <th>دعم</th>
+                                            <th>رصيد</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            CreditBiz objCredit = new CreditBiz();
+
+                                        }
+                                        @for (int intIndex = objRo.CreditCol.Count - 1; intIndex >= 0; intIndex--)
+                                        {
+                                            objCredit = objRo.CreditCol[intIndex];
+                                            strTemp = objCredit.ID > 0 ? "c" : "";
+                                        <tr>
+                                            <td>@strTemp</td>
+                                            <td>
+                                                @objCredit.YearBiz.YearBiz.Desc
+                                            </td>
+                                            <td>
+                                                @objCredit.CrditInitialValue.ToString("0")
+                                            </td>
+                                            <td>
+                                                @objCredit.PaymentValue.ToString("0")
+                                            </td>
+                                            <td>
+                                                @objCredit.DiscountValue.ToString("0")
+                                            </td>
+                                            <td>
+                                                @objCredit.Cost.ToString("0")
+                                            </td>
+                                            <td>
+                                                @objCredit.BonusValue.ToString("0")
+                                            </td>
+                                            <td>
+                                                @objCredit.Closing.ToString("0")
+                                            </td>
+                                        </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+</body>
+</html>

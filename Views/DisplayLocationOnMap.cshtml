@@ -1,0 +1,23 @@
+﻿
+@{
+    Layout = null;
+    string strTitle = ViewBag.AppName;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@strTitle</title>
+ 
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    </head>
+<body>
+    <div id="map" style="height: 500px"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <input type="hidden" id="lblLong" value="@ViewBag.Long" />
+    <input type="hidden" id="lblLat" value="@ViewBag.Lat" />
+    <script src="~/Scripts/LocationOnMap.js"></script>
+</body>
+</html>

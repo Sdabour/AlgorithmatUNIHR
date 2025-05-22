@@ -1,0 +1,189 @@
+﻿<script type="text/javascript">
+    const { isNumber } = require("util");
+const fa = require("../../wwwroot/js/plugins/ui/fullcalendar/core/locales/fa");
+
+    function AddNewElement() {
+        var vrName = document.getElementById("txtElementDesc").value;
+        var vrIsFuzzy = !document.getElementById("chkElementIsNumeric").checked;
+        var vrTxtValue = document.getElementById("txtElementValue").value;
+        var vrValue = 0;
+        try {
+            if (isNumber(vrTxtValue)) {
+                vrValue = vrTxtValue;
+                }
+        } catch { }
+        var vrApp = document.getElementById("lblApplicantID").value;
+
+        var vrServiceUrl = "../api/TempEstimationElementController/AddNewElement";
+        $.ajax({
+            type: 'GET',
+            url: vrServiceUrl,
+            contentType: 'application/json; charset=utf-8',
+
+            dataType: 'json',
+            data: { intAppID: vrApp, strElementName: vrName, blIsFuzzy: vrIsFuzzy, dblValue: vrValue },
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data, status) {
+            FillElementLst(data);
+
+        }
+
+        function errorFunc(jqXHR, textStatus, errorThrown) {
+            alert("ErrorFunct :" + errorThrown);
+        }
+        Clear();
+        return false;
+    }
+    function LoadElement() {
+        var vrApp = document.getElementById("lblApplicantID").value;
+
+        var vrServiceUrl = "../api/TempEstimationElementController/GetElementCol";
+        $.ajax({
+            type: 'GET',
+            url: vrServiceUrl,
+            contentType: 'application/json; charset=utf-8',
+
+            dataType: 'json',
+            data: { intAppID: vrApp },
+            success: successFunc,
+            error: errorFunc
+        });
+        function successFunc(data, status) {
+            FillElementLst(data);
+
+        }
+
+        function errorFunc(jqXHR, textStatus, errorThrown) {
+            alert("ErrorFunct :" + errorThrown);
+        }
+        return false;
+    }
+    function FillElementLst(data) {
+        var strDV = "<table class=\"table\">";
+        var vrElement;
+        var vrElementID;
+        for (var vrIndex = 0; vrIndex < data.length; vrIndex++) {
+            strDV += "<tr>";
+            vrElement = data[vrIndex];
+
+          
+
+            strDV += "<td>";
+            vrElementID = "";
+            vrElementID = "lblTempElement" + vrElement.ID;
+            strDV += "<input type=\"hidden\" id=\"" + vrElementID + "\" value='" + JSON.stringify(vrElement) + "'\>";
+            strDV += vrElement.Name + "</td>";
+
+
+
+            strDV += "<td>" + (vrElement.IsFuzzy == true ? "" : "Is Numeric") + "</td>";
+
+
+            strDV += "<td>" + vrElement.Value + "</td>";
+            strDV += "<td><input type=\"button\" value=\"تثبيت\" id=\"btnReturnElement" + vrElement.ID + "\"  onclick=\"return onReturnClick('" + vrElementID + "')\" name=\"btnReturnElement" + vrElement.ID + "\" /></td>";
+            strDV += "</tr>";
+        }
+        strDV += "</table>";
+        //alert(strDV);
+        var objDvElement = document.getElementById("dvElement");
+        objDvElement.innerHTML = strDV;
+    }
+    function onReturnClick(vrLblName) {
+
+        var vrLbl = document.getElementById(vrLblName).value;
+        //alert(vrLbl);
+        AddNewRowToTableFlexable();
+        var vrRowIndex = document.getElementById("lblFlexableElementCount").value;
+       // alert(vrLbl);
+        var vrElement = JSON.parse(vrLbl);
+        //alert(vrElement.Value);
+        //alert(document.getElementById("lblVendor").innerText);
+        //alert(document.getElementById("txtFlexableEstimationDesc").innerText);
+        document.getElementById("txtFlexableEstimationDesc" + vrRowIndex).innerText = vrElement.Name;
+        document.getElementById("txtFlexableTempElementDesc" + vrRowIndex).value = vrElement.Name;
+       
+        try {
+            var vrElementID = "txtFlexableElementValue" + vrRowIndex.toString();
+            //alert(vrElement.Value.toString());
+            document.getElementById(vrElementID).setAttribute("value", vrElement.Value.toString());
+          // alert( document.getElementById(vrElementID).innerText);
+          
+        } catch { }
+        document.getElementById("lblFlexableTempElement" + vrRowIndex).value = vrElement.ID;
+        var vrModal = document.getElementById("myTempElementModal");
+        vrModal.style.display = "none";
+        return false;
+    }
+
+
+    function Clear() {
+        document.getElementById("txtElementDesc").value = "";
+        document.getElementById("txtElementValue").value = "";
+        document.getElementById("chkElementIsNumeric").checked = false;
+    }
+   
+</script>
+<div class="row">
+    <div class="col-2">
+        <button id="myTempElementBtn" class="btn btn-success" type="button">عنصر جديد</button>
+    </div>
+    <div class="col-10">
+       <!-- <h4> <label id="lblVendor" style="width:100% ;text-align:center;background-color:gainsboro;font-size:larger;font-weight:bold;"></label></h4>
+        <input type="hidden" id="lblVendorValue" name="lblVendorValue" />-->
+    </div>
+    <div class="col">
+        <div id="myTempElementModal" class="modal" tabindex="-1">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span id="TempElementClose" class="close">&times;</span>
+
+                @{
+                    int intApplicantID = 0;
+                    intApplicantID = SharpVision.SystemBase.SysData.CurrentUser.EmployeeBiz.ID;
+                }
+                <input type="hidden" id="lblApplicantID" name="lblApplicantID" value="@intApplicantID" />
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" id="txtElementDesc" name="txtElementDesc" placeholder="وصف" />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="checkbox" id="chkElementIsNumeric" name="chkElementIsNumeric" />
+
+                    </div>
+                    <div class="col">
+                        <input type="text" id="txtElementValue" name="txtElementValue" placeholder="Value" />
+
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="button" value="رفع العنصر" id="btnAddElement" onclick="return AddNewElement()" />
+                    </div>
+
+                </div>
+
+             
+                    <div class="form-row">
+                        <div class="col-3">
+                            <input type="button" id="btnLoadTempItem" vlaue="تحميل" onclick="return LoadElement()"/>
+                        </div>
+                        <div class="col-7">
+                            <input type="text" id="txtElementFilter" style="width:100%;" placeholder="Filter" />
+                        </div>
+                    </div>
+                    <div class="table-responsive" id="dvElement" style="max-height:500px;">
+
+                    </div>
+                </div>
+
+            
+        </div>
+
+        </div>
+</div>

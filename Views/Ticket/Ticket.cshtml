@@ -1,0 +1,312 @@
+﻿@using SharpVision.UMS.UMSBusiness;
+@using SharpVision.SystemBase;
+@using SharpVision.CRM.CRMBusiness;
+@{
+    Layout = null;
+}
+
+@{
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strBranchID = System.Configuration.ConfigurationManager.AppSettings["CurrentBranch"];
+    UserBiz objUserBiz = new UserBiz();
+    if (Session["CurrentUser"] != null)
+    { objUserBiz = (UserBiz)Session["CurrentUser"]; }
+
+
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+    SysData.Language = intLanguage;
+    UMSBranchBiz objBranchBiz = new UMSBranchBiz();
+    UMSBranchCol objBranchCol = new UMSBranchCol();
+    Session["BranchCol"] = objBranchCol;
+
+    objBranchBiz = ((UMSBranchCol)Session["BranchCol"])[strBranchID];
+    Session["Branch"] = objBranchBiz;
+    string strEmployee = objUserBiz.EmployeeBiz.ID.ToString() ;
+    string strGroup = objUserBiz.EmployeeBiz.WorkGroupBiz.ID.ToString();
+    string strGroupMonitoring =  SysData.CurrentUser.UserFunctionInstantCol.GetIndex(TicketBiz.UMSTicketMonitor) != -1? objUserBiz.EmployeeBiz.WorkGroupBiz.ID.ToString():"0";
+    #endregion
+
+
+
+}
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style>
+
+    table {
+        border-collapse: collapse;
+        direction: rtl;
+        align-content: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    tr {
+        border: hidden;
+    }
+
+    th {
+        direction: rtl;
+        text-align: center;
+        align-content: center;
+        height: 30px;
+        background-color: ActiveCaption;
+    }
+
+    td {
+        height: 30px;
+        direction: rtl;
+        text-align: center;
+        align-content: center;
+    }
+
+    .trWhite tr {
+        background-color: whitesmoke;
+    }
+
+    .trSilver tr {
+        background-color: whitesmoke;
+    }
+
+    label {
+        background-color: lightgrey;
+        direction: ltr;
+        font-size: 16px;
+        width: 100%;
+    }
+</style>
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Ticket</title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/TicketScript.js"></script>
+    <script type="text/javascript">
+
+        setTimeout(OnTicket, 5000);
+
+
+        $(document).ready(function () {
+            var objNewmodal = document.getElementById("NewModal");
+
+            // Get the button that opens the modal
+            var objNewbtn = document.getElementById("myNewBtn");
+
+            // Get the <span> element that closes the modal
+            var objNewspan = document.getElementById("NewClose");
+
+            // When the user clicks on the button, open the modal
+            objNewbtn.onclick = function () {
+                objNewmodal.style.display = "block";
+                return false;
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            objNewspan.onclick = function () {
+                objNewmodal.style.display = "none";
+
+
+            }
+
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("WaitingClose");
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+                FillSelectedWaiting();
+
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                //if (event.target == modal) {
+                //    modal.style.display = "none";
+                //}
+
+            }
+
+
+        });
+    </script>
+</head>
+<body>
+    <div class="container" dir="rtl">
+        <div class="pre-scrollable" style="max-height:500px">
+            <input type="hidden" id="lblEmployeeID" name="lblEmployeeID" value="@strEmployee" />
+            <input type="hidden" id="lblGroupID" name="lblGroupID" value="@strGroup" />
+            <input type="hidden" id="lblGroupMonitorID" name="lblGroupMonitorID" value="@strGroupMonitoring" />
+            <div >
+                <div class="col-12">
+                    <div class="row">
+                        <div  class="col-md-6">
+                            <label id="lblEmployeeName">@objUserBiz.EmployeeBiz.Name</label>
+                        </div>
+                        <div class="col-md-6" style="align-content:center;">
+                            <label id="lblClock">@DateTime.Now.ToString("HHH:mm:ss")</label>
+                        </div>
+                    </div>
+
+
+                   
+
+                </div>
+            </div>
+            <table>
+                <tr dir=ltr>
+                    <td>
+                        <label>New Tickets </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <button type="button" id="myBtn">NewTicket</button>
+                            @{ string strModalDisplay1 = "none";}
+                            <div id="myModal" class="modal" tabindex="-1" style="display:@strModalDisplay1;">
+
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span id="WaitingClose" class="close">&times;</span>
+                                    <div id="dvPickedNotServed" name="dvPickedNotServed" class="row">
+                                        <table id="tblNewTicket" style="background-color:aliceblue;height:50px;" class="table-bordered">
+                                            <tr>
+                                                <th>&#1578;&#1608;&#1602;&#1610;&#1578;</th>
+                                                <th>رقم</th>
+                                                <th>&#1593;&#1605;&#1610;&#1604;</th>
+                                                <th>&#1605;&#1580;&#1605;&#1608;&#1593;&#1577;</th>
+                                                <th width="80">
+                                                    &#1605;&#1608;&#1592;&#1601;
+                                                </th>
+                                                <th>
+                                                    &#1578;&#1608;&#1602;&#1610;&#1578;
+                                                </th>
+                                                <th>
+                                                    &#1581;&#1575;&#1604;&#1577;
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td width="80"></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+                       
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pre-scrollable" style="max-height:500px">
+
+
+            <table>
+                <tr>
+                   
+                    <td>
+                        <table style="width:100%">
+                            <tr>
+
+                                <td>
+                                    <label style="width:100%">
+                                        Waiting Processing
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <button type="button" id="myNewBtn">Waiting Processing</button>
+                                        @{ string strModalDisplay =  "none";}
+                                        <div id="NewModal" class="modal" tabindex="-1" style="display:@strModalDisplay;">
+
+                                            <!-- Modal content -->
+                                            <div class="modal-content">
+                                                <span id="NewClose" class="close">&times;</span>
+                                                <div id="dvFree" name="dvFree" class="container">
+                                                    <table id="tblWaitingTicket" class="table-bordered">
+                                                        <tr>
+                                                            <th>تاريخ</th>
+                                                            
+                                                            <th>&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</th>
+                                                            <th width="80">
+                                                                &#1605;&#1580;&#1605;&#1608;&#1593;&#1577;
+                                                            </th>
+                                                            <th>
+                                                                &#1605;&#1587;&#1574;&#1608;&#1604;
+                                                            </th>
+                                                            <th>
+                                                                &#1608;&#1589;&#1601;
+                                                            </th>
+                                                            <th>
+                                                                <span lang="ar-eg">&#1606;&#1608;&#1593;</span>
+                                                            </th>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td width="80"></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+
+                                                        </tr>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                   
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

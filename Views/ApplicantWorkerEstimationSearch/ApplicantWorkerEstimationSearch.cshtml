@@ -1,0 +1,402 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+@using SharpVision.HR.HRBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@using System.Linq;
+@using AlgorithmatMVC.Controllers.HRController;
+@using System.Collections;
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/templatemo-style.css" rel="stylesheet" />
+<html>
+<head>
+
+
+    <title>ApplicantWorkerEstimationSearch</title>
+    @{
+        #region
+        EstimationStatementBiz _StatementBiz;
+        if (Session["StatementBiz"] == null || ((EstimationStatementBiz)Session["StatementBiz"]).ID == 0)
+        {
+            _StatementBiz = EstimationStatementBiz.CurrentStatementBiz;
+            Session["StatementBiz"] = _StatementBiz;
+
+        }
+        else
+        {
+            _StatementBiz = (EstimationStatementBiz)Session["StatementBiz"];
+        }
+
+        ApplicantWorkerCol _ApplicantWorkerCol;
+        List<SectorSimple> arrSectorSimple = new List<SectorSimple>();
+        List<SectorSimple> arrSelectedSimple = new List<SectorSimple>();
+        if (Session["SectorID"] != null && (int)Session["SectorID"]!= 0)
+        {
+            int intSectorID = 0;
+            int.TryParse(Session["SectorID"].ToString(), out intSectorID);
+            if (intSectorID != 0)
+            { arrSelectedSimple = SectorSimple.GetList(new SectorSimple() { ID = intSectorID }); }
+
+        }
+        if (Session["ApplicantCol"] == null || ((ApplicantWorkerCol)Session["ApplicantCol"]).Count == 0)
+        {
+            _ApplicantWorkerCol = new ApplicantWorkerCol(new SectorBiz(), 1, 0);
+
+            //if (Session["AssignedSectorTable"] == null)
+            //{
+            //    EmployeeSectorAssignmentCol.AssignedSectorTable = null;
+            //    if (Session["CurrentUser"] != null)
+            //    {
+            //        SharpVision.SystemBase.SysData.CurrentUser = (UserBiz)Session["CurrentUser"];
+            //    }
+            //    Session["AssignedSectorTable"] = EmployeeSectorAssignmentCol.AssignedSectorTable;
+
+            Hashtable hsTemp = EmployeeSectorAssignmentCol.AssignedSectorTable;
+            //EmployeeSectorAssignmentCol.AssignedSectorTable;
+            List<ApplicantWorkerBiz> objApplicantTempCol = (from objApplicant in _ApplicantWorkerCol.Cast<ApplicantWorkerBiz>()
+                                                            where hsTemp[objApplicant.CurrentSubSectorBiz.SubSectorBiz.SectorBiz.ID.ToString()] != null
+                                                            select objApplicant).ToList();
+
+            _ApplicantWorkerCol.Clear();
+            _ApplicantWorkerCol = new ApplicantWorkerCol(true);
+            ApplicantWorkerBiz objBiz;
+            for (int intIndex = 0; intIndex < objApplicantTempCol.Count; intIndex++)
+            {
+                objBiz = objApplicantTempCol[intIndex];
+                _ApplicantWorkerCol.Add(objBiz);
+            }
+            Session["ApplicantCol"] = _ApplicantWorkerCol;
+
+        }
+        else
+        {
+            _ApplicantWorkerCol = (ApplicantWorkerCol)Session["ApplicantCol"];
+        }
+        IEnumerable<ApplicantWorkerBiz> objSelectedCol = from objBiz in _ApplicantWorkerCol.Cast<ApplicantWorkerBiz>()
+                                                         select objBiz;
+        if (arrSelectedSimple.Count > 0)
+        {
+            objSelectedCol = from objBiz in objSelectedCol
+                             join objSector in arrSelectedSimple
+                             on objBiz.CurrentSubSectorBiz.SubSectorBiz.SectorBiz.ID equals objSector.ID
+                             select objBiz;
+        }
+        UserBiz objCurrentUser = SharpVision.SystemBase.SysData.CurrentUser;
+
+        IEnumerable<ApplicantSingle> objApplicantCol = from objApplicant in objSelectedCol
+                                                       select new ApplicantSingle() { ID = objApplicant.ID, Name = objApplicant.Name, Code = objApplicant.Code, Department = objApplicant.CurrentSubSectorBiz.SubSectorBiz.SectorName, Job = objApplicant.CurrentSubSectorBiz.JobNatureTypeBiz.Name, Processed = _StatementBiz.ApplicantHash[objApplicant.ID.ToString()] != null, Value = (_StatementBiz.ApplicantHash[objApplicant.ID.ToString()] == null ? 0 :  _StatementBiz.ApplicantHash[objApplicant.ID.ToString()]).ToString(), ForiegnID = _StatementBiz.ID ,IsCurrentApplicant=objApplicant.ID== objCurrentUser.EmployeeBiz.ID};
+        string strSerializedApplicant = Json.Encode(objApplicantCol.ToArray());
+        #endregion
+
+    }
+
+    <script src="~/Scripts/ApplicantControl.js"></script>
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/Applicant.js"></script>
+    <script type="text/javascript">
+        $(document).ready(FillApplicantEstimationLst
+        )
+        function FillApplicantEstimationLst()
+        {
+            FillApplicant(0);
+        }
+        function GetSearchData() {
+            var vrSector = 0;
+            var vrSectorCmbName = "cmbSectorLevel";
+            for (var vrIndex = 5; vrIndex >= 1; vrIndex--) {
+                if (document.getElementById(vrSectorCmbName + vrIndex).value > 0) {
+                    vrSector = document.getElementById(vrSectorCmbName + vrIndex).value;
+                    break;
+                }
+            }
+        //    var vrMaterialGroup = document.getElementById("cmbMaterialGroup").value;
+            var vrUrl = "";
+            vrUrl = window.location.origin;
+            vrUrl = vrUrl.replace("ApplicantWorkerEstimationSearch/", "");
+            vrUrl = vrUrl.replace("Index/", "");
+            //vrStrURL=vrStrURL+ "/EV/services/
+            // alert(vrUrl);
+           // var vrServieType = document.getElementById("cmbServiceType").value;
+
+
+
+            vrUrl = vrUrl + "/ApplicantWorkerEstimationSearch/index";
+            if (vrSector != 0)
+                vrUrl += "?SectorID=" + vrSector;
+           
+           
+
+            document.getElementById("aSearch").setAttribute("href", vrUrl);
+            //alert(document.getElementById("aSearch").getAttribute("href"));
+            // alert(vrUrl);
+            return true;
+        }
+    </script>
+    <style>
+
+        /* The container */
+        label {
+            display: block;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            label input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            /* Create a custom checkbox */
+            label span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 25px;
+                width: 25px;
+                background-color: #eee;
+            }
+
+            /* On mouse-over, add a grey background color */
+            label:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            label input:checked ~ span {
+                background-color: #2196F3;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            label:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            label input:checked ~ span:after {
+                display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            label span:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+        .ListTable tr {
+            height: 5px;
+            padding:2px;
+
+        }
+        .ListTable {
+        padding:1px;
+        }
+        .ListTable td {
+            padding:2px;
+        }
+        .container td {
+            padding:2px;
+        }
+        .container tr {
+        padding:2px;
+        height:fit-content;
+        }
+        td > label {
+            align-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .container {
+        border:none;
+        }
+            .container tr {
+            border:none;
+            }
+        .form-check-label 
+        {
+            align-content:center;
+            justify-content:center;
+            font-size:small;
+            max-width:auto;
+            width:120px;
+        }
+    </style>
+</head>
+<body>
+    <div   dir="rtl" style="align-items:center;max-width:100%;">
+    
+
+        <input type="hidden" id="lblApplicant" name="lblApplicant" value="@strSerializedApplicant" />
+        <div class="row">
+            <div class="col">
+                <a id="aSearch" onclick="GetSearchData()"  href="/ApplicantWorkerEstimationSearch/index"> <input type="button" class="btn btn-primary" value="بحث" /></a>
+            </div>
+        </div>
+        <div class="row">
+          
+            <div class="col">
+                @Html.Partial("SectorSearch")
+            </div>
+        </div>
+        <table border="0" class="container" style="max-width:100%;height:auto;" dir="rtl" >
+            <tr>
+                <td>
+                    <table style="max-width:100%;height:auto;" dir="rtl" class="container">
+                        <tr>
+                            <td>
+                                <table  style="max-width:100%;height:auto;" dir="rtl" class="container">
+                                    <tr style="line-height:10px;padding-top:1px;padding-bottom:1px;">
+                                        <td>
+                                            <label id="lblStatementDesc" name="lblStatementDesc">
+                                                @_StatementBiz.EstimationStatementDesc
+                                            </label>
+                                        </td>
+
+                                        <td>
+                                           <a href="/EstimationStatementSearch/index"> <input type="button" class="btn btn-primary"  value="الفترة" /></a>
+                                        </td>
+                                    </tr>
+                                   
+                                </table>
+                            </td>
+                           
+                        </tr>
+                        @if (_StatementBiz.Note.Trim() != "")
+                        {
+                        <tr>
+                            <td><label id="lblStatementNote" name="lblStatementNote"> @_StatementBiz.Note</label></td>
+                        </tr>
+                        }
+                    </table>
+                    <div class="form-row">
+                        <div class="col-2">
+                            <label> عدد اجمالى </label>
+                        </div>
+                        <div class="col-2">
+                            <label id="lblTotalCount"></label>
+                        </div>
+                        <div class="col-2">
+                           <label>تمت معالجته </label>
+                        </div>
+                        <div class="col-2">
+                            <label id="lblProcessedCount"></label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <table style="max-width:100%;height:auto" class="container">
+                        <tr>
+                            <td>
+                                <table align="center" dir="rtl" class="container">
+                                    <tr>
+                                        <td>
+                                            <table style="max-width:100%;height:auto;" dir="rtl" class="container">
+                                                <tr >
+                                                    <td>
+                                                        <span>اسم</span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtFilterName" name="txtFilterName"
+                                                               onchange="FillApplicant(0);"
+                                                               onkeyup="this.onchange();"
+                                                               onpaste="this.onchange();" oninput="this.onchange();" />
+                                                    </td>
+                                                    <td>
+                                                        <span>كود</span>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="txtFilterCode" name="txtFilterCode" onchange="FillApplicant(0);"
+                                                               onkeyup="this.onchange();"
+                                                               onpaste="this.onchange();" oninput="this.onchange();" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            
+
+                                            <div class="form-group mb-3 mb-md-2">
+                                               
+                                                <div class="form-check form-check-inline form-check-right">
+                                                    <label class="form-check-label">
+                                                         الكل
+                                                        <span class="checked">
+                                                        <input type="radio" class="form-check-input-styled" id="rdProcessedAll" onchange="FillApplicant(0);" name="rdProcessed" value="0" checked="" data-fouc=""></span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-check form-check-inline form-check-right">
+                                                    <label class="form-check-label">
+                                                        تمت المعالجة
+                                                        <span><input type="radio" class="form-check-input-styled" id="rdProcessedOnlyProcessed" onchange="FillApplicant(0);" name="rdProcessed" value="1" data-fouc=""></span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="form-check form-check-inline form-check-right">
+                                                    <label class="form-check-label">
+                                                        لم يتم المعالجة
+                                                        <span><input type="radio" class="form-check-input-styled" id="rdProcessedOnlyNotProcessed" onchange="FillApplicant(0);" name="rdProcessed" value="2" data-fouc=""></span>
+                                                    </label>
+                                                </div>
+
+
+                                            </div>
+                                   
+                                        </td>
+
+                                    </tr>
+
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table id="tblApplicant" name="tblApplicant" class="ListTable" table style="max-width:100%;height:auto">
+                                    <tr>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                  
+                </td>
+
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

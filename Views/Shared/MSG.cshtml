@@ -1,0 +1,616 @@
+﻿<script src="~/Scripts/MSG/MSG.js"></script>
+<script src="~/Scripts/MSG/MSGJS.js"></script>
+<script src="~/Scripts/MSG/Group.js"></script>
+<div id="myMSGModal" name="myMSGModal" class="modal" tabindex="-1">
+    
+    <div class="modal-content">
+        <input type="hidden" id="lblMainMSG" value="" />
+        <input type="hidden" id="lblMainMSGCount" value="" />
+        <span id="MSGClose" onclick="CloseMSGModal()" class="close">&times;</span>
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <!-- /main sidebar -->
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                <!-- Page header -->
+                <div class="page-header page-header-light">
+                    <div class="page-header-content header-elements-md-inline">
+                        <div class="page-title d-flex">
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+
+
+
+                    </div>
+                </div>
+                <!-- /page header -->
+                <!-- Content area -->
+                <div class="content">
+
+                    <!-- Inner container -->
+                    <div class="d-md-flex align-items-md-start">
+
+                        <!-- Left sidebar component -->
+                        <!-- /left sidebar component -->
+                        <!-- Right content -->
+                        <div class="flex-fill overflow-auto">
+
+                            <!-- Single mail -->
+                            <div class="card">
+
+                                <!-- Action toolbar -->
+                                <div class="navbar navbar-light bg-light navbar-expand-lg border-bottom-0 py-lg-2 rounded-top">
+                                    <div class="text-center d-lg-none w-100">
+                                        <button type="button" class="navbar-toggler w-100 h-100" data-toggle="collapse" data-target="#inbox-toolbar-toggle-write">
+                                            <i class="icon-circle-down2"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="navbar-collapse text-center text-lg-left flex-wrap collapse" id="inbox-toolbar-toggle-write">
+
+                                        <div class="mt-3 mt-lg-0 mr-lg-3">
+                                            <button type="button" class="btn bg-blue" onclick="return SendMSG()"><i class="icon-paperplane mr-2"></i> Send mail</button>
+                                        </div>
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                                <!-- /action toolbar -->
+                                <!-- Mail details -->
+                                <div id="dvDes" class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="align-top py-0" style="width: 1%">
+                                                    <div class="py-2 mr-sm-3">ادارة:</div>
+                                                </td>
+                                                <td class="align-top py-0" style="width: 5%">
+                                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                                        <input type="search" id="txtDepartmentFilter" class="form-control wmin-200" placeholder="قطاع او ادارة">
+                                                        <div class="form-control-feedback">
+                                                            <i class="icon-search4 font-size-base text-muted" onclick="return FillMSGSector1()"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="align-top py-0">
+                                                    <div class="d-sm-flex flex-sm-wrap">
+                                                        <input type="text" id="txtSectorRecepient" class="form-control flex-fill w-auto py-2 px-0 border-0 rounded-0" placeholder="Add recipients">
+                                                        <ul class="list-inline list-inline-dotted text-nowrap pt-sm-2 pb-2 mb-0 ml-sm-3">
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="align-top py-0" style="width: 1%">
+                                                    <div class="py-2 mr-sm-3">موظف:</div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group form-group-feedback form-group-feedback-right">
+                                                        <input type="search" id="txtEmployeeFilter" class="form-control wmin-200" placeholder="موظف">
+                                                        <div class="form-control-feedback">
+                                                            <i class="icon-search4 font-size-base text-muted" onclick="return FillMSGApplicant()"></i>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="align-top py-0">
+                                                    <div class="d-sm-flex flex-sm-wrap">
+                                                        <input type="text" id="txtApplicantRecepient" class="form-control flex-fill w-auto py-2 px-0 border-0 rounded-0" placeholder="Add recipients">
+                                                        <ul class="list-inline list-inline-dotted text-nowrap pt-sm-2 pb-2 mb-0 ml-sm-3">
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="align-top py-0">
+         <input type="hidden" id="lblGroup" name="lblGroup" value="" />                                           <div class="py-2 mr-sm-3"><button id="btnGroup" onclick="DisplayGroupExploreModal()">Group</button></div>
+                                                </td>
+                                                <td class="align-top py-0">
+                                                    <input type="text" class="form-control py-2 px-0 border-0 rounded-0" id="txtMSGGroup" name="txtMSGGroup" placeholder="Add Group">
+                                                </td>
+                                            
+                                       </tr><tr>         <td class="align-top py-0">
+                                                    <div class="py-2 mr-sm-3">Subject:</div>
+                                                </td>
+                                                <td class="align-top py-0">
+                                                    <input type="text" class="form-control py-2 px-0 border-0 rounded-0" id="txtMSGSubject" name="txtMSGSubject" placeholder="Add subject">
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /mail details -->
+                                <!-- Mail container -->
+                                <div class="card-body p-0">
+                                    <div class="overflow-auto mw-100">
+                                        <div class="summernote summernote-borderless" style="display: none;">
+
+                                            <!-- Email sample (demo) -->
+                                            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" id="tblTryMSG">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+
+                                                            <!-- Hero -->
+                                                            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td align="center" bgcolor="#f67b7c" style="background-image: url('../images/backgrounds/panel_bg.png'); background-repeat: repeat;">
+                                                                            <table width="640" border="0" cellpadding="0" cellspacing="0" align="center" id="tblDvMail1">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td width="100%" height="15"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td align="center">
+
+                                                                                            <!-- Nav -->
+                                                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" id="">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td width="100%" valign="middle">
+
+                                                                                                            <!-- Logo -->
+                                                                                                            <table width="280" border="0" cellpadding="0" cellspacing="0" align="left" id="tblDvMail2">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td height="60" valign="middle" width="100%" align="right"></td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <!-- /logo -->
+                                                                                                            <!-- View Online -->
+                                                                                                            <table width="280" border="0" cellpadding="0" cellspacing="0" align="right" id="tblDvMail3">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td height="60" valign="middle" width="100%" align="right">
+
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <!-- /view Online -->
+
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td width="100%" height="30"></td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <!-- /nav -->
+                                                                                            <!-- Title -->
+                                                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td valign="middle" align="center" style="font-size: 40px; color: #ffffff; line-height: 50px; font-weight: 300;">
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <!-- /title -->
+                                                                                            <!-- Subtitle -->
+                                                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" id="tblDvMail4">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td width="100%" height="30"></td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td valign="middle" width="100%">
+                                                                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" id="tblDvMail5">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td width="30"></td>
+                                                                                                                        <td width="540" align="center" style="font-size: 14px; color: #ffffff; line-height: 24px;">
+                                                                                                                        </td>
+                                                                                                                        <td width="30"></td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <!-- /subtitle -->
+                                                                                            <!-- Button -->
+                                                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" id="tblDvMail6">
+                                                                                                <tbody>
+                                                                                                    <tr>
+                                                                                                        <td height="40"></td>
+                                                                                                    </tr>
+                                                                                                    <tr>
+                                                                                                        <td width="auto" align="center">
+                                                                                                            <table border="0" cellpadding="0" cellspacing="0" align="center" id="tblDvMail7">
+                                                                                                                <tbody>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                            <!-- /button -->
+
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td width="100%" height="50"></td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                            <!-- /footer -->
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- /email sample (demo) -->
+
+                                        </div><div class="note-editor note-frame card">
+                                            <div class="note-dropzone">
+                                                <div class="note-dropzone-message"></div>
+                                            </div>
+
+
+                                            <div class="note-editing-area" id="dvNote1">
+                                                <div class="note-handle"><div class="note-control-selection" style="display: none;" id="dvNote2"><div class="note-control-selection-bg"></div><div class="note-control-holder note-control-nw"></div><div class="note-control-holder note-control-ne"></div><div class="note-control-holder note-control-sw"></div><div class="note-control-sizing note-control-se"></div><div class="note-control-selection-info"></div></div></div><textarea class="note-codable" role="textbox" aria-multiline="true"></textarea>
+                                                <div class="note-editable card-block" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="true" id="dvMailCard">
+
+                                                    <!-- Email sample (demo) -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+
+                                                                    <!-- Hero -->
+                                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td align="center" bgcolor="#f67b7c" style="background-image: url('../wwwroot/images/backgrounds/panel_bg.png'); background-repeat: repeat;">
+                                                                                    <table width="640" border="0" cellpadding="0" cellspacing="0" align="center">
+                                                                                        <tbody>
+                                                                                            <tr>
+                                                                                                <td width="100%" height="15"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td align="center">
+
+                                                                                                    <!-- Nav -->
+                                                                                                    <table width="600" border="0" cellpadding="0" cellspacing="0">
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td width="100%" valign="middle">
+
+                                                                                                                    <!-- Logo -->
+                                                                                                                    <table width="280" border="0" cellpadding="0" cellspacing="0" align="right" id="tblMainMSG">
+                                                                                                                        <tbody>
+                                                                                                                            <tr>
+                                                                                                                                <td height="60" valign="middle" width="100%" align="right" id="tdMSGBody">
+                                                                                                                                </td>
+                                                                                                                            </tr>
+                                                                                                                        </tbody>
+                                                                                                                    </table>
+
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            <tr id="objNewTr">
+                                                                                                                <td>
+                                                                                                                    <table id="tblMSGThread">
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table width="280" border="0" cellpadding="0" cellspacing="0" align="right">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td height="60" valign="middle" width="100%" align="right">
+                                                                                                                                                Heeeeeeeeeeeeeeeeeeeeeey
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                <table width="280" border="0" cellpadding="0" cellspacing="0" align="right">
+                                                                                                                                    <tbody>
+                                                                                                                                        <tr>
+                                                                                                                                            <td height="60" valign="middle" width="100%" align="right">
+                                                                                                                                                Heeeeeeeeeeeeeeeeeeeeeey33333333333333
+                                                                                                                                            </td>
+                                                                                                                                        </tr>
+                                                                                                                                    </tbody>
+                                                                                                                                </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+
+                                                                                                                    </table>
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                            <tr>
+                                                                                                                <td width="100%" height="30">
+                                                                                                                </td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                    <!-- /nav -->
+                                                                                                    <!-- Title -->
+                                                                                                    <!-- /button -->
+
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td width="100%" height="50"></td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <!-- /hero -->
+                                                                    <!-- /footer -->
+
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- /email sample (demo) -->
+
+                                                </div>
+                                            </div>
+
+                                            <div class="note-statusbar" role="status">
+                                                <div class="modal link-dialog" tabindex="-1" role="dialog" aria-label="Insert Link" style="display: none;" aria-hidden="true"><div class="modal-dialog">  <div class="modal-content">    <div class="modal-header">      <h4 class="modal-title">Insert Link</h4>      <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>    </div>    <div class="modal-body"><div class="form-group note-form-group"><label class="note-form-label">Text to display</label><input class="note-link-text form-control note-form-control note-input" type="text"></div><div class="form-group note-form-group"><label class="note-form-label">To what URL should this link go?</label><input class="note-link-url form-control note-form-control note-input" type="text" value="http://"></div><div class="form-check sn-checkbox-open-in-new-window"><label class="form-check-label"> <input role="checkbox" type="checkbox" class="form-check-input" checked="" aria-label="Open in new window" aria-checked="true"> Open in new window</label></div></div>    <div class="modal-footer"><input type="button" href="#" class="btn btn-primary note-btn note-btn-primary note-link-btn" value="Insert Link"></div>  </div></div></div><div class="modal" aria-hidden="false" tabindex="-1" role="dialog" aria-label="Insert Image"><div class="modal-dialog">  <div class="modal-content">    <div class="modal-header">      <h4 class="modal-title">Insert Image</h4>      <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>    </div>    <div class="modal-body"><div class="form-group note-form-group note-group-select-from-files"><label class="note-form-label">Select from files</label><div class="uniform-uploader"><input class="note-image-input form-control-file note-form-control note-input" type="file" name="files" accept="image/*" multiple="multiple"><span class="filename" style="user-select: none;">No file selected</span><span class="action btn bg-warning-400" style="user-select: none;">Choose Files</span></div></div><div class="form-group note-group-image-url" style="overflow:auto;"><label class="note-form-label">Image URL</label><input class="note-image-url form-control note-form-control note-input  col-md-12" type="text"></div></div>    <div class="modal-footer"><input type="button" href="#" class="btn btn-primary note-btn note-btn-primary note-image-btn" value="Insert Image" disabled=""></div>  </div></div></div><div class="modal" aria-hidden="false" tabindex="-1" role="dialog" aria-label="Insert Video"><div class="modal-dialog">  <div class="modal-content">    <div class="modal-header">      <h4 class="modal-title">Insert Video</h4>      <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>    </div>    <div class="modal-body"><div class="form-group note-form-group row-fluid"><label class="note-form-label">Video URL <small class="text-muted">(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)</small></label><input class="note-video-url form-control note-form-control note-input" type="text"></div></div>    <div class="modal-footer"><input type="button" href="#" class="btn btn-primary note-btn note-btn-primary note-video-btn" value="Insert Video" disabled=""></div>  </div></div></div><div class="modal" aria-hidden="false" tabindex="-1" role="dialog" aria-label="Help">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">      <h4 class="modal-title">Help</h4>      <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">×</button>    </div>    <div class="modal-body" style="max-height: 300px; overflow: scroll;">                                               </div>
+                                                            <div class="modal-footer"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /mail container -->
+                                    <!-- Attachments -->
+                                    <div class="card-body border-top">
+                                        <h6 class="mb-0">2 Attachments</h6>
+
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item">
+                                                <div class="card bg-light py-2 px-3 mt-3 mb-0">
+                                                    <div class="media my-1">
+                                                        <div class="mr-3 align-self-center"><i class="icon-file-pdf icon-2x text-danger-400 top-0"></i></div>
+
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <div class="card bg-light py-2 px-3 mt-3 mb-0">
+                                                    <div class="media my-1">
+                                                        <div class="mr-3 align-self-center"><i class="icon-file-pdf icon-2x text-danger-400 top-0"></i></div>
+                                                        <div class="media-body">
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- /attachments -->
+
+                                </div>
+                                <!-- /single mail -->
+
+                            </div>
+                            <!-- /right content -->
+
+                        </div>
+                        <!-- /inner container -->
+
+                    </div>
+                    <!-- /content area -->
+                    <!-- Footer -->
+                    <div class="navbar navbar-expand-lg navbar-light">
+                        <div class="text-center d-lg-none w-100">
+                            <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+                                <i class="icon-unfold mr-2"></i>
+                                Footer
+                            </button>
+                        </div>
+
+
+                    </div>
+                    <!-- /footer -->
+
+                </div>
+                <!-- /main content -->
+
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+    <!--EndOfMSGModal-->
+
+</div>
+<div id="myEmployeeModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="EmployeeClose" class="close" onclick="return CloseEmployeeModal()">&times;</span>
+
+
+        <div class="form-row">
+           
+
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="align-top py-0" style="width: 1%">
+                        <div class="py-2 mr-sm-3">ٍSelected<input type="checkbox" id="chkOnlySelected" onchange="return FillMSGApplicant();" /></div>
+                    </td>
+                    <td class="align-top py-0" style="width: 1%">
+                        <div class="py-2 mr-sm-3"><input type="button" value="مجموعة جديدة"  onclick="return DisplayNewGroupModal();"/></div>
+                    </td>
+                </tr>
+                <tr>
+                   
+                    
+                    <td class="align-top py-0" style="width: 1%">
+                        <div class="py-2 mr-sm-3">موظف:</div>
+                    </td>
+                    <td>
+                        <div class="form-group form-group-feedback form-group-feedback-right">
+                            <input type="search" id="txtEmployeeFilter1" class="form-control wmin-200" placeholder="موظف">
+                            <div class="form-control-feedback">
+                                <i class="icon-search4 font-size-base text-muted" onclick="return FillMSGApplicant()"></i>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+                
+
+            </tbody>
+        </table>
+        <div class="table-responsive" id="dvEmployee">
+
+        </div>
+
+
+    </div>
+
+</div>
+<div id="mySelectedEmployeeModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="SelectedEmployeeClose" class="close" onclick="return CloseSelectedEmployeeModal()">&times;</span>
+
+        <input type="hidden" id="lblSelectedEmployee" value="" />
+
+        
+        <div class="table-responsive" id="dvSelectedEmployee">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<div id="mySectorModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="SectorClose" class="close" onclick="return CloseSectorModal()">&times;</span>
+
+
+
+
+        <div class="table-responsive" id="dvSector">
+
+        </div>
+
+
+    </div>
+
+</div>
+<div id="mySelectedSectorModal" class="modal" tabindex="-1">
+    @{
+        string strAllSector = Json.Encode(SectorSimple.AllSectorLst);
+
+    }
+    <input type="hidden" id="lblAllSector" value="@strAllSector" />
+    <div class="modal-content">
+        <span id="SelectedSectorClose" class="close" onclick="return CloseSelectedSectorModal()">&times;</span>
+
+        <input type="hidden" id="lblSelectedSector" value="" />
+
+
+        <div class="table-responsive" id="dvSelectedSector">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<div id="myNewGroupModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="NewGroupClose" class="close" onclick="return CloseNewGroupModal()">&times;</span>
+
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="form-group form-group-feedback form-group-feedback-right">
+                            <input type="text" id="txtNewGroupName" class="form-control wmin-200" placeholder="مجموعة جديدة">
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group form-group-feedback form-group-feedback-right">
+                            <input type="text" id="txtNewGroupDesc" class="form-control wmin-200" placeholder="وصف">
+                            <div class="form-control-feedback">
+                                <i class="icon-add font-size-base text-muted" onclick="return AddNewGroup()"></i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="icon-user font-size-sm" onclick="return FillMSGApplicant();"></i>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+
+      
+
+
+    </div>
+
+</div>
+
+<div id="myGroupExploreModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="GroupExploreClose" class="close" onclick="return CloseGroupExploreModal()">&times;</span>
+
+
+        <input type="hidden" id="lblSelectedGroup" name="lblSelectedGroup" value="" />
+        <div class="form-row">
+            <div class="col">
+                <button id="btnGroupSearch" onclick="FillMSGGroup()">Search</button>
+            </div>
+        </div>
+
+        <div class="table-responsive" id="dvGroupExplore">
+
+        </div>
+
+
+    </div>
+
+</div>

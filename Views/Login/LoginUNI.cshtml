@@ -1,0 +1,116 @@
+﻿
+@model SharpVision.UMS.UMSBusiness.UserBiz
+@using SharpVision.UMS.UMSBusiness
+@using SharpVision.SystemBase;
+@using AlgorithmatMVC.UNI.UNIBusiness;
+@{
+    ViewBag.Title = "Algorithmat";
+    Layout = "~/Views/Shared/_Layout - Copy.cshtml";
+}
+<style>
+    #LogInDiv {
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        border: 1px solid #cc;
+        padding: 10px;
+    }
+</style>
+<script type="text/javascript">
+const fa = require("../../wwwroot/js/plugins/ui/fullcalendar/core/locales/fa");
+
+    function CheckFormValidation()
+    {
+
+
+        if (document.getElementById("Name") == null || document.getElementById("Name").value == "")
+        {
+            alert("Please Enter user name");
+            return false;
+        }
+        if (document.getElementById("Password") == null || document.getElementById("Password").value == "") {
+            alert("Please Enter Password");
+            return false;
+        }
+        //if (document.getElementById("lblApp").value == "") {
+        //    alert("يجب تحديد الموظف");
+        //    return false;
+        //}
+        return true;
+    }
+</script>
+
+
+@{
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    int intSystem = 6;
+    string strSys = System.Configuration.ConfigurationManager.AppSettings["SysID"];
+    if (strSys != null)
+    {
+        int.TryParse(strSys, out intSystem);
+    }
+    SystemBiz objSystemBiz = new SystemBiz() { ID = intSystem };
+    UserBiz.SetUmsBaseConnection(strConnection, intSystem, 0, "");
+    SysData.Language = intLanguage;
+    #endregion
+
+
+}
+<body>
+
+    <div id="LogInDiv">
+
+        <form id="myForm" action="~/Login/CheckUser" method="post" onsubmit="return CheckFormValidation()">
+
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" id="Name" name="Name" class="form-control" placeholder="UserName">
+            </div>
+            <div class="form-group">
+                <label>PassWord:</label>
+                <input type="password" id="Password" name="Password" class="form-control" placeholder="PassWord">
+            </div>
+            <div class="form-group">
+                @{
+                    FacultyCol objFacultyCol = new FacultyCol();
+                    List<FacultySimple> lstFaculty = objFacultyCol.Cast<FacultyBiz>().Select(x => x.GetSimple()).ToList();
+                    string strFaculty = Json.Encode(lstFaculty);
+
+                }
+                <input type="hidden" id="lblFacultyCol" name="lblFacultyCol" value='@strFaculty' />
+
+                @if (ViewBag.Faculty != null && ViewBag.Faculty == -1)
+                {
+                    <label>Faculty:</label>
+                    <select class="form-control form-control-sm" id="cmbFaculty" name="cmbFaculty">
+                        @foreach (FacultyBiz objBiz in objFacultyCol)
+                        {
+                            <option value="@objBiz.ID">@objBiz.NameA</option>
+                        }
+                    </select>
+                }
+                else if(ViewBag.Faculty != null)
+                {
+                <input type="hidden" id="lblCurrentFaculty" name="lblCurrentFaculty" value="@ViewBag.Faculty" />
+            }
+            </div>
+            <div class="form-group">
+
+
+                <input type="submit" value="LogIn" onclick="return CheckFormValidation();" class="btn btn-outline-primary" formmethod="post">
+            </div>
+
+
+
+        </form>
+
+    </div>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>

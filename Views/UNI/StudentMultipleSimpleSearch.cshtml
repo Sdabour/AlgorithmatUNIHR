@@ -1,0 +1,44 @@
+﻿
+<div id="myStudentModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="StudentClose" class="close" onclick="  document.getElementById('myStudentModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col-2">
+
+                <input type="text" id="txtStudentName" class="form-control form-control-sm" placeholder="Student Code Or Name" />
+            </div>
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchStudent()" />
+            </div>
+         
+
+        </div>
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Select All" onclick="return SelectAllStudent()" />
+            </div>
+        </div>
+        <div class="form-row">
+            <input type="hidden" id="lblStudent" value="" />
+            <div class="col">
+            <div class="table-responsive" id="tblStudent">
+
+
+            </div>
+                </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="button" class="Button" value="طلبة" onclick="  document.getElementById('myStudentModal').style.display = 'block'"/>
+
+    </div>
+</div>
+<input type="hidden" id="lblSelectedStudent" value="" />
+<div class="table-responsive" id="tblSelectedStudent" style="max-height:90%;scroll-behavior:auto;">
+
+
+</div>

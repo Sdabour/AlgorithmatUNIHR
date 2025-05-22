@@ -1,0 +1,144 @@
+﻿@using SharpVision.HR.HRBusiness;
+@using AlgorithmatMVC.Controllers;
+@using System.Linq;
+
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LocationAssignPoint</title>
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/Location.js"></script>
+    <script type="text/javascript">
+        function FillLst() {
+           
+            let objLocation = new WorkLocation();
+            
+            objLocation.FillLocationLst();
+        }
+        var strType;
+        var strLocation;
+        function GetLocation1( strLocationID, strPointType) {
+            
+            strType = strPointType;
+            strLocation = strLocationID;
+            var x;
+            x = document.getElementById("lblCurrentLocation");
+            if (document.getElementById("rdFromTextLocation").checked)
+            {
+               
+                
+                alert("ok");
+                var strPosition = document.getElementById("txtLocation").value;
+                alert(strPosition);
+                var arrStr = strPosition.split(",");
+                alert(arrStr[0]);
+                let objPosition = {
+                    coords: { latitude: arrStr[0], longitude: arrStr[1] }};
+                alert("OK"+ objPosition.coords.longitude);
+                showPosition1(objPosition);
+            }
+            else {
+                if (navigator.geolocation) {
+
+                    navigator.geolocation.getCurrentPosition(showPosition1);
+
+
+                } else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            }
+        }
+
+        function showPosition1( position) {
+            alert("X"+position.coords.longitude);
+            var x = document.getElementById("lblCurrentLocation");
+           
+            x.innerHTML = strType + " : " + "Latitude: " + position.coords.latitude +
+                "<br>Longitude: " + position.coords.longitude;
+
+
+
+          //  alert(strLocation);
+            var objPoint = { "LocationID": strLocation, "PointType": strType, "PointLat": position.coords.latitude, "PointLong": position.coords.longitude };
+            var vrServiceUrl = "../api/WorkLocationWebController/UploadPoint";
+
+             $.ajax({
+            type: "POST",
+            url: vrServiceUrl,
+            data: JSON.stringify(objPoint),
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (response) {
+                var vrVisitNo = response;
+
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+        
+        }
+        $(document).ready(FillLst
+        )
+    </script>
+</head>
+<body>
+    @{
+        WorkLocationCol objWorkLocationCol = new WorkLocationCol(false);
+        IEnumerable<SingleWorkLocation> objSingleWorkLocationCol = from objWorkLocationBiz in objWorkLocationCol.Cast<WorkLocationBiz>()
+                                                               select new SingleWorkLocation() { ID = objWorkLocationBiz.ID, Desc = objWorkLocationBiz.Desc, CenterLat = objWorkLocationBiz.CenterLat, CenterLong = objWorkLocationBiz.CenterLong, PoingLat = objWorkLocationBiz.PointLat, PointLong = objWorkLocationBiz.PointLong };
+        string strWorkLocation = Json.Encode(objWorkLocationCol);
+
+
+    }
+    <input type="hidden" id="lblWorkLocation" name="lblWorkLocation" value="@strWorkLocation" />
+   
+    <div id="lblCurrentLocation"></div>
+    <div class="container">
+        <div class="row">
+        <div class="col-6">
+            <div class="form-group mb-3 mb-md-2">
+             
+                <div class="custom-control custom-control-right custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" name="rdLocation" id="rdCurrentLocation" checked="">
+                    <label class="custom-control-label position-static" for="rdCurrentLocation">الموقع الحالى</label>
+                </div>
+
+                <div class="custom-control custom-control-right custom-radio custom-control-inline">
+                    <input type="radio" class="custom-control-input" name="rdLocation" id="rdFromTextLocation">
+                    <label class="custom-control-label position-static" for="rdFromTextLocation">موقع من الخريطة</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <input type="text" id="txtLocation" placeholder="Location From Google Map" name="txtLocation" class="form-control">
+        </div>
+        </div>
+    </div>
+   <div><input type="button" value="Try" onclick="GetLocation1(1,'c')" /></div>
+    <div id="dvMain">
+        <div class="col-3">
+            <div class="row">
+                <div class="col">
+
+                    <label>Bavaria</label>
+
+                </div>
+                <div class="col"><input type="button" id="btnCenter" name="btnCenter" onclick="{ }" /></div>
+                <div class="col"><input type="button" id="btnPoint" name="btnPoint" /></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

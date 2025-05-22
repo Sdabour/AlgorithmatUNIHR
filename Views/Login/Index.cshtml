@@ -1,0 +1,111 @@
+﻿
+@model SharpVision.UMS.UMSBusiness.UserBiz
+@using SharpVision.UMS.UMSBusiness
+@using SharpVision.SystemBase;
+@{
+    ViewBag.Title = "Algorithmat";
+    Layout = "";
+}
+<style >
+    #LogInDiv {
+        position: absolute;
+        left: 40%;
+        right: 40%;
+        border: 1px solid #cc;
+        padding: 10px 10px;
+    }
+</style>
+<script type="text/javascript">
+    function CheckFormValidation()
+    {
+
+      
+        if (document.getElementById("Name") == null || document.getElementById("Name").value == "")
+        {
+            alert("Please Enter your user name");
+            return false;
+        }
+        if (document.getElementById("Password") == null || document.getElementById("Password").value == "") {
+            alert("Please Enter your Password");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<h2>Index</h2>
+
+@{
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    int intSystem = 6;
+    string strSys = System.Configuration.ConfigurationManager.AppSettings["SysID"];
+    if (strSys != null)
+    {
+        int.TryParse(strSys, out intSystem);
+    }
+    SystemBiz objSystemBiz = new SystemBiz() { ID = intSystem };
+    UserBiz.SetUmsBaseConnection(strConnection, intSystem, 0, "");
+    SysData.Language = intLanguage;
+    #endregion
+    UMSBranchCol objBranchCol;
+
+    objBranchCol = new UMSBranchCol(false);
+    Session["BranchCol"] = objBranchCol;
+
+}
+<body>
+    <div id="LogInDiv">
+
+        <form id="myForm" action="~/Login/CheckUser" method="post" onsubmit="return CheckFormValidation()">
+
+            <table>
+                <tr>
+                    <td>
+                        User Name
+                    </td>
+                    <td>
+                        @Html.EditorFor(Model => Model.Name)
+                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Pass
+                    </td>
+                    <td>
+                        @Html.EditorFor(Model => Model.Password)
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Branch
+                    </td>
+                    <td>
+                        <select name="cmbBranch" id="cmbBranch">
+                            @foreach (UMSBranchBiz objBiz in objBranchCol)
+                            {
+                                <option  value="@objBiz.ID">@objBiz.Name</option>
+                            }
+                        </select>
+              
+
+                    </td>
+                </tr>
+                <tr><td><input type="submit" value="LogIn" formmethod="post" /></td></tr>
+            </table>
+
+
+
+        </form>
+
+        </div>
+            <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>

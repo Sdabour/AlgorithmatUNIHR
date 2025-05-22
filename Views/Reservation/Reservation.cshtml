@@ -1,0 +1,670 @@
+﻿@using SharpVision.CRM.CRMBusiness
+@using SharpVision.SystemBase
+@using SharpVision.UMS.UMSBusiness
+@using System.Web.Script.Serialization;
+@using SharpVision.Base.BaseBusiness;
+@using SharpVision.HR.HRBusiness;
+@using AlgorithmatMVC.Controllers.CRMController;
+@using System.Web.Http;
+@using System.Linq;
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutNew.cshtml");
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reservation</title>
+    @{
+        #region Test
+        string strUrl = @"";
+         
+
+        
+         
+      
+
+
+        #endregion
+
+        #region IntializeConnection
+        int intLanguage = 0;
+        string strLang = Request["Lang"];
+        string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+        string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+        SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+        UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+        SysData.Language = intLanguage;
+        #endregion
+        #region
+        UnitViewCol _ViewCol = new UnitViewCol(false);
+        UnitTypeCol _TypeCol = new UnitTypeCol(false);
+        UnitUsageTypeCol _UsageTypeCol = new UnitUsageTypeCol(false);
+        FloorCol _FloorCol = FloorBiz.FloorCol;
+        UnitModelCol _ModelCol = new UnitModelCol(false);
+        PeripheralTypeCol _PeripheralCol = new PeripheralTypeCol(false);
+
+        IEnumerable<SerializableBiz> objFloorCol = from objBiz in _FloorCol.Cast<FloorBiz>()
+                                                   select objBiz.SerializableObject;
+        string strSerializeFloor = Json.Encode(objFloorCol);
+        string _TempName;
+        CancelationTypeCol _CancelationTypeCol = new CancelationTypeCol(false);
+
+        ResubmissionTypeCol _ResubmissionTypeCol = new ResubmissionTypeCol();
+        SharpVision.HR.HRBusiness.BranchCol _BranchCol = new SharpVision.HR.HRBusiness.BranchCol();
+        ProjectCol _ProjectCol = new ProjectCol(false);
+        IEnumerable<SerializableBiz> objProjectCol = from objBiz in _ProjectCol.Cast<ProjectBiz>()
+                                                     select objBiz.SerializableObject;
+
+        IEnumerable<SerializableBiz> objBranchCol = from objBiz in _BranchCol.Cast<BranchBiz>()
+                                                    select objBiz.SerializableObject;
+        IEnumerable<SerializableBiz> objResubmissionCol = from objBiz in _ResubmissionTypeCol.Cast<ResubmissionTypeBiz>()
+                                                          select objBiz.SerializableObject;
+
+        string strSerializeProject = Json.Encode(objProjectCol);
+        string strSerializeBranch = Json.Encode(objBranchCol);
+        string strSerializeResubmissionType = Json.Encode(objResubmissionCol);
+        string strCheck;
+        bool _SelectEnabled = true;
+        #endregion
+
+
+    }
+
+    @{
+        #region UMSFunctions
+        int _UMSEditUnit = 104;
+        bool _UMSEditUnitAuthorized = false;
+
+        int _UMSEditUnitPrice = 1157;
+        bool _UMSEditUnitPriceAuthorized = false;
+        int _UMSReadyForDelivery = 898;
+        bool _UMSReadyForDeliveryAuthorized = false;
+        int _UMSAssignToCampaign = 1029;
+        bool _UMSAssignToCampaignAuthorised;
+        int _UMSEditDesc = 1196;
+        bool _UMSEditDescAuthorised = false;
+
+        
+        int _UMSAddComment = 1028;
+        bool _UMSAddCommentAuthorised = false;
+        #endregion
+        #region SetPrivilege
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditUnit) > -1)
+        {
+            _UMSEditUnitAuthorized = true;
+
+        }
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditUnitPrice) > -1)
+        {
+            _UMSEditUnitPriceAuthorized = true;
+
+        }
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSReadyForDelivery) > -1)
+        {
+            _UMSReadyForDeliveryAuthorized = true;
+
+        }
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSAssignToCampaign) > -1)
+        {
+            _UMSAssignToCampaignAuthorised = true;
+
+        }
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditDesc) > -1)
+        {
+            _UMSEditDescAuthorised = true;
+
+        }
+        if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSAddComment) > -1)
+        {
+            _UMSAddCommentAuthorised = true;
+
+        }
+        #endregion
+    }
+    <style>
+       
+        /* The container */
+        label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+       label span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        label:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        label input:checked ~ span {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        label:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        label input:checked ~ span:after {
+            display: block;
+        }
+       
+        /* Style the checkmark/indicator */
+       label span:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        .ListTable tr {
+        height:10px;
+        }
+        td>label 
+        {
+            align-content:center;
+           
+
+            font-size:14px;
+            font-weight:bold;
+        }
+      
+    </style>
+</head>
+<body dir="rtl">
+    <script src="~/Scripts/ControlScript.js"></script>
+     
+    <table align="right">
+        <tr>
+            @using (Html.BeginForm("search", "Reservation", FormMethod.Post))
+            {
+                <td align="right" style="width:40%">
+
+
+                    <div id=dvContract>
+
+                        <div cellpadding="0" cellspacing="0" width="201" height="159">
+                            <!-- MSTableType="layout" -->
+                            <label>
+                                
+                                <button type=submit id="btnSubmit">Search</button><span></span><br>
+                            </label>
+                            <label>
+                                &#1581;&#1580;&#1586; &#1576;&#1583;&#1601;&#1593;&#1575;&#1578;
+                                <input type=checkbox id="chkStatusReservedWithAmount" name="chkStatusReservedWithAmount">
+                                <span></span><br>
+                            </label>
+
+                            <label>
+                                &#1578;&#1593;&#1575;&#1602;&#1583;
+                                <input type=checkbox id="chkStatusContracted" name="chkStatusContracted">
+                                <span></span><br>
+                            </label>
+                            <label>
+                                &#1575;&#1587;&#1578;&#1610;&#1601;&#1575;&#1569;
+                                <input type=checkbox id="chkStatusFinished" name="chkStatusFinished">
+                                <span></span><br>
+                            </label>
+                            <label>
+                                &#1573;&#1604;&#1594;&#1575;&#1569;
+                                <input type=checkbox id="chkStatusCanceled" name="chkStatusCanceled">
+                                <span></span> <br>
+                            </label>
+
+                        </div>
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <span> &#1606;&#1608;&#1593; &#1575;&#1604;&#1575;&#1604;&#1594;&#1575;&#1569; </span></td><td>
+                                    <select name="cmbCancelationType" id="cmbCancelationType">
+                                        <option selected value="0">@_CancelationTypeCol[0].Name</option>
+                                        @foreach (CancelationTypeBiz objTypeBiz in _CancelationTypeCol)
+                                        {
+                                            if (objTypeBiz.ID == 0)
+                                            {
+                                                continue;
+                                            }
+                                            <option value=@objTypeBiz.ID>@objTypeBiz.Name</option>
+
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div class="circle-item">
+
+                                        <label>
+                                            &#1575;&#1604;&#1603;&#1604;<input type=radio id="rdFreeAll" checked name="rdFree" value="0">
+                                            &nbsp;&nbsp; &nbsp;<span></span>
+                                        </label>
+                                        </div>
+</td>
+                                <td>
+
+                                    <div class="circle-item">
+
+                                        <label>
+                                            &#1605;&#1580;&#1575;&#1606;&#1609;<input type=radio id="rdFreeOnly" name="rdFree" value="2">
+                                            <span></span>
+                                        </label>
+                                        </div>
+</td>
+                                <td>
+                                 
+
+                                        <div class="circle-item">
+
+                                            <label>
+                                                &#1594;&#1610;&#1585; &#1575;&#1604;&#1605;&#1580;&#1575;&#1606;&#1610;&#1577;
+                                                <input type=radio id="rdFreeNotOnly" name="rdFree" value="1">
+                                                <span></span>
+                                            </label>
+                                        </div>
+
+ 
+</td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><label> &#1575;&#1604;&#1603;&#1604;<input type="radio" id="rdNewAll" name="rdNew" checked value="0">
+                                  <span></span>  </label>
+                                    </td>
+                                <td>   </td>
+                                <td><label> &#1580;&#1583;&#1610;&#1583;&nbsp;  <input type=radio id="rdNewOnlyNew" name="rdNew" value="2"><span></span></label></td>
+                                <td>   </td>
+                                <td><label> &#1575;&#1587;&#1578;&#1576;&#1583;&#1575;&#1604;<input type=radio id=rdNewOnlyNot name="rdNew" value="1"><span></span></label></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><label> &#1575;&#1604;&#1603;&#1604;
+                                    <input type="radio" id="rdDealAll" name="rdDeal" checked value="0"> <span></span></label></td>
+                                <td>   </td>
+                                <td><label> &#1605;&#1578;&#1575;&#1581;&#1577;&nbsp; <input type=radio id="rdDealAvailable" name="rdDeal" value="1"><span></span></label></td>
+                                <td>   </td>
+                                <td><label> &#1605;&#1608;&#1602;&#1608;&#1601;&#1577;
+                                    <input type=radio id=rdDealNotAvailable name="rdDeal" value="2">
+                                    <span></span></label></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><label> &#1575;&#1604;&#1603;&#1604;<input type="radio" id="rdSoldAll" name="rdSold" checked value="0"> 
+<span></span></label>
+</td>
+                                <td>   </td>
+                                <td><label> &#1578;&#1605; &#1575;&#1604;&#1576;&#1610;&#1593; <input type=radio id="rdSoldOnlySold" name="rdSold" value="1"><span></span></label></td>
+                                <td>   </td>
+                                <td><label>
+                                    &#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1576;&#1610;&#1593;<input type=radio id=rdSoldOnlyNotSold name="rdSold" value="2"><span>
+                                              </span></label></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><label> &#1575;&#1604;&#1603;&#1604;<input type="radio" id="rdPayBackAll" name="rdPayBack" checked value="0"><span></span></label> </td>
+                                <td>   </td>
+                                <td><label> &#1578;&#1605; &#1575;&#1604;&#1585;&#1583; <input type=radio id="rdPayBackPaid" name="rdPayBack" value="1">
+                                    <span></span></label>
+                                    </td>
+                                <td>   </td>
+                                <td><label> &#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1585;&#1583;
+                                <input type=radio id=rdPayBackNotPaid name="rdPayBack" value="2"> <span></span> </label></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="dvReservation">
+                        <table width="410">
+                            <tr>
+                                <td>
+                                    <span>&#1605;&#1604;&#1575;&#1581;&#1592;&#1577; &#1593;&#1604;&#1609; &#1575;&#1604;&#1581;&#1580;&#1586;</span>
+                                    <input type=text id="txtReservationNote" name="txtReservationNote" size="42" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1578;&#1593;&#1575;&#1602;&#1583; &#1605;&#1606; </span>
+                                    <input type=date id="dtContractFrom" name="dtContractFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtContractTo" name="dtContractTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1581;&#1580;&#1586; &#1605;&#1606;</span>
+                                    <input type=date id="dtReservationFrom" name="dtReservationFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtReservationTo" name="dtReservationTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1581;&#1575;&#1604;&#1577; &#1605;&#1606;</span>
+                                    <input type=date id="dtStatusFrom" name="dtStatusFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtStatusTo" name="dtStatusTo" />
+
+                                </td>
+
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleBranch" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>&#1601;&#1585;&#1593;</td></tr>
+                                            <tr><td>
+                                                    <input type="hidden" id="BranchCheckedCol" name="BranchCheckedCol" value="" />
+                                                </td></tr>
+                                            <tr>
+                                                <td>
+                  
+                                                    <input  type="text"
+                                                           onchange="OnTxtFilterChanged('txtBranchFilter','tblBranch','chkBranch','BranchCheckedCol');"
+                                                           id="txtBranchFilter" style="width:100%" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table class="ListTable" style="height: 90%" id="tblBranch" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeBranch" SelectedObjectCol="@strSerializeBranch">
+                                                @foreach (BranchBiz objBranch in _BranchCol)
+                                                {
+                                                    _TempName = "chkBranch" + objBranch.ID.ToString();
+                                                    <tr>
+                                                        <td>
+
+                                                            <label>
+                                                                @objBranch.Name
+                                                                <input id="@_TempName"
+                                                                       type=checkbox onchange="OnCheckChanged('@_TempName','tblBranch','@objBranch.ID','BranchCheckedCol')" />
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <table width="267">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                &#1603;&#1608;&#1583;&nbsp; &#1575;&#1604;&#1608;&#1581;&#1583;&#1577;
+                                            </td>
+                                            <td >
+                                                <input type="text" name="txtUnitCode" id="txtUnitCode" size="23">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleProject" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="ProjectCheckedCol" name="ProjectCheckedCol" value="" />
+                                                    <input   type="text"
+                                                           onchange="OnTxtFilterChanged('txtProjectFilter','tblProject','chkProject','ProjectCheckedCol');"
+                                                           id="txtProjectFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table class="ListTable" style="height: 90%" id="tblProject" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeProject" SelectedObjectCol="@strSerializeProject">
+                                                @foreach (ProjectBiz objProject in _ProjectCol)
+                                                {
+                                                    _TempName = "chkProject" + objProject.ID.ToString();
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                @objProject.Name
+                                                                <input id="@_TempName"
+                                                                       type=checkbox onchange="OnCheckChanged('@_TempName','tblProject','@objProject.ID','ProjectCheckedCol')" />
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+
+                                                }
+                                            </table>
+
+
+
+
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleResubmissionType" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>ResubmissionType</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1576;&#1610;&#1606;</span><input id="dtStartResubmission" name="dtStartResubmission" type='Date' />
+                                                            </td>
+                                                            <td><span>&#1608;</span><input id="dtEndResubmission" name="dtEndResubmission" type="date" /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="ResubmissionTypeCheckedCol" name="ResubmissionTypeCheckedCol" value="" />
+                                                    <input style=" height:22" type="text"
+                                                           onchange="OnTxtFilterChanged('txtResubmissionTypeFilter','tblResubmissionType','chkResubmissionType','ResubmissionTypeCheckedCol');"
+                                                           id="txtResubmissionTypeFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table><br>
+                                        <div style=" height: 274px;background-color:ghostwhite;overflow-x:auto" class="panel-body">
+
+                                            <table class="ListTable" style="height: 90%" id="tblResubmissionType" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeResubmissionType" SelectedObjectCol="@strSerializeResubmissionType">
+                                                @foreach (ResubmissionTypeBiz objResubmissionType in _ResubmissionTypeCol)
+                                                {
+                                                    _TempName = "chkResubmissionType" + objResubmissionType.ID.ToString();
+                                                    <tr>
+                                                        <td>
+                                                            <label>
+                                                                @objResubmissionType.Name
+                                                                <input id="@_TempName"
+                                                                       type=checkbox onchange="OnCheckChanged('@_TempName','tblResubmissionType','@objResubmissionType.ID','ResubmissionTypeCheckedCol')" />
+
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </table>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            }
+            <td align="center" style="width:40%;vertical-align:top;">
+
+
+
+                <div  dir="rtl" style="overflow: scroll;max-height:1500px ; width: 100%;vertical-align:top" >
+
+                    @if (ViewBag.ReservationCol != null)
+                    {
+                        using (Html.BeginForm("Search", "Reservation", FormMethod.Post))
+                        {
+                    <script src="~/Scripts/ControlScript.js"></script>
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="chkSelectAllUnit" onchange="ChkChanged('chkSelectAllUnit', 'chkReservation', 'ReservationCheckCol')" />
+                            </td>
+                            @if (_UMSAddCommentAuthorised)
+                                    {
+                                    <td>
+                                        <input type="submit" formaction="ReservationComment" value="Comment" />
+                                    </td>
+                                    }
+                        </tr>
+                    </table>
+
+                    <table style="vertical-align:top;" >
+                        <thead>
+                            <tr>
+                                @if (_SelectEnabled)
+                                    {
+                                    <th>
+
+                                    </th>
+                                    }
+                                <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</span></th>
+                                <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1593;&#1605;&#1610;&#1604;</span></th>
+                                <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1581;&#1575;&#1604;&#1577;</span></th>
+                                <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1605;&#1588;&#1585;&#1608;&#1593;</span></th>
+                                <th align="center"><span lang="ar-eg">&#1575;&#1604;&#1601;&#1585;&#1593;</span></th>
+                                <th align="center">Sales</th>
+                                <th align="center">User Ins</th>
+                                <th align="center">Insert Date</th>
+                                <th align="center">User Update</th>
+                                <th align="center">Update Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{string strTemp = "";}
+                            @foreach (ReservationBiz objBiz in ViewBag.ReservationCol)
+                                {
+                                <tr>
+                                    @if (_SelectEnabled)
+                                        {
+                                            strCheck = "chkReservation" + objBiz.ID;
+                                        <td><input type="checkbox" name="@strCheck" id="@strCheck" /></td>
+                                        }
+                                    <td align="center">@objBiz.DirectUnitCodeStr</td>
+                                    <td>@objBiz.DirectCustomerStr;</td>
+                                    <td>@objBiz.DirectStatusStr</td>
+                                    <td>@objBiz.DirectProjectName</td>
+                                    <td>@objBiz.BranchBiz.Name</td>
+                                    <td>@objBiz.DirectSalesStr</td>
+                                    @{
+                                            strTemp = objBiz.UserIns.EmployeeBiz.ID == 0 ? objBiz.UserIns.FullName : objBiz.UserIns.EmployeeBiz.Name;
+                                    }
+                                    <td>@strTemp</td>
+                                    <td>@objBiz.TimeIns.ToString("yyyy-MM-dd hh:mm ")</td>
+                                    @{
+                                            strTemp = objBiz.UserUpd.EmployeeBiz.ID == 0 ? objBiz.UserUpd.FullName : objBiz.UserUpd.EmployeeBiz.Name;
+                                    }
+                                    <td>@strTemp</td>
+                                    <td>@objBiz.TimeUpd.ToString("yyyy-MM-dd hh:mm")</td>
+                                </tr>
+                                            }
+
+                        </tbody>
+                    </table>
+                    <input type="hidden" id="ReservationCheckCol" name="ReservationCheckCol" value="@ViewBag.ReservationIDs" />
+
+                                                }
+                                            }
+
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+
+
+
+
+
+
+
+</html>

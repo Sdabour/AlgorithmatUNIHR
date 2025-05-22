@@ -1,0 +1,228 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+@using SharpVision.HR.HRBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@using System.Linq;
+@using AlgorithmatMVC.Controllers.HRController;
+@using System.Collections;
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/templatemo-style.css" rel="stylesheet" />
+<html>
+<head>
+
+
+    <title>البحث فى جمل التقييمات</title>
+    @{
+        #region
+
+        EstimationStatementCol _StatementCol;
+        if (Session["EstimationStatementCol"] != null)
+        {
+            _StatementCol = (EstimationStatementCol)Session["EstimationStatementCol"];
+        }
+        else
+        {
+            _StatementCol = new EstimationStatementCol();
+        }
+        #endregion
+
+    }
+    <link href="~/Content/Modal.css" rel="stylesheet" />
+    <script src="~/Scripts/ApplicantControl.js"></script>
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/Applicant.js"></script>
+    <script type="text/javascript">
+        $(document).ready(FillApplicant
+        )
+
+    </script>
+    <style>
+
+        /* The container */
+        label {
+            display: block;
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            label input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+            /* Create a custom checkbox */
+            label span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 25px;
+                width: 25px;
+                background-color: #eee;
+            }
+
+            /* On mouse-over, add a grey background color */
+            label:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            label input:checked ~ span {
+                background-color: #2196F3;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            label:after {
+                content: "";
+                position: absolute;
+                display: none;
+            }
+
+            /* Show the checkmark when checked */
+            label input:checked ~ span:after {
+                display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            label span:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+
+        .ListTable tr {
+            height: 10px;
+        }
+
+        .ListTable td {
+            padding: 5px;
+        }
+
+        .container td {
+            padding: 10px;
+        }
+
+        td > label {
+            align-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .container {
+        }
+    </style>
+</head>
+<body>
+    <div dir="auto" style="align-items:center;max-width:100%;">
+
+
+      
+
+        <table style="max-width:100%;height:auto;" dir="rtl" class="table-responsive">
+            <tr>
+                <td>
+                    <table style="max-width:100%;height:auto;" dir="rtl" class="container">
+                        <tr>
+                            <td>
+                              
+                                            <label id="lblStatementDesc" name="lblStatementDesc">
+                                                البحث فى جمل التقييمات
+                                            </label>
+                                        
+                            </td>
+                        
+
+                        </tr>
+                       
+                    </table>
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    <table class="ListTable" style="max-width:100%;height:auto">
+                 
+                        <tr>
+                            <td>
+                                @using (Html.BeginForm("", "", FormMethod.Post))
+                                {
+                                   <div>
+                                       <input type="submit" class="btn btn-success" formaction=@Url.Content("/EstimationStatementSearch/ReturnWithResult") value="عودة" />
+                                       </div> 
+<table id="tblStatement" name="tblStatement" class="table-responsive" table style="max-width:100%;height:auto">
+                                        @{
+                                            string strRdName = "rdSelected";
+                                            string strRdID;
+                                            int intFirstStatement = 0;
+                                            if (_StatementCol.Count > 0)
+                                            {
+                                                intFirstStatement = _StatementCol[0].ID;
+                                            }
+                                        }
+                                        @foreach (EstimationStatementBiz objBiz in _StatementCol)
+                                        {
+                                            <tr>
+
+                                                <td>
+                                                    <div class="form
+                                                         group pt-2">
+
+                                                        <div class="form-check">
+                                                            <label class="form-check-label">
+                                                                @{string strCheck = objBiz.ID != intFirstStatement ? "" : @"checked=""""";
+                                                                    string strSpanClass = objBiz.ID != intFirstStatement ? "" : @"class=""checked""";
+                                                                    strRdID = strRdName + objBiz.ID.ToString();
+                                                                }
+                                                                <span @strSpanClass>
+
+                                                                    <input type="radio" class="form-check-input-styled" name="@strRdName" id="@strRdID" value="@objBiz.ID" @strCheck data-fouc="">
+                                                                </span>
+
+                                                            </label>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                </td>
+                                                <td>@objBiz.ID.ToString()</td>
+                                                <td>@objBiz.EstimationStatementDate.ToString("yyyy-MM-dd")</td>
+                                                <td>@objBiz.EstimationStatementDesc</td>
+                                                <td>@objBiz.EstimationStatementTypeBiz.Name</td>
+
+                                            </tr>
+                                                                    }
+                                    </table>
+                                                                    }
+                                </td>
+                        </tr>
+                    </table>
+
+                </td>
+
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

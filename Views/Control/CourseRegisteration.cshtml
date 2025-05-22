@@ -1,0 +1,76 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+
+@{
+    ViewBag.Title = "CourseRegisteration";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/CourseJS.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<h2>CourseRegisteration</h2>
+<div class="form-row">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strSemester = Json.Encode(objSemester);
+        }
+        <input type="hidden" id="lblSemester" value="@strSemester" />
+        <label id="lblSemesterDesc" style="background-color:honeydew">@objSemester.Desc</label>
+    </div>
+</div>
+<br />
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+    </div>
+</div>
+<br />
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">طلبة جدد</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+        <div class="form-row">
+            <div class="col-6"></div>
+            <div class="col-2">
+                <input type="button" value="Register"  onclick="UploadRegisterationStudent()"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col" style="max-height:95%;">
+                @{ Html.RenderPartial("../UNI/StudentMultipleSimpleSearch");}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">طلبة مسجلين</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+       <div class="table-responsive" id="dvRegisteredStudent">
+
+       </div>
+    </div>
+</div>

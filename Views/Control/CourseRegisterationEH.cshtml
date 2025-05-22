@@ -1,0 +1,103 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@using SharpVision.COMMON.COMMONBusiness;
+@using SharpVision.Base.BaseBusiness;
+@{
+    ViewBag.Title = "CourseRegisterationEH";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+
+ <link href="~/Content/Modal.css" rel="stylesheet" />
+
+ <script src="~/Scripts/SerializableSimple.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/CourseJS.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+ 
+<div class="form-row">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strSemester = Json.Encode(objSemester);
+        }
+        <input type="hidden" id="lblSemester" value="@strSemester" />
+        <label id="lblSemesterDesc" style="background-color:honeydew">@objSemester.Desc</label>
+    </div>
+</div>
+<br />
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+    </div>
+</div>
+<br />
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">طلبة جدد</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+
+
+        <div class="form-row">
+            <div class="col" style="max-height:95%;">
+                @{ Html.RenderPartial("../UNI/StudentSimpleSearch");}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-1">NameA</div>
+            <div class="col-2">
+                <input type="text" id="txtEQNameA" placeholder="NameA" class="form-control" />
+            </div>
+            <div class="col-1">NameE</div>
+            <div class="col-2">
+                <input type="text" id="txtEQNameE" placeholder="NameE" class="form-control" />
+            </div>
+            <div class="col-1">FinalDegree</div>
+            <div class="col-2">
+                <input type="number" id="txtFinalValue" placeholder="FinalDegree" class="form-control" />
+            </div>
+        </div><br />
+        <div class="form-row">
+            <div class="col-2"><input type="button" value="جامعة" onclick="GetSearchModal('lblArrUniversty','lblSelectedUniversty', 'lblUniversty')"/></div>
+            @{ 
+                UniversityCol objUniverstyCol = new UniversityCol();
+                List<SerializableBiz> lstUni = objUniverstyCol.Cast<UniversityBiz>().Select(x => new SerializableBiz() { ID = x.ID, Code = x.Code, Name = x.NameA }).ToList();
+                string strUni = Json.Encode(lstUni);
+            }
+           <br />
+        <div class="col-10">
+                <input type="hidden" id="lblArrUniversty" value="@strUni" />
+                <input type="hidden" id="lblSelectedUniversty" />
+                <label id="lblUniversty" style="background-color:lavender;text-align:center;width:100%;"></label>
+            </div>
+        </div><br/>
+        <div class="form-row">
+            <div class="col-6"></div>
+            <div class="col-2">
+                <input type="button" value="معادلة" onclick="UploadRegisterationEQ()" />
+            </div>
+        </div><br />
+        <div id="mySerialModal" class="modal" tabindex="-1">
+            <div class="modal-content" >
+                <span id="StudentClose" class="close" onclick="  document.getElementById('mySerialModal').style.display = 'none'">&times;</span>
+                <div class="content" id="dvSerialModalContent">
+
+                </div>
+                </div>
+        </div>
+            </div>
+        </div>
+
+
+

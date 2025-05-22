@@ -1,0 +1,122 @@
+﻿
+@using SharpVision.HR.HRBusiness;
+@using System.Linq;
+@using System.Collections;
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HandShakeDisplay</title>
+</head>
+<body>
+
+    <div>
+        @{
+            ApplicantHandShakeCol objHandSHakeCol = new ApplicantHandShakeCol(false);
+            if (Session["HandShakeCol"] != null)
+            { objHandSHakeCol = ((ApplicantHandShakeCol)Session["HandShakeCol"]); }
+            string strURL = "";
+            int intApp = 0;
+            if (ViewBag.AppID != null)
+            {
+                intApp = (int)ViewBag.AppID;
+
+            }
+            List<ApplicantHandShakeBiz> vrCol = (from objHandShake in objHandSHakeCol.Cast<ApplicantHandShakeBiz>()
+                                                 where objHandShake.ApplicantID == intApp
+                                                 orderby objHandShake.Time descending
+
+                                                 select objHandShake).ToList();
+        }
+        @if (vrCol.Count > 0)
+        {
+        <div class="form-row">
+            <div class="col-2">@vrCol[0].ApplicantCode</div>
+            <div class="col-1"></div>
+            <div class="col-3">@vrCol[0].ApplicantFirstName</div>
+            <div class="col-3">@vrCol[0].JobNatureNameA</div>
+        </div>
+        }
+        <div class="content" style="max-height:500px;">
+            <div class="card border-dark">
+                <div class="card-header bg-dark text-white header-elements-inline">
+                    <h5 class="card-title"><i class="icon-user-plus mr-2"></i>HandShake</h5>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mycustom">
+
+                    
+                        <div class="table-responsive table table-bordered table table-hover table-striped">
+                            <div class="table-responsive table table-bordered table table-hover table-striped">
+                                <table class="table">
+                                    <thead class="thead-gray">
+
+                                    <thead class="thead-gray">
+                                        <tr>
+                                            <th>تاريخ</th>
+                                            <th>وقت(بداية)</th>
+                                            <th>تاريخ</th>
+                                            <th>وقت(نهاية)</th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @{
+
+                                            foreach (ApplicantHandShakeBiz objBiz in vrCol)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @objBiz.TimIns.ToString("yyyy-MM-dd")
+                                                    </td>
+                                                    <td>
+                                                        @objBiz.TimIns.ToString("HH:mm")
+                                                    </td>
+                                                    <td>
+                                                        @objBiz.Time.ToString("MM-dd")
+                                                    </td>
+                                                    <td>
+                                                        @objBiz.Time.ToString("HH:mm")
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            strURL = "/LocationAssignPoint/DisplayLocationOnMap?Long=" + objBiz.Long + "&Lat=" + objBiz.Lat+"&AppName="+objBiz.ApplicantFirstName;
+                                                        }
+                                                        @if (objBiz.Long != "0")
+                                                        {<a href="@strURL" target="_blank" class="media-title font-weight-semibold\"> عرض</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Log Out</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                    </div>
+
+                </div>
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

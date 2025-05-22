@@ -1,0 +1,228 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+
+@{
+    ViewBag.Title = "RegisterationSearch";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+
+<h2>البحث فى التسجيل</h2>
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/CourseJS.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+
+<style>
+    .dropbtn {
+        background-color: #ddd;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ddd;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #ddd;
+    }
+</style>
+<div class="form-row">
+
+    <div class="col-3">
+
+        <select id="cmbSemester" class="form-control form-control-sm">
+            @{
+                int intIndex = 0;
+                SemesterCol objSemesterCol = new SemesterCol(false);
+            }
+            @foreach (SemesterBiz objSemester in objSemesterCol)
+            {
+                <option value="@objSemester.ID">@objSemester.Desc</option>
+                intIndex++;
+            }
+        </select>
+    </div>
+    <div class="col-3">
+
+        <select id="cmbLevel" class="form-control form-control-sm">
+            @{
+                 intIndex = 0;
+                int intFaculty = 0;
+                string strFaculty = "";
+                if (Session["CurrentFaculty"] != null)
+                {
+                    strFaculty = Session["CurrentFaculty"].ToString();
+                    if (strFaculty != null && strFaculty != "")
+                    {
+                        intFaculty = Json.Decode<FacultySimple>(strFaculty).ID;
+                    }
+                }
+                LevelCol objLevelCol = new LevelCol(false, intFaculty);
+            }
+            @foreach (LevelBiz objLevel in objLevelCol)
+            {
+                <option value="@objLevel.Level">@objLevel.LevelDesc</option>
+                intIndex++;
+            }
+        </select>
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchRegisteration()" />
+    </div>
+</div><br />
+<div class="form-row">
+
+</div>
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../UNI/StudentSimpleSearch");}
+
+    </div>
+</div><br />
+      <div class="form-row">
+    <div class="col-2">مستوى الكورس</div>
+          <div class="col-3">
+
+              <select id="cmbCourseLevel" class="form-control form-control-sm">
+                   
+                  @foreach (LevelBiz objLevel in objLevelCol)
+                  {
+                      <option value="@objLevel.Level">@objLevel.LevelDesc</option>
+                      intIndex++;
+                  }
+              </select>
+          </div>
+      </div><br />
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../Control/CourseSimpleSearch");}
+         
+    </div>
+</div><br />
+      <div class="form-row">
+          <div class="col-1">Posted</div>
+          <div class="col-1"><input type="checkbox" id="chkPosted" name="chkPosted" /></div>
+          <div class="col-2">غير مكتمل المتطلبات</div>
+          <div class="col-1"><input type="checkbox" id="chkPreInc" name="chkPreInc" /></div>
+          <div class="col-2">Selected</div>
+          <div class="col-1"><input type="checkbox" id="chkSelected" name="chkSelected" /></div>
+          <div class="col-2">تحميل المتطلبات</div>
+          <div class="col-1"><input type="checkbox" id="chkIncludePre" name="chkIncludePre" /></div>
+      </div>
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">التسجيل</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="form-row">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="return false"></button>
+                <div class="dropdown-content">
+                    <input type="button" class="dropbtn" value="طباعة" onclick="OnRegisterationSearchDownloadClick(0)" /><br />
+                    <input type="button" class="dropbtn" value="طباعة بالكورس" onclick="OnRegisterationSearchDownloadClick(2)" /><br />
+                    <input type="button" class="dropbtn" value="Seat No" onclick=" OnRegisterationSearchDownloadClick(4)" /><br />
+                </div>
+            </div>
+
+        </div>
+        <div id="dvRegisteration" class="table-responsive table table-bordered table table-hover table-striped" style="max-height:90%;max-width:100%; text-align:center;scroll-behavior:auto;height:auto;">
+
+        </div>
+    </div>
+</div>
+<div id="myPrequisitModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="PrequisitClose" class="close" onclick="  document.getElementById('myPrequisitModal').style.display = 'none'">&times;</span>
+
+        <div class="form-row">
+            <div class="col-4">
+                <label id="lblBaseStudentCode" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            <div class="col-6">
+                <label id="lblBaseStudentName" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-2">
+                <label id="lblBaseCourseCode" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            <div class="col-2">
+                <label id="lblBaseCourseNameA" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            
+            <div class="col-2">
+                <label id="lblBaseCourseGPA" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            <div class="col-2">
+                <label id="lblBaseCourseVerbalGPA" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-3">
+                <label  style="text-align:center;background-color:aliceblue;">عدد متطلبات الكورس</label>
+            </div>
+            <div class="col-1">
+                <label id="lblBaseCoursePrequisitCount" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            <div class="col-3">
+                <label style="text-align:center;background-color:aliceblue;">عدد الكورسات المجتازة</label>
+            </div>
+            <div class="col-1">
+                <label id="lblBaseCoursePassedPrequisitCount" style="text-align:center;background-color:aliceblue;"></label>
+            </div>
+            
+        </div>
+        <div class="table-responsive" id="dvPrequisit">
+            <table class="table" id="tblPrequisit">
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+

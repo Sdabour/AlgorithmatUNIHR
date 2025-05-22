@@ -1,0 +1,241 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UNI/Group.js"></script>
+<script src="~/Scripts/UNI/GroupJS.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/TeacherType.js"></script>
+<script src="~/Scripts/UNI/Teacher.js"></script>
+<script src="~/Scripts/UNI/TeacherJ.js"></script>
+<script src="~/Scripts/UNI/LectureType.js"></script>
+<script src="~/Scripts/UNI/Lecture.js"></script>
+<script src="~/Scripts/UNI/LectureJS.js"></script>
+
+<div class="form-row" id="rowSemester">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strTemp = Json.Encode(objSemester);
+        }
+        @{
+
+            string strAllCoursesAuthorized = "0";
+
+
+            int intFaculty = 0;
+            string strFaculty = "";
+            FacultySimple objFaculty = new FacultySimple();
+            if (Session["CurrentFaculty"] != null)
+            {
+                strFaculty = Session["CurrentFaculty"].ToString();
+                objFaculty = Json.Decode<FacultySimple>(strFaculty);
+            }
+
+            intFaculty = objFaculty.ID;
+            CourseCol objRegisterationCouseCol = CourseCol.GetRegisteredCourseCol(objSemester.ID, intFaculty);
+
+            List<int> lstIDs = objRegisterationCouseCol.Cast<CourseBiz>().Select(x => x.ID).ToList();
+            string strAssignedCourse = Json.Encode(lstIDs);
+
+
+        }
+        <input type="hidden" id="lblAllCoursesAuthorized" value=" @strAllCoursesAuthorized" />
+        <input type="hidden" id="lblAssignedCourse" value=" @strAssignedCourse" />
+        <input type="hidden" id="lblSemester" value=" @strTemp" />
+        <label style="background-color:azure;text-align:center;">@objSemester.Desc</label>
+    </div>
+</div>
+<div id="myLectureAddModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="LectureAddClose" class="close" onclick="  document.getElementById('myLectureAddModal').style.display = 'none'">&times;</span>
+        <div class="row pt-1" id="rowMainLectureData">
+
+            <div class="col-2">
+                @{
+                    LectureTypeCol objTypeCol = new LectureTypeCol(false);
+                }
+
+                <input type="time" class="form-control form-control-sm" id="dtStartTime" />
+            </div>
+            <div class="col-2">
+                <input type="time" class="form-control form-control-sm" id="dtEndTime" />
+            </div>
+            <div class="col-1">نوع</div>
+            <div class="col-3">
+                <select class="form-control form-control-sm" id="cmbLectureType">
+                    @foreach (LectureTypeBiz objTypeBiz in objTypeCol)
+                    {
+                        <option value="@objTypeBiz.ID">@objTypeBiz.NameA</option>
+                    }
+                </select>
+            </div>
+            <div class="col-2">
+
+                <input type="button" id="btnSave" class="success" value="Save" onclick="SaveLecture(); return false;" />
+            </div>
+        </div>            </div></div>
+        <div class="row pt-1" id="rowEmployee">
+            <div class="col">
+
+                @{
+
+
+
+                    Html.RenderPartial("../uni/TeacherSimpleSearch");
+                }
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+            </div>
+        </div>
+        <div class="form-row" id="RowGroup">
+            <div class="col-1">
+                <button onclick="SearchRegisterationGroup(); ShowGroupModal();" class="form-control form-control-sm">Section </button>
+            </div>
+        </div>
+        <input type="hidden" id="lblRegIDs" value="[]">
+        <input type="hidden" id="lblSelectedRegIDs" value="[]">
+
+        <div class="form-row" id="RowGroup1">
+            <input type="hidden" id="lblSelectedGroup" />
+            <div class="col-2">
+                <label id="lblSelectedGroupCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+            </div>
+            <div class="col-2">
+                <label id="lblSelectedGroupCourseNameA" style="background-color:gainsboro;align-content:center;"></label>
+            </div>
+            <div class="col-2">
+                <label id="lblSelectedGroupCourseNameE" style="background-color:gainsboro;align-content:center;"></label>
+            </div>
+            <div class="col-2">
+                <label id="lblSelectedGroupNameA" style="background-color:gainsboro;align-content:center;"></label>
+            </div>
+            
+
+        </div>
+        <div id="myRegisterationGroupModal" class="modal" tabindex="-1">
+            <div class="modal-content">
+                <span id="RegisterationGroupClose" class="close" onclick="  document.getElementById('myRegisterationGroupModal').style.display = 'none'">&times;</span>
+                <div class="form-row">
+
+                    <div class="col-2">
+
+                        <input type="text" id="txtRegisterationGroupName" class="form-control form-control-sm" placeholder="RegisterationGroup Code Or Name" />
+                    </div>
+
+
+                </div>
+                <div class="table-responsive" id="tblRegisterationGroup">
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row" id="rowOPenLectureSearchModal">
+            <div class="col-2">
+                <button class="success" onclick="  document.getElementById('myLectureAddModal').style.display = 'block'">New Lecture</button>
+            </div>
+            <div class="col-2">
+
+            </div>
+            <div class="col-2">
+                <button class="success" onclick="  document.getElementById('myLectureSearchModal').style.display = 'block'">Old</button>
+            </div>
+            <div class="col-4">
+                @{
+                    string strGUID = "No Data";
+                    string strQR = SharpVision.SystemBase.SysUtility.GenerateBarcode(strGUID);
+                    string imgQRURL = string.Format("data:image/jpg;base64,{0}", strQR);
+                }
+                <img id="imgQR" src="@imgQRURL" style="height:200px;width:200px" class="card" />
+            </div>
+        </div>
+        <div id="myLectureSearchModal" class="modal" tabindex="-1">
+            <div class="modal-content">
+                <span id="LectureSearchClose" class="close" onclick="  document.getElementById('myLectureSearchModal').style.display = 'none'">&times;</span>
+                <div class="form-row">
+
+              <input type="button"  onclick="SearchLecture()" value="Search"/>
+
+
+                </div>
+                <div class="table-responsive" id="tblLectureSearch">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-row" id="SelectedLecture1">
+
+            <div class="col-2">
+                <input type="hidden" id="lblSelectedLecture" value="" />
+                <label id="lblSelectedLectureCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+            </div>
+            <div class="col-4">
+
+                <label id="lblSelectedLectureCourseName" style="background-color:gainsboro;align-content:center;"></label>
+
+            </div>
+            <div class="col-2">
+
+                <label id="lblSelectedLectureDate" style="background-color:gainsboro;align-content:center;"></label>
+
+            </div>
+
+        </div>
+        <div class="form-row">
+            
+
+        </div>
+        <div class="form-row" id="rowSelectAll">
+
+            <div class="col-2">
+                <input type="checkbox" id="chkSelectAll" class="checkbox" onchange="CheckAllLectureRegisteration();" />
+                check All
+            </div>
+           
+            <div class="col-6"><input type="text" class="form-control form-control-sm" id="txtFilter" /></div>
+            <div class="col-2"><button class="form-control form-control-sm" onclick="return UploadGroupStudent();">حفظ الحضور</button></div>
+            </div>
+
+
+        <div class="table-responsive" id="tblReg">
+
+        </div>
+
+        <link href="~/Content/Modal.css" rel="stylesheet" />
+        <script src="~/Scripts/UMS/User.js"></script>
+        <script src="~/wwwroot/js/main/jquery.min.js"></script>
+        <script src="~/Scripts/UNI/Course.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+
+
+        <script src="~/Scripts/UNI/Semester.js"></script>
+        <script src="~/Scripts/Applicant.js"></script>
+        <script src="~/Scripts/UNI/Regestration.js"></script>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                
+
+                RefreshQR();
+                //setTimeout(RefreshQR,)
+            });
+        </script>

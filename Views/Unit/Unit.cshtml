@@ -1,0 +1,769 @@
+﻿@using SharpVision.CRM.CRMBusiness
+@using SharpVision.SystemBase
+@using SharpVision.UMS.UMSBusiness
+@using System.Web.Script.Serialization
+@using SharpVision.Base.BaseBusiness;
+@using System.Linq;
+@{
+    ViewBag.Title = "Unit";
+
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link href=@Url.Content("~/Content/UnitStyle.css") rel="stylesheet" />
+
+@{
+
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+    SysData.Language = intLanguage;
+    #endregion
+    #region
+    UnitViewCol _ViewCol = new UnitViewCol(false);
+    UnitTypeCol _TypeCol = new UnitTypeCol(false);
+    UnitUsageTypeCol _UsageTypeCol = new UnitUsageTypeCol(false);
+    FloorCol _FloorCol = FloorBiz.FloorCol;
+    if (_FloorCol.Count > 0 && _FloorCol[0].ID == 0)
+    { _FloorCol.RemoveAt(0); }
+    UnitModelCol _ModelCol = new UnitModelCol(false);
+    PeripheralTypeCol _PeripheralCol = new PeripheralTypeCol(false);
+
+    IEnumerable<SerializableBiz> objFloorCol = from objBiz in _FloorCol.Cast<FloorBiz>()
+                                               select objBiz.SerializableObject;
+    string strSerializeFloor = Json.Encode(objFloorCol);
+    string _TempName;
+    ProjectCol _ProjectCol = new ProjectCol(false);
+    if (_ProjectCol.Count > 0 && _ProjectCol[0].ID == 0)
+    {
+        _ProjectCol.RemoveAt(0);
+    }
+
+    IEnumerable<SerializableBiz> objProjectCol = from objBiz in _ProjectCol.Cast<ProjectBiz>()
+                                                 select objBiz.SerializableObject;
+
+    string strSerializeProject = Json.Encode(objProjectCol);
+    string strCheck;
+    bool _SelectEnabled = true;
+    ViewBag._SelectEnabled = true;
+    Session["SelectEnabled"] = "1";
+    #endregion
+
+
+}
+
+@{
+    #region UMSFunctions
+    int _UMSEditUnit = 104;
+    bool _UMSEditUnitAuthorized = false;
+
+    int _UMSEditUnitPrice = 1157;
+    bool _UMSEditUnitPriceAuthorized = false;
+    int _UMSReadyForDelivery = 898;
+    bool _UMSReadyForDeliveryAuthorized = false;
+    int _UMSAssignToCampaign = 1029;
+    bool _UMSAssignToCampaignAuthorised;
+    int _UMSEditDesc = 1196;
+    bool _UMSEditDescAuthorised = false;
+
+    int _UMSCloseOpen = 157;
+    bool _UMSCloseOpenAuthorised = false;
+    #endregion
+    #region SetPrivilege
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditUnit) > -1)
+    {
+        _UMSEditUnitAuthorized = true;
+
+    }
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditUnitPrice) > -1)
+    {
+        _UMSEditUnitPriceAuthorized = true;
+
+    }
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSReadyForDelivery) > -1)
+    {
+        _UMSReadyForDeliveryAuthorized = true;
+
+    }
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSAssignToCampaign) > -1)
+    {
+        _UMSAssignToCampaignAuthorised = true;
+
+    }
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSEditDesc) > -1)
+    {
+        _UMSEditDescAuthorised = true;
+
+    }
+    if (SysData.CurrentUser.UserFunctionInstantCol.GetIndex(_UMSCloseOpen) > -1)
+    {
+        _UMSCloseOpenAuthorised = true;
+
+    }
+    // ViewBag._UMSCloseOpenAuthorised = _UMSCloseOpenAuthorised;
+    Session["UMSCloseOpenAuthorised"] = _UMSCloseOpenAuthorised ? "1" : "0";
+    #endregion
+}
+
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<html>
+<body dir="rtl">
+
+
+
+
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+
+
+        function OnCheckAllChanged1(strCheckAllName, strCheckPrefix, strIDsName) {
+            var objCheckAll = document.getElementById(strCheckAllName);
+            var strCheckName;
+            var objIDCol = [];
+            var strIDs = document.getElementById(strIDsName).value;
+            if (strIDs != null && strIDs != "") {
+                objIDCol = JSON.parse(strIDs);
+            }
+            var blChecked = document.getElementById(strCheckAllName).checked;
+            for (var intIndex = 0; intIndex < objIDCol.length; intIndex++) {
+                strCheckName = strCheckPrefix + objIDCol[intIndex];
+                document.getElementById(strCheckName).checked = blChecked;
+
+            }
+
+
+        }
+
+        $(document).ready(function () {
+            var objUnitmodal = document.getElementById("myUnitModal");
+
+            // Get the button that opens the modal
+            var objUnitbtn = document.getElementById("myUnitBtn");
+
+            // Get the <span> element that closes the modal
+            var objUnitspan = document.getElementById("UnitClose");
+
+            // When the user clicks on the button, open the modal
+            objUnitbtn.onclick = function () {
+                objUnitmodal.style.display = "block";
+                return false;
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            objUnitspan.onclick = function () {
+                objUnitmodal.style.display = "none";
+
+
+            }
+
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("CustomerClose");
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+                FillSelectedCustomer();
+
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                //if (event.target == modal) {
+                //    modal.style.display = "none";
+                //}
+
+            }
+
+
+        });
+
+    </script>
+    <script src="~/Scripts/ControlScript.js"></script>
+    <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+
+    <div dir="rtl" style="align-content:center; max-width:100%;height:auto;">
+        <div>
+
+            <div dir="rtl" style="max-width:100%;height:auto;">
+
+
+
+                @using (Html.BeginForm("", "", FormMethod.Post, new { @class = ".form-control" }))
+                {
+                    <div>
+
+
+
+                        <div style="max-width:100%;height:auto;">
+                            <div style="max-width:100%;height:auto;">
+                                <div id="trSearch">
+
+
+                                    <label>
+                                        بحث
+                                        <input type="submit" formaction="../unit/Search" value="Search" tabindex="-1" />
+                                        <span></span>
+                                    </label>
+
+
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div>
+                                            &#1580;&#1586;&#1571; &#1605;&#1606; &#1575;&#1604;&#1603;&#1608;&#1583;
+                                            <input type=text id="txtUnitName" name="txtUnitName"> <span></span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3 mb-md-2">
+                                        <label class="d-block font-weight-semibold">تسليم البرج</label>
+                                        <div class="form-check form-check-inline form-check-right">
+                                            <label class="form-check-label">
+                                                الكل
+                                                <span class="checked"><input type="radio" class="form-check-input-styled" value="0" id="rdTowerDeliveredAll" name="rdTowerDelivered" checked="" data-fouc=""></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline form-check-right">
+                                            <label class="form-check-label">
+                                                تم التسليم
+                                                <span><input type="radio" class="form-check-input-styled" id="rdTowerDeliveredOnlyDelivered" value="1" name="rdTowerDelivered" data-fouc=""></span>
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline form-check-right">
+                                            <label class="form-check-label">
+                                                لم يتم التسليم
+                                                <span><input type="radio" class="form-check-input-styled" id="rdTowerDeliveredOnlyNotDelivered" value="2" name="rdTowerDelivered" data-fouc=""></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+                                <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+                                <div>
+
+                                    <div class="row">
+                                        <div>
+
+                                            <label>
+
+                                                الدور
+                                                <select id="cmbFloor1" size="1" name="cmbFloor1" class="alpaca-control form-control">
+
+                                                    <option selected value="0">&#1594;&#1610;&#1585; &#1605;&#1581;&#1583;&#1583;</option>
+                                                    <option value="1">&#1575;&#1604;&#1571;&#1585;&#1590;&#1609;</option>
+                                                    <option value="2">&#1575;&#1604;&#1571;&#1608;&#1604;</option>
+                                                    <option value="3">&#1575;&#1604;&#1579;&#1575;&#1606;&#1609;</option>
+                                                    <option value="4">&#1575;&#1604;&#1579;&#1575;&#1604;&#1579;</option>
+                                                    <option value="5">&#1575;&#1604;&#1585;&#1575;&#1576;&#1593;</option>
+                                                    <option value="6">&#1575;&#1604;&#1582;&#1575;&#1605;&#1587;</option>
+                                                    <option value="7">&#1575;&#1604;&#1587;&#1575;&#1583;&#1587;</option>
+                                                    <option value="9">&#1575;&#1604;&#1579;&#1575;&#1605;&#1606;</option>
+                                                    <option value="11">&#1575;&#1604;&#1593;&#1575;&#1588;&#1585;</option>
+                                                    <option value="12">&#1575;&#1604;&#1581;&#1575;&#1583;&#1609; &#1593;&#1588;&#1585;</option>
+                                                    <option value="13">&#1575;&#1604;&#1579;&#1575;&#1606;&#1609; &#1593;&#1588;&#1585;</option>
+                                                    <option value="14">&#1575;&#1604;&#1579;&#1575;&#1604;&#1579; &#1593;&#1588;&#1585;</option>
+
+                                                </select>
+
+                                            </label>
+                                        </div>
+
+
+                                        <div class="col">
+
+
+                                            الادوار <input type="text" id="txtFloorOrder" name="txtFloorOrder" />
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+                                <!--webbot bot="SaveResults" U-File="E:\Work\SharpvisionLastVersion\HTMLTuturial\_private\form_results.csv" S-Format="TEXT/CSV" S-Label-Fields="TRUE" -->
+                                <div>
+
+                                    <div>
+                                        <div>
+
+                                            <div id="DivMultipleFloor" class="DivMultipleChecked" style="">
+
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="hidden" id="FloorCheckedCol" name="FloorCheckedCol" value="" />
+                                                            <input style="width:100%" type="text"
+                                                                   onchange="OnTxtFilterChanged('txtFloorFilter','tblFloor','chkFloor','FloorCheckedCol');"
+                                                                   id="txtFloorFilter" name="txtFloorFilter" onkeyup="this.onchange();"
+                                                                   onpaste="this.onchange();" oninput="this.onchange();" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div style="width: 100%; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                                                <table style="height: 90%" id="tblFloor" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeFloor" SelectedObjectCol="@strSerializeFloor">
+                                                                    @foreach (FloorBiz objFloor in _FloorCol)
+                                                                    {
+                                                                        _TempName = "chkFloor" + objFloor.ID.ToString();
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label>
+                                                                                    <input id="@_TempName"
+                                                                                           type=checkbox onchange="OnCheckChanged('@_TempName','tblFloor','@objFloor.ID','FloorCheckedCol')" />
+                                                                                    @objFloor.Name<span></span>
+                                                                                </label>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                </table>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </div>
+
+
+                                            <div id="DivMultipleProject" class="DivMultipleChecked" style="">
+
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <input type="hidden" id="ProjectCheckedCol" name="ProjectCheckedCol" value="" />
+                                                            <input style="width:100%" type="text"
+                                                                   onchange="OnTxtFilterChanged('txtProjectFilter','tblProject','chkProject','ProjectCheckedCol');"
+                                                                   id="txtProjectFilter" onkeyup="this.onchange();"
+                                                                   onpaste="this.onchange();" oninput="this.onchange();" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <div style="height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                                    <table style="height: 90%" id="tblProject" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeProject" SelectedObjectCol="@strSerializeProject">
+                                                        @foreach (ProjectBiz objProject in _ProjectCol)
+                                                        {
+                                                            _TempName = "chkProject" + objProject.ID.ToString();
+                                                            <tr>
+                                                                <td>
+                                                                    <label>
+                                                                        <input id="@_TempName"
+                                                                               type=checkbox onchange="OnCheckChanged('@_TempName','tblProject','@objProject.ID','ProjectCheckedCol')" />
+                                                                        @objProject.Name
+                                                                        <span></span>
+                                                                    </label>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div>
+
+                                    <div>
+
+                                        <div rowspan="2">
+                                            &#1585;&#1602;&#1605;
+                                            &#1575;&#1604;&#1608;&#1581;&#1583;&#1577;
+                                        </div>
+                                        <div>
+                                            <input type=text id="txtFlatOrder" name="txtFlatOrder" size="13" />
+                                        </div>
+                                        <div rowspan="2">
+                                            <span lang="ar-eg">&#1575;&#1604;&#1605;&#1587;&#1575;&#1581;&#1577; &#1576;&#1610;&#1606;</span>
+                                            <input type=text id="txtSurveyStart" value="0" name="txtSurveyStart" size="8" />
+                                        </div>
+                                        <div rowspan="2">
+                                            <span lang="ar-eg">&#1608;</span><input type=text id="txtSurveyEnd" value="0" name="txtSurveyEnd" size="9" />
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div>
+
+                                    <div>
+
+
+                                        <div>
+                                            &#1575;&#1604;&#1605;&#1604;&#1581;&#1602;&#1575;&#1578;
+                                            <select id="cmbPeripheral" name="cmbPeripheral" hiddenValue="">
+                                                <option value=0 selected> &#1594;&#1610;&#1585; &#1605;&#1581;&#1583;&#1583; </option>
+                                                @foreach (PeripheralTypeBiz objBiz in _PeripheralCol)
+                                                {
+                                                    if (objBiz.ID == 0)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    <option value=@objBiz.ID> @objBiz.Name </option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div>
+                                            &nbsp;&#1605;&#1587;&#1575;&#1581;&#1577;&#1575;&#1604;&#1605;&#1604;&#1581;&#1602; &#1576;&#1610;&#1606;
+                                        </div>
+                                        <div>
+                                            <input type=text id="txtPeripheralSurveyStart" name="txtPeripheralSurveyStart" value="0" />
+                                        </div>
+                                        <div>
+                                            &#1608;
+                                            <input type=text id="txtPeripheralSurveyEnd" name="txtPeripheralSurveyEnd" value="0" />
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div>
+
+                                    <div align="center">
+
+                                        <div align="right">
+                                            &#1575;&#1604;&#1606;&#1608;&#1593;
+
+                                            <select id="cmbType" hiddenValue="" name="cmbType">
+                                                <option selected value=0> @_TypeCol[0].Name </option>
+                                                @foreach (UnitTypeBiz objBiz in _TypeCol)
+                                                {
+                                                    if (@objBiz.ID == 0)
+                                                    { continue; }
+                                                    <option value=@objBiz.ID> @objBiz.Name </option>
+                                                }
+
+
+
+                                            </select>
+                                        </div>
+                                        <div align="right">
+                                            &#1575;&#1604;&#1606;&#1608;&#1593; &#1581;&#1587;&#1576; &#1575;&#1604;&#1575;&#1587;&#1578;&#1582;&#1583;&#1575;&#1605;
+                                            <select id="cmbUsageType" hiddenValue="" name="cmbUsageType">
+                                                <option selected value=0> @_UsageTypeCol[0].Name </option>
+                                                @foreach (UnitUsageTypeBiz objBiz in _UsageTypeCol)
+                                                {
+                                                    if (@objBiz.ID == 0)
+                                                    { continue; }
+                                                    <option value=@objBiz.ID> @objBiz.Name </option>
+                                                }
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <div>
+
+
+                                    <div>
+                                        <div></div>>
+                                        <label>
+                                            &#1575;&#1604;&#1606;&#1605;&#1608;&#1586;&#1580;
+                                            <select id="cmbModel" hiddenValue="" name="cmbModel">
+                                                <option selected value=0> @_ModelCol[0].Name </option>
+                                                @foreach (UnitModelBiz objBiz in _ModelCol)
+                                                {
+                                                    if (@objBiz.ID == 0)
+                                                    { continue; }
+                                                    <option value=@objBiz.ID> @objBiz.Name </option>
+                                                }
+                                            </select>
+                                            <span></span>
+                                        </label>
+                                    </div>
+
+                                    <div>
+
+                                        &#1575;&#1604;&#1587;&#1593;&#1585; &#1576;&#1610;&#1606;<input type="text" id="txtPriceStart" value="0" name="txtPriceStart" />
+
+                                    </div>
+                                    <div>
+                                        &#1608;
+                                        <input type="text" id="txtPriceEnd" value="0" name="txtPriceEnd" />
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div>
+
+
+                                <div class="form-group mb-3 mb-md-2">
+                                    <label class="d-block font-weight-semibold">تسليم الوحدة</label>
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            الكل
+                                            <span class="checked"><input type="radio" class="form-check-input-styled" value="0" id="rdDeliveredAll" name="rdDelivered" checked="" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            تم التسليم
+                                            <span><input type="radio" class="form-check-input-styled" id="rdDeliveredOnlyDelivered" value="1" name="rdDelivered" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            لم يتم التسليم
+                                            <span><input type="radio" class="form-check-input-styled" id="rdDeliveredOnlyNotDelivered" value="2" name="rdDelivered" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="form-group mb-3 mb-md-2">
+                                    <label class="d-block font-weight-semibold">حالة الوحدة</label>
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            الكل
+                                            <span class="checked"><input type="radio" class="form-check-input-styled" value="0" d="rdReservedAll" name="rdReserved" checked="" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            فارغة
+                                            <span><input type="radio" class="form-check-input-styled" value="1" id="rdReservedFree" name="rdReserved" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            مغلقة بشكل دائم
+                                            <span><input type="radio" class="form-check-input-styled" value="3" id="rdReservedClosedPermanent" name="rdReserved" data-fouc=""></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            مغلقة بشكل مؤقت
+                                            <span><input type="radio" class="form-check-input-styled" value="4" id="rdReservedClosedTemp" name="rdReserved" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline form-check-right">
+                                        <label class="form-check-label">
+                                            مباعة
+                                            <span><input type="radio" class="form-check-input-styled" value="2" id="rdReservedSold" name="rdReserved" data-fouc=""></span>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                            <div>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="SelectedCustomerCol" name="SelectedCustomerCol" value="" />
+
+
+
+
+                    <div>
+
+                        <div>
+                            <button type="button" id="myUnitBtn">الوحدات</button>
+                            @{ string strModalDisplay = ViewBag.UnitCol != null && ViewBag.UnitCol.Count > 0 ? "block" : "none";}
+                            <div id="myUnitModal" class="modal" tabindex="-1" style="display:@strModalDisplay;">
+
+                                <!-- Modal content -->
+                                <div class="modal-content">
+                                    <span id="UnitClose" class="close">&times;</span>
+                                    <div>
+
+                                        <div id="tdSearchResult">
+                                            <div dir="rtl" style="overflow: scroll; max-width: 100%; height: auto;">
+
+                                                @if (ViewBag.UnitCol != null)
+                                                {
+
+
+                                                    <div>
+                                                        <div>
+
+                                                            @if (_UMSCloseOpenAuthorised)
+                                                            {
+                                                                <div>
+                                                                    <input type="submit" name="btnUnitClose" id="btnUnitClose" formaction="../Unit/UnitClose" formmethod="post" value="Close Unit" />
+                                                                </div>
+                                                                <div>
+                                                                    <input type="submit" name="btnUnitOpen" id="btnUnitOpen" formaction="../Unit/OpenUnit" formmethod="post" value="Open" />
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <table style="overflow: scroll; max-width: 100%; max-height: auto;" class="container">
+                                                        <thead>
+                                                            <tr>
+                                                                @if (_SelectEnabled)
+                                                                {
+                                                                    <th>
+                                                                        <label><input type="checkbox" id="chkSelectAllUnit" onchange="ChkChanged('chkSelectAllUnit', 'chkUnit', 'UnitCheckCol')" /><span></span></label>
+
+                                                                    </th>
+                                                                }
+                                                                <th align="center">&#1575;&#1604;&#1603;&#1608;&#1583;</th>
+                                                                <th align="center">&#1575;&#1604;&#1606;&#1608;&#1593;</th>
+                                                                <th align="center">&#1575;&#1604;&#1605;&#1588;&#1585;&#1608;&#1593;</th>
+                                                                <th align="center">&#1575;&#1604;&#1576;&#1585;&#1580;</th>
+                                                                <th align="center">&#1575;&#1604;&#1583;&#1608;&#1585;</th>
+                                                                <th align="center">&#1575;&#1604;&#1581;&#1575;&#1604;&#1577;</th>
+                                                                <th align="center">&#1575;&#1604;&#1605;&#1587;&#1575;&#1581;&#1577;</th>
+                                                                <th align="center">&#1575;&#1604;&#1593;&#1605;&#1610;&#1604;</th>
+                                                                <th align="center">&#1575;&#1604;&#1605;&#1604;&#1581;&#1602;&#1575;&#1578;</th>
+                                                                <th align="center">&#1605;&#1604;&#1575;&#1581;&#1592;&#1575;&#1578;</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            @foreach (UnitBiz objBiz in ViewBag.UnitCol)
+                                                            {
+                                                                <tr>
+                                                                    @if (_SelectEnabled)
+                                                                    {
+                                                                        strCheck = "chkUnit" + objBiz.ID;
+                                                                        <td width="5%"><label><input type="checkbox" name="@strCheck" id="@strCheck" /><span></span></label></td>
+                                                                    }
+                                                                    <td align="center" width="10%">@objBiz.FullName</td>
+                                                                    <td width="10%">@objBiz.UsageTypeBiz.Name</td>
+                                                                    <td width="10%">@objBiz.TowerBiz.ProjectBiz.Name</td>
+                                                                    <td>@objBiz.TowerBiz.Name</td>
+                                                                    <td>@objBiz.FloorBiz.Name</td>
+                                                                    <td>@objBiz.StatusWithoutCustomerStr</td>
+                                                                    <td>@objBiz.Survey</td>
+                                                                    <td>@objBiz.CustomerStr</td>
+                                                                    <td>@objBiz.PeripheralFullName</td>
+                                                                    <td>@objBiz.Desc</td>
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                    <input type="hidden" id="UnitCheckCol" name="UnitCheckCol" value="@ViewBag.UnitIDs" />
+
+
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+                }
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <table>
+            <tr>
+                <!--
+                Customer Modal
+                -->
+                <td>
+
+                    <button id="myBtn">العملاء</button>
+
+                    <div id="myModal" class="modal" tabindex="-1">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span id="CustomerClose" class="close">&times;</span>
+                            <iframe id="CustomerFrame" style="width:100%;height:100%;" src="../Customer/SubCustomer" seamless></iframe>
+                        </div>
+
+                    </div>
+              
+                    <br /> 
+                    <div>
+
+                        <table id="tblSelectedCustomer"
+                               class="table-hover"
+                               align="right" dir="rtl"></table>
+
+
+
+                    </div>
+                </td>
+
+
+            </tr>
+        </table>
+
+    </div>
+
+</body>
+</html>
+

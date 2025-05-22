@@ -1,0 +1,249 @@
+﻿@using SharpVision.HR.HRBusiness;
+@using System.Collections;
+@using SharpVision.UMS.UMSBusiness;
+
+@{
+    ViewBag.Title = "ApplicantWorkerMotivation";
+    Layout = "~/Views/Shared/_LayoutYoussef.cshtml";
+}
+@{
+
+
+}
+
+
+<style>
+    th {
+        background-color: ghostwhite;
+        font-size: 12px;
+        height: min-content;
+    }
+
+    td {
+        font-size: 12px;
+        height: min-content;
+    }
+
+    tr {
+        font-size: 12px;
+        height: min-content;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-top: 1px solid #000;
+        overflow: scroll;
+    }
+
+    .Scrolltd, .Scrollth {
+        margin: 0;
+        border: 1px solid #000;
+        white-space: nowrap;
+        border-top-width: 0px;
+    }
+
+    .tablediv, .table-responsive {
+        width: 100%;
+        overflow-x: scroll;
+        margin-left: 5em;
+        overflow-y: visible;
+        padding: 0;
+    }
+
+    .headcol {
+        position: absolute;
+        left: 0;
+        top: auto;
+        border-top-width: 2px;
+        margin-top: -1px;
+    }
+
+    .headrow {
+        position: absolute;
+        top: auto;
+        margin-top: -1px;
+    }
+
+    .long {
+    }
+
+    input[type=number] {
+        display: block;
+        width: 60px;
+    }
+</style>
+<script src="~/Scripts/JqueryLatest.js"></script>
+<script src="~/Scripts/Motivation/MotivationCostCenter.js"></script>
+<script src="~/Scripts/Motivation/ApplicantWorkerMotivation.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/Scripts/Motivation/ApplicantWorkerMotivationJ.js"></script>
+<script src="~/Scripts/Motivation/ApplicantValue.js"></script>
+<script type="text/javascript">
+    $(document).ready(PerformAllCostDeVision
+    );
+</script>
+@{ 
+    string strCostCenter = EmployeeSectorAssignmentCol.GetAssignedMotivationCostCenter();
+
+
+
+    MotivationStatementBiz objStatement = EmployeeSectorAssignmentCol.GetLastAssignedMotivationStatement(strCostCenter);
+    //List<string> lstCostID = new List<string>();
+    //CostCenterHRBiz.CostCenterIDs = strCostCenter== ""?"0":strCostCenter;
+    string[] arrCostStr = strCostCenter.Split(',');
+    string strMotivationCostCenter = "";
+    // MotivationStatementCostCenterBiz objCost;
+    objStatement.GetRelatedStatements();
+    objStatement.GetEstimationStatements();
+    MotivationStatementCostCenterCol objCostCol = new MotivationStatementCostCenterCol(objStatement, strCostCenter);
+    objCostCol.SetManyCol();
+    objCostCol.SetEstimationStatement();
+    objCostCol.SetMotivationStatement();
+    objCostCol.SetCurrentMotivationStatement();
+    int intCostCenter = 0;
+    string strTemp = "";
+    double dblValue = 0;
+    //int intShowSalaryAuthorized = 0;
+    int intShowSalaryAuthorized = UserBiz.CurrentUser.UserFunctionInstantCol.GetIndex(3419)>-1 ? 1 : 0;
+
+}
+<div class="form-row">
+    <input type="hidden" id="lblAllCostIDs" value='@Json.Encode(arrCostStr)' />
+    <input type="hidden" id="lblShowSalaryAuthorized" value='@intShowSalaryAuthorized' />
+    <div class="col-5">
+        <input type="hidden" id="lblStatementID" value="@objStatement.ID" />
+        @objStatement.Desc
+    </div>
+
+</div>
+@if (strCostCenter != null || strCostCenter != "")
+            {
+                bool blReviewd ;
+                foreach (MotivationStatementCostCenterBiz objCost in objCostCol)
+                {
+                    blReviewd = objCost.ManyStatementCol.Cast<ApplicantWorkerManyStatementBiz>().Where(x=>x.Reviewed).ToList().Count>0  ;
+                    intCostCenter = 0;
+                    intCostCenter = objCost.CostCenterHRBiz.ID;
+
+                    if(objCost.CostCenterHRBiz.ID == 53)
+                    {
+
+                    }
+
+
+
+
+                    dblValue = objCost.TotalSalaryAndHeadSectorValue + objCost.BounsOnDeserved;
+
+                    MotivationCostCenterSimple objSimple = objCost.GetSimple();
+                    strMotivationCostCenter = System.Web.Helpers.Json.Encode(objSimple);
+                    strTemp = "";
+                    strTemp = "lblMotivationCostCenter" + intCostCenter.ToString();
+
+
+
+
+    <div class="card">
+       
+        <div class="card-header bg-teal-400 text-white header-elements-inline">
+            @{ 
+                string strTitle = objCost.CostCenterHRBiz.Name;
+                strTitle +="-" +(blReviewd ? "تم الترحيل" : "لم يتم الترحيل");
+            }
+            <h6 class="card-title">@strTitle</h6>
+            <div class="header-elements">
+                <div class="list-icons">
+                    <a class="list-icons-item" data-action="collapse">
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" style="text-align:center;font-weight:bold;">
+            <input type="hidden" id="@strTemp" name="@strTemp" value='@strMotivationCostCenter' />
+            <div class="form-row">
+
+                <div class="col-2">
+                    المبلغ الكلى
+                </div>
+                <div class="col-2">
+                    @{
+                        strTemp = "lblTotalValue" + intCostCenter;
+
+                    }
+                    <label id="@strTemp">@dblValue.ToString("0")</label>
+                </div>
+                <div class="col-2">
+                    المبلغ المراد تقسيمه
+                </div>
+                <div class="col-2">
+                    @{
+                        strTemp = "lblRemainingValue" + intCostCenter;
+                    }
+                    <label id="@strTemp">@dblValue</label>
+                </div>
+                <div class="col-2">
+                    العدد
+                </div>
+
+                <div class="col-2">
+                    <label id="lblCount+@intCostCenter+">@objCost.ManyStatementCol.Count</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-2">
+                    المبلغ المقسم
+                </div>
+                @{
+    dblValue = objCost.ManyStatementCol.Cast<ApplicantWorkerManyStatementBiz>().Sum(x => x.SavedValue);
+}
+                <div class="col-2">
+                    @{
+    strTemp = "lblDevidedValue" + intCostCenter;
+}
+                    <label id="@strTemp">@dblValue.ToString("0")</label>
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="col-2">
+                    <input type="button" value="إعادة تحميل" onclick="return PerformAllCostDevision();" />
+                </div>
+                <div class="col-2">
+                    <label>
+                        ضبط القيم
+                        @{
+    strTemp = "chkJustify" + intCostCenter;
+}
+                        <input type="checkbox" id="@strTemp" />
+                    </label>
+
+                </div>
+                <div class="col-2">
+                    @{
+    strTemp = "chkDevideSectorHeadValue" + intCostCenter;
+}
+                    <label>تقسيم مبلغ رئيس القطاع<input type="checkbox" id="@strTemp" checked /></label>
+
+                </div>
+                <div class="col-2">
+                    <input type="button" value="رفع" onclick="UploadMotivationValue(false,@intCostCenter);" />
+                </div>
+                <div class="col-2">
+                    <input type="button" value="حفظ وترحيل" onclick="UploadMotivationValue(true,@intCostCenter);" />
+                </div>
+            </div>
+
+
+            @{
+    strTemp = "dvApplicantMotivation" + intCostCenter;
+}
+            <div class="table-responsive" id="@strTemp" name="dvSelectedUnit" style="font-size:small;font-weight:lighter;overflow:scroll;max-height:500px;">
+
+            </div>
+
+        </div>
+    </div>
+                }
+                }

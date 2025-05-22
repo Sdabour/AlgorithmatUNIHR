@@ -1,0 +1,146 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+
+@{
+    ViewBag.Title = "StudentRegisteration";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/Level.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+
+<script src="~/Scripts/UMS/User.js"></script>
+<h2>التسجيل</h2>
+<div class="form-row">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strSemester = Json.Encode(objSemester);
+        }
+        <input type="hidden" id="lblSemester" value="@strSemester" />
+        <label id="lblSemesterDesc" style="background-color:honeydew">@objSemester.Desc</label>
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-6">
+
+    </div>
+    <div class="col-2">
+        <input type="button" value="Register" onclick="UploadRegisterationCourse()" />
+    </div>
+    <div class="col-2">
+       
+    </div>
+    <div class="col-2">
+        <input type="button" value="Print" onclick="OnRegisterationDownloadClick(0)" />
+    </div>
+</div>
+<br />
+<div class="form-row">
+    <div class="col-6">
+
+    </div>
+    <div class="col-2">
+         
+    </div>
+    <div class="col-2">
+
+    </div>
+    <div class="col-2">
+        <input type="button" value="Full Transcription" onclick="OnRegisterationDownloadClick(1)" />
+    </div>
+</div>
+<div class="form-row">
+   
+    <div class="col">
+        @{ Html.RenderPartial("../UNI/StudentSimpleSearch");}
+       
+    </div>
+</div>
+<div class="form-row">
+
+   
+    <div class="col-2">
+        <label style="background-color:azure;text-align:center;">Allowed Hours</label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;" id="lblSemesterAllowedHour"></label>
+    </div>
+
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;">Semester Hour</label>
+    </div>
+    <div class="col-1">
+        <label style="background-color:azure;text-align:center;" id="lblSemesterHour"></label>
+    </div>
+   
+</div>
+<br />
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">كورسات</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+        <div class="form-row">
+            <div class="col-6"></div>
+           
+        </div>
+        <div class="form-row">
+            <div class="col" style="max-height:95%;">
+                @{ Html.RenderPartial("../control/CourseMultipleSimpleSearch");}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" >
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">كورسات</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body" style="scroll-behavior:auto;">
+        @{
+
+            int intFaculty = 0;
+            string strFaculty = "";
+            if (Session["CurrentFaculty"] != null)
+            {
+                strFaculty = Session["CurrentFaculty"].ToString();
+                if (strFaculty != null && strFaculty != "")
+                {
+                    intFaculty = Json.Decode<FacultySimple>(strFaculty).ID;
+                }
+            }
+            LevelCol objLevelCol = new LevelCol(false, intFaculty);
+            List<LevelSimple> lstLevel = objLevelCol.Cast<LevelBiz>().Select(x => x.GetSimple()).ToList();
+            string strLevel = Json.Encode(lstLevel);
+
+        }
+        <input type="hidden" id="lblAllLevel" value='@strLevel' />
+        <input type="hidden" id="lblRegisteredCourses" value="" />
+        <input type="hidden" id="lblAllRegisteredCourses" value="" />
+        <div class="table-responsive" id="dvRegisteredCourse" style="max-height:95%;align-content:center;">
+
+        </div>
+    </div>
+</div>

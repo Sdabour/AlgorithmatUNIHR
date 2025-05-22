@@ -1,0 +1,31 @@
+﻿class Schedule {
+    public ID: number;
+    public WeekDay: number;
+    public StartTime: Date;
+    public DurationInMinutes: number;
+    public Hall: number;
+    public AttendanceMandatory: boolean;
+    public Note: string;
+    public FacultyID: number;
+    public FacultyCode: string;
+    public FacultyNameA: string;
+    public FacultyNameE: string;
+    public SemesterID: number;
+    public SemesterDesc: string;
+    public CourseID: number;
+    public CourseCode: string;
+    public CourseNameA: string;
+    public CourseNameE: string;
+    public GroupID: number;
+    public GroupCode: string;
+    public GroupNameA: string;
+    public GroupNameE: string;
+    public LectureTypeID: number;
+    public LectureTypeCode: string;
+    public LectureTypeNameA: string;
+    public LectureTypeNameE: string;
+    public TeacherID: number;
+    public TeacherCode: string;
+    public TeacherName: string;
+
+}

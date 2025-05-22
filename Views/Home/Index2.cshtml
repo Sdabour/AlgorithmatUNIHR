@@ -1,0 +1,308 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    // MasterPage = "~/Views/Shared/ALGORITHMATMaster.Master";
+
+}
+@using Algorithmat.Algorithmat.AlgorithmatBusiness;
+@using System.Web.UI.HtmlControls;
+@using SharpVision.SystemBase;
+@model PageBiz
+<asp:Content ContentPlaceHolderID="scriptHolder" runat="server">
+    @{
+
+        #region IntializeConnection
+        int intLanguage = 1;
+        //string strLang = Request["Lang"];
+        //string strConnection = System.Configuration.ConfigurationManager.AppSettings["DBCon"];
+        //string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+        //SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+        //SysData.Language = intLanguage;
+        #endregion
+        PageBiz _PageBiz = Model;
+        int intOrder;
+        // dvSUBHeader
+        //dvSUBBody
+        //dvSUBLink
+        //dvSUBeTitle
+        string strSUBHeader, strSUBBody, strSUBLink, strSUBTitle, strSubImage, strLOCATIONHeader, strLOCATIONTitle;
+        int intLocationCount = _PageBiz.LocationCol.Count;
+        string[] SUBHeader = new string[intLocationCount];
+        string[] SUBBody = new string[intLocationCount];
+        string[] SUBLink = new string[intLocationCount];
+        string[] SUBTitle = new string[intLocationCount];
+        string[] SubImage = new string[intLocationCount];
+        string[] LOCATIONHeader = new string[intLocationCount];
+        string[] LOCATIONTitle = new string[intLocationCount];
+
+        string[] SUBHeaderValue = new string[intLocationCount];
+        string[] SUBBodyValue = new string[intLocationCount];
+        string[] SUBLinkValue = new string[intLocationCount];
+        string[] SUBTitleValue = new string[intLocationCount];
+        string[] SubImageValue = new string[intLocationCount];
+        string[] LOCATIONHeaderValue = new string[intLocationCount];
+        string[] LOCATIONTitleValue = new string[intLocationCount];
+
+        Control objControl;
+
+        int intImgCurrentIndex = 0;
+
+        // Control objMain = Page.FindControl("bodyHolder");
+        HtmlGenericControl objControl1;
+        string strImage = "";
+        int intIndex = 0;
+        foreach (LocationBiz objBiz in _PageBiz.LocationCol)
+        {
+
+            intOrder = objBiz.Order;
+
+            strSUBHeader = "dvSUBHeader" + intOrder.ToString();
+            SUBHeader[intIndex] = strSUBHeader;
+            SUBBody[intIndex] = "dvSUBBody" + intOrder.ToString();
+            //SUBBody[intIndex] = strSUBBody;
+            SUBLink[intIndex] = "dvSUBLink" + intOrder.ToString();
+            SUBTitle[intIndex] = "dvSUBTitle" + intOrder.ToString();
+            SubImage[intIndex] = "dvDisplayPnl" + intOrder.ToString();
+            LOCATIONHeader[intIndex] = "dvLOCATIONHeader" + intOrder.ToString();
+            LOCATIONTitle[intIndex] = "dvLOCATIONTitle" + intOrder.ToString();
+
+            SUBHeaderValue[intIndex] = objBiz.ContentBiz.Title;
+            SUBBodyValue[intIndex] = objBiz.ContentBiz.Short;
+            //SUBBody[intIndex] = strSUBBody;
+            SUBLinkValue[intIndex] = objBiz.DisplayContentLink;
+            SUBTitleValue[intIndex] = objBiz.ContentBiz.Title1;
+            strImage = "";
+            foreach (LocationImageBiz objImageBiz in objBiz.ImageCol)
+            {
+                if (strImage != "")
+                {
+                    strImage += ";";
+                }
+                strImage += objImageBiz.ImageBiz.FullSmallImageWebDirectory;
+            }
+            //.InnerText = strImage;
+
+            SubImageValue[intIndex] = strImage; //"dvDisplayPnl" + intOrder.ToString();
+            LOCATIONHeaderValue[intIndex] = objBiz.Title;
+            LOCATIONTitleValue[intIndex] = objBiz.Title1;
+            #region
+            //objControl = Page.FindControl(strSUBHeader);
+            // objControl1 = new HtmlGenericControl(strSUBHeader);
+
+
+            //if (objControl != null)
+            //{
+            //    ((HtmlGenericControl)objControl).InnerHtml = objBiz.ContentBiz.Title;
+
+            //}
+            //objControl = objMain.FindControl(strSUBBody);
+            //if (objControl != null)
+            //{
+            //    ((HtmlGenericControl)objControl).InnerHtml = objBiz.ContentBiz.Short;
+
+            //}
+            //objControl = objMain.FindControl(strSUBLink);
+            //if (objControl != null)
+            //{
+            //    ((HtmlAnchor)objControl).HRef = objBiz.DisplayContentLink;
+
+
+            //}
+            //objControl = objMain.FindControl(strSUBTitle);
+            //if (objControl != null)
+            //{
+            //    ((HtmlGenericControl)objControl).InnerHtml = objBiz.ContentBiz.Title1;
+
+            //}
+
+            //objControl = objMain.FindControl(strLOCATIONHeader);
+            //if (objControl != null)
+            //{
+            //    ((HtmlGenericControl)objControl).InnerHtml = objBiz.Title;
+
+            //}
+            //objControl = objMain.FindControl(strLOCATIONTitle);
+            //if (objControl != null)
+            //{
+            //    ((HtmlGenericControl)objControl).InnerHtml = objBiz.Title1;
+
+            //}
+
+            //objControl = objMain.FindControl(strSubImage);
+            //if (objControl != null)
+            //{
+            //    strImage = "";
+            //    foreach (LocationImageBiz objImageBiz in objBiz.ImageCol)
+            //    {
+            //        if (strImage != "")
+            //        {
+            //            strImage += ";";
+            //        }
+            //        strImage += objImageBiz.ImageBiz.FullSmallImageWebDirectory;
+            //    }
+
+            //((HtmlGenericControl)objControl).InnerText = strImage;
+            //    // ((HtmlGenericControl)objControl).InnerText = "OK OKK";
+
+            //}
+            #endregion
+            intIndex++;
+
+        }
+
+    }
+    <script type="text/javascript" src="../../js/AlgScriptIndex.js"></script>
+    <script type="text/javascript">
+        //rotateimages();
+
+        window.onload = rotateimages();
+        $(document).ready(
+        function ()
+        {
+            @{
+
+            }
+           @{ intIndex = 1;}
+            $(@Model.LocationCol).each(
+            function (index, val)
+            {
+                var strTemp = @SUBHeader[intIndex];
+                var strTempVal = @SUBHeaderValue[intIndex];
+                $("#" + strTemp).innerHtml = @SUBHeaderValue[intIndex];
+                $("#" + @SUBBody[intIndex]).innerHtml = @SUBBodyValue[intIndex];
+                 $("#" + @SUBLink[intIndex]).href = @SUBLinkValue[intIndex];
+                @{ intIndex++;}
+                //strSUBBody = objBiz.ContentBiz.Short
+                //strSUBLink.href = objBiz.DisplayContentLink;
+                //strSUBTitle = objBiz.ContentBiz.Title1;
+                //strLOCATIONHeader = objBiz.Title;
+                //strLOCATIONTitle = objBiz.Title1;
+                //strSubImage
+
+
+            }
+            )
+
+        }
+        )
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css" />
+</asp:Content>
+<asp:Content ContentPlaceHolderID="headerHolder" runat="server">
+    <div class="banner">
+        <div class="banner-content">
+            <ul>
+                <li>
+                    <h2></h2>
+                    <h1>Information System</h1>
+                    <a href="#">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="tblDisplayData" runat="server">
+
+    </div>
+</asp:Content>
+<asp:Content ContentPlaceHolderID="bodyHolder" runat="server">
+
+    <div class="panel-wrapper">
+        <div class="panel-content">
+            <div class="panel marRight">
+                <div class="panel-icon">
+                    <img src="../../images/panel-icon-1.gif" />
+                </div>
+
+                <h1 runat="server" order="1" id="dvSUBHeader1">Short About Us</h1>
+                <p runat="server" id="dvSUBBody1">Algorithmat is a primitive software company aim to contribute in local software industry </p>
+                <a runat="server" id="dvSUBLink1" class="more1" href="#">More Info</a>
+                <div class="panel-bottom">
+                </div>
+
+            </div>
+            <div class="panel marRight">
+                <div class="panel-icon">
+                    <img src="../../images/panel-icon-2.gif" />
+                </div>
+                <h1 runat="server" id="dvSUBHeader2">Solutions</h1>
+                <p runat="server" id="dvSUBBody2">
+                    We aim to introduce innovative Business software solutions serve your midle size business
+                </p>
+                <a runat="server" id="dvSUBLink2" class="more1" href="#">More Info</a>
+                <div class="panel-bottom">
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-icon">
+                    <img src="../../images/panel-icon-3.gif" />
+                </div>
+                <h1 runat="server" id="dvSUBHeader3">Services</h1>
+                <p runat="server" id="dvSUBBody3">Custom Windows Development , Windows App Design and Architecture , Help Documentation and ASP.NET Applications </p>
+                <a runat="server" id="dvSUBLink3" class="more1" href="#">More Info</a>
+                <div class="panel-bottom">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!--- panel-wrapper div end -->
+    <div class="clearing"></div>
+    <div class="generic-content-wrapper">
+        <div class="generic-content">
+
+            <div class="content marRight">
+                <h1 runat="server" id="dvSUBHeader4">@SUBHeaderValue[3]</h1>
+                <h2 runat="server" id="dvSUBTitle4">Algorithmat try to share knowledege</h2>
+                <p runat="server" id="dvSUBBody4">in this corner we try to interact with out world by presenting some codes in c++ , c# or software requirement specification   wishing it helps whom are intersted ...</p>
+                <a runat="server" id="dvSUBLink4" class="more" href="#">More Info</a>
+            </div>
+
+            <div class="slider-panel">
+                <div class="slider-content">
+
+                    <div class="slider-left-arrow">
+                    </div>
+
+                    <div class="slider-image">
+
+                        <div runat="server" class="HiddenDiv" id="dvDisplayPnl7"></div>
+                        <img src="../../images/img-1.jpg" runat="server" id="imgDisplayPnl" name="imgDisplayPnl" />
+                    </div>
+
+                    <div class="slider-right-arrow">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="generic-content">
+
+        <div class="content1 marRight">
+            <h1 runat="server" id="dvSUBHeader5">Being your success partener is our goal </h1>
+            <h2 runat="server" id="dvSUBTitle5">infinite relationship between business and software  </h2>
+            <p runat="server" id="dvSUBBody5">we belive that relationship between business and software is infinite ends just either software or business death ,death means unprogress. </p>
+            <p>We present information system suitable for diffrent level of managment .</p>
+            <a runat="server" id="dvSUBLink5" class="more" href="#">More Info</a>
+        </div>
+
+        <div class="content2">
+            <h1 runat="server" id="dvLOCATIONHeader6">ALGORITHMAT Corner</h1>
+            <h2 runat="server" id="dvLOCATIONTitle6">An example  </h2>
+            <div class="content2-image">
+                <p runat="server" id="dvSUBBody6">Rough set theory (RST) is a mathematical  framework that deals with uncertainty .</p>
+            </div>
+            <h3 runat="server" id="dvSUBHeader6">Rough</h3>
+            <span>-</span><span runat="server" id="dvSUBTitle6">RST Example</span> <a runat="server" id="dvSUBLink6" class="readmore" href="#">| Read More |</a>
+        </div>
+
+    </div>
+     
+   
+</asp:Content>
+

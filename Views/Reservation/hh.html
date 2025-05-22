@@ -1,0 +1,1328 @@
+
+
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+   
+
+    <title>ALGORITHMAT</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href=/vendor/bootstrap/css/bootstrap.min.css rel="stylesheet">
+
+   
+    <link rel="stylesheet" href=/assets/css/fontawesome.css>
+    <link rel="stylesheet" href=/assets/css/templatemo-style.css>
+    <link rel="stylesheet" href="/assets/css/owl.css">
+
+</head>
+
+<body class="is-preload">
+
+   
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Main -->
+     
+
+        <!-- Sidebar -->
+        <div id="sidebar">
+
+            <div class="inner">
+
+                <!-- Search Box -->
+                <section id="search" class="alt">
+                    <form method="get" action="#">
+                        <input type="text" name="search" id="search" placeholder="Search..." />
+                    </form>
+                </section>
+
+                <!-- Menu -->
+                <nav id="menu">
+                    <ul>
+                        <li>  <span class="opener">«· ”ÊÌﬁ ÊÕ—ﬂ… «·»Ì⁄</span><ul><li><a href='Unit/Index'>«·»ÕÀ ›Ï «·ÊÕœ« </a></li><li><a href='Reservation/index'>«·»ÕÀ ›Ï «·⁄ﬁÊœ</a></li></ul></li>
+                      
+                     
+                    </ul>
+                </nav>
+
+                <!-- Featured Posts -->
+                <div class="featured-posts">
+                    <div class="heading">
+                        <h2>Featured Posts</h2>
+                    </div>
+                    <div class="owl-carousel owl-theme">
+                        <a href="#">
+                            <div class="featured-item">
+                                <img src="assets/images/featured_post_01.jpg" alt="featured one">
+                                <p>Aliquam egestas convallis eros sed gravida. Curabitur consequat sit.</p>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="featured-item">
+                                <img src="assets/images/featured_post_01.jpg" alt="featured two">
+                                <p>Donec a scelerisque massa. Aliquam non iaculis quam. Duis arcu turpis.</p>
+                            </div>
+                        </a>
+                        <a href="#">
+                            <div class="featured-item">
+                                <img src="assets/images/featured_post_01.jpg" alt="featured three">
+                                <p>Suspendisse ac convallis urna, vitae luctus ante. Donec sit amet.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer id="footer">
+                   
+                </footer>
+
+            </div>
+        </div>
+        
+
+
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reservation</title>
+
+
+
+
+</head>
+<body dir="rtl">
+    <script src="/Scripts/ControlScript.js"></script>
+    <table>
+        <tr>
+<form action="/Reservation/search" method="post">                <td>
+
+
+                    <div id=dvContract>
+
+                        <table cellpadding="0" cellspacing="0" width="201" height="159">
+                            <!-- MSTableType="layout" -->
+                            <tr>
+                                <td>
+                                    <button type=submit id="btnSubmit">Search</button>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><input type=checkbox id="chkStatusReservedWithAmount" name="chkStatusReservedWithAmount"></td>
+
+                                <td>&nbsp;</td>
+
+                                <td height="61">&#1581;&#1580;&#1586; &#1576;&#1583;&#1601;&#1593;&#1575;&#1578;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type=checkbox id="chkStatusContracted" name="chkStatusContracted"></td>
+                                <td height="32">&#1578;&#1593;&#1575;&#1602;&#1583;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type=checkbox id="chkStatusFinished" name="chkStatusFinished"></td>
+                                <td height="32">&#1575;&#1587;&#1578;&#1610;&#1601;&#1575;&#1569;</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type=checkbox id="chkStatusCanceled" name="chkStatusCanceled"></td>
+                                <td height="33">&#1573;&#1604;&#1594;&#1575;&#1569;</td>
+                            </tr>
+                            <tr>
+                                <td width="61"></td>
+                                <td width="5"></td>
+                                <td height="1" width="135"></td>
+                            </tr>
+
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span> &#1606;&#1608;&#1593; &#1575;&#1604;&#1575;&#1604;&#1594;&#1575;&#1569; </span>
+                                    <select name="cmbCancelationType" id="cmbCancelationType">
+                                        <option selected value="0">€Ì— „Õœœ</option>
+                                            <option value=1>›”Œ ﬁ÷«∆Ï</option>
+                                            <option value=2>«·›”Œ «·„»«‘—</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span>&#1575;&#1604;&#1603;&#1604;</span><input type=radio id="rdFreeAll" checked name="rdFree" value="0">&nbsp;&nbsp; &nbsp; </td>
+                                <td></td>
+                                <td><span>&#1605;&#1580;&#1575;&#1606;&#1609;</span><input type=radio id="rdFreeOnly" name="rdFree" value="2"></td>
+                                <td>   </td>
+                                <td><span>&#1594;&#1610;&#1585; &#1575;&#1604;&#1605;&#1580;&#1575;&#1606;&#1610;&#1577;</span><input type=radio id="rdFreeNotOnly" name="rdFree" value="1"></td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><span>&#1575;&#1604;&#1603;&#1604;</span><input type="radio" id="rdNewAll" name="rdNew" checked value="0"> </td>
+                                <td>   </td>
+                                <td><span>&#1581;&#1580;&#1586; &#1580;&#1583;&#1610;&#1583;&nbsp; </span><input type=radio id="rdNewOnlyNew" name="rdNew" value="2"></td>
+                                <td>   </td>
+                                <td><span>&#1575;&#1587;&#1578;&#1576;&#1583;&#1575;&#1604;</span><input type=radio id=rdNewOnlyNot name="rdNew" value="1"></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><span>&#1575;&#1604;&#1603;&#1604;</span><input type="radio" id="rdDealAll" name="rdDeal" checked value="0"> </td>
+                                <td>   </td>
+                                <td><span>&#1605;&#1578;&#1575;&#1581;&#1577;&nbsp; </span><input type=radio id="rdDealAvailable" name="rdDeal" value="1"></td>
+                                <td>   </td>
+                                <td><span>&#1605;&#1608;&#1602;&#1608;&#1601;&#1577;</span><input type=radio id=rdDealNotAvailable name="rdDeal" value="2"></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><span>&#1575;&#1604;&#1603;&#1604;</span><input type="radio" id="rdSoldAll" name="rdSold" checked value="0"> </td>
+                                <td>   </td>
+                                <td><span>&#1578;&#1605; &#1575;&#1604;&#1576;&#1610;&#1593; </span><input type=radio id="rdSoldOnlySold" name="rdSold" value="1"></td>
+                                <td>   </td>
+                                <td><span>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1576;&#1610;&#1593;</span><input type=radio id=rdSoldOnlyNotSold name="rdSold" value="2"></td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                                <td><span>&#1575;&#1604;&#1603;&#1604;</span><input type="radio" id="rdPayBackAll" name="rdPayBack" checked value="0"> </td>
+                                <td>   </td>
+                                <td><span>&#1578;&#1605; &#1575;&#1604;&#1585;&#1583; </span><input type=radio id="rdPayBackPaid" name="rdPayBack" value="1"></td>
+                                <td>   </td>
+                                <td><span>&#1604;&#1605; &#1610;&#1578;&#1605; &#1575;&#1604;&#1585;&#1583;</span><input type=radio id=rdPayBackNotPaid name="rdPayBack" value="2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="dvReservation">
+                        <table width="410">
+                            <tr>
+                                <td>
+                                    <span>&#1605;&#1604;&#1575;&#1581;&#1592;&#1577; &#1593;&#1604;&#1609; &#1575;&#1604;&#1581;&#1580;&#1586;</span>
+                                    <input type=text id="txtReservationNote" name="txtReservationNote" size="42" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1578;&#1593;&#1575;&#1602;&#1583; &#1605;&#1606; </span>
+                                    <input type=date id="dtContractFrom" name="dtContractFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtContractTo" name="dtContractTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1581;&#1580;&#1586; &#1605;&#1606;</span>
+                                    <input type=date id="dtReservationFrom" name="dtReservationFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtReservationTo" name="dtReservationTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1581;&#1575;&#1604;&#1577; &#1605;&#1606;</span>
+                                    <input type=date id="dtStatusFrom" name="dtStatusFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtStatusTo" name="dtStatusTo" />
+
+                                </td>
+
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleBranch" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>&#1601;&#1585;&#1593;</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="BranchCheckedCol" name="BranchCheckedCol" value="" />
+                                                    <input style="width:195px" type="text"
+                                                           onchange="OnTxtFloorChanged('txtBranchFilter','tblBranch','chkBranch','BranchCheckedCol');"
+                                                           id="txtBranchFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table style="height: 90%" id="tblBranch" Runat="server" CheckedObjectCol="" ObjectCol="[{&quot;ID&quot;:1,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„’— «·ÃœÌœ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄«œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·œﬁÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«ﬂ Ê»—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘»—«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·Â—„ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·ŒÌ„…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;OutDoor&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„œÌ‰… ‰’—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·»Õ— «·√⁄Ÿ„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·√Ê»—«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄«œÌ «·ÃœÌœ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;AMP&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·»«›«—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„œÌ‰… ‰’— „Ã„Ê⁄… «·»«›«—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:29,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ”Ì Ì&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Hayper&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Mall Of Aribia&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Carefour&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;SunCity&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—Êﬂ”Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„Â‰œ”Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:37,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:38,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ·Ê«‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:39,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;›Ì’·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:40,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰’Ê—…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:41,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·«”ﬂ‰œ—Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:42,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ÿ‰ÿ«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:43,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ì·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:44,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„ﬁÿ„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:45,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·“ﬁ«“Ìﬁ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:46,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«· Ã„⁄ «·Œ«„”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:47,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œ„Ì«ÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:48,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·“„«·ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:49,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:50,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:51,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·ﬂ·Ì… «·Õ—»Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:52,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ﬂ—„ ⁄»Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:53,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·⁄»«”Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:54,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«”ÌÊÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:55,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:56,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄—«Ã&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:57,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ê›Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:58,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:59,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;√›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:60,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«· Ã«—Ï Ê«·«œ«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:61,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ã”— «·”ÊÌ”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:62,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Œœ„… «·⁄„·«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:63,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… «·⁄„·«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:64,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„⁄«—÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:65,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„—ﬂ“ «·—∆Ì”Ì&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:66,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·…  «Ê—“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:67,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;”„ÊÕ…&quot;,&quot;ForeignKey&quot;:0}]" SelectedObjectCol="[{&quot;ID&quot;:1,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„’— «·ÃœÌœ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄«œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·œﬁÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«ﬂ Ê»—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘»—«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·Â—„ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·ŒÌ„…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;OutDoor&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„œÌ‰… ‰’—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·»Õ— «·√⁄Ÿ„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·√Ê»—«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄«œÌ «·ÃœÌœ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;AMP&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·»«›«—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„œÌ‰… ‰’— „Ã„Ê⁄… «·»«›«—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:29,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ”Ì Ì&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Hayper&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Mall Of Aribia&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Carefour&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;SunCity&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—Êﬂ”Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„Â‰œ”Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:37,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:38,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ·Ê«‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:39,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;›Ì’·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:40,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰’Ê—…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:41,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·«”ﬂ‰œ—Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:42,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ÿ‰ÿ«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:43,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ì·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:44,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„ﬁÿ„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:45,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·“ﬁ«“Ìﬁ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:46,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«· Ã„⁄ «·Œ«„”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:47,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œ„Ì«ÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:48,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·“„«·ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:49,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:50,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:51,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·ﬂ·Ì… «·Õ—»Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:52,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ﬂ—„ ⁄»Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:53,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·⁄»«”Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:54,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«”ÌÊÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:55,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:56,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„⁄—«Ã&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:57,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ê›Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:58,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„‰Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:59,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;√›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:60,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«· Ã«—Ï Ê«·«œ«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:61,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Ã”— «·”ÊÌ”&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:62,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Œœ„… «·⁄„·«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:63,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… «·⁄„·«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:64,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„⁄«—÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:65,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«·„—ﬂ“ «·—∆Ì”Ì&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:66,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;œÃ·…  «Ê—“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:67,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;”„ÊÕ…&quot;,&quot;ForeignKey&quot;:0}]" width="202">
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch1"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch1','tblBranch','1','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„’— «·ÃœÌœ…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch2"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch2','tblBranch','2','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„⁄«œÏ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch3"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch3','tblBranch','3','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·œﬁÌ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch4"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch4','tblBranch','4','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«ﬂ Ê»—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch6"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch6','tblBranch','6','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>‘»—«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch7"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch7','tblBranch','7','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·Â—„ </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch9"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch9','tblBranch','9','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·ŒÌ„…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch10"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch10','tblBranch','10','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>OutDoor</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch11"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch11','tblBranch','11','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„œÌ‰… ‰’—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch23"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch23','tblBranch','23','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·»Õ— «·√⁄Ÿ„</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch24"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch24','tblBranch','24','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·√Ê»—«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch25"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch25','tblBranch','25','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„⁄«œÌ «·ÃœÌœ…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch26"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch26','tblBranch','26','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>AMP</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch27"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch27','tblBranch','27','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·»«›«—Ì«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch28"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch28','tblBranch','28','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„œÌ‰… ‰’— „Ã„Ê⁄… «·»«›«—Ì«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch29"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch29','tblBranch','29','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>—ÌÕ«‰Â</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch30"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch30','tblBranch','30','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Ã—«‰œ ”Ì Ì</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch31"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch31','tblBranch','31','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Hayper</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch32"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch32','tblBranch','32','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Mall Of Aribia</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch33"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch33','tblBranch','33','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Carefour</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch34"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch34','tblBranch','34','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>SunCity</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch35"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch35','tblBranch','35','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>—Êﬂ”Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch36"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch36','tblBranch','36','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„Â‰œ”Ì‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch37"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch37','tblBranch','37','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch38"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch38','tblBranch','38','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Õ·Ê«‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch39"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch39','tblBranch','39','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>›Ì’·</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch40"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch40','tblBranch','40','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„‰’Ê—…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch41"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch41','tblBranch','41','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·«”ﬂ‰œ—Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch42"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch42','tblBranch','42','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>ÿ‰ÿ«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch43"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch43','tblBranch','43','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„‰Ì·</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch44"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch44','tblBranch','44','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„ﬁÿ„</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch45"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch45','tblBranch','45','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·“ﬁ«“Ìﬁ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch46"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch46','tblBranch','46','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«· Ã„⁄ «·Œ«„”</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch47"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch47','tblBranch','47','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>œ„Ì«ÿ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch48"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch48','tblBranch','48','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·“„«·ﬂ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch49"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch49','tblBranch','49','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… ›ÌÊ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch50"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch50','tblBranch','50','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>»Ê— ”⁄Ìœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch51"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch51','tblBranch','51','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·ﬂ·Ì… «·Õ—»Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch52"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch52','tblBranch','52','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„ﬂ—„ ⁄»Ìœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch53"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch53','tblBranch','53','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·⁄»«”Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch54"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch54','tblBranch','54','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«”ÌÊÿ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch55"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch55','tblBranch','55','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Ê«‰ ﬁÿ«„Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch56"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch56','tblBranch','56','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„⁄—«Ã</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch57"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch57','tblBranch','57','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„‰Ê›Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch58"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch58','tblBranch','58','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„‰Ì«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch59"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch59','tblBranch','59','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>√›Ì‰ÌÊ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch60"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch60','tblBranch','60','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«· Ã«—Ï Ê«·«œ«—Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch61"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch61','tblBranch','61','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Ã”— «·”ÊÌ”</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch62"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch62','tblBranch','62','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>Œœ„… «·⁄„·«¡</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch63"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch63','tblBranch','63','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„ «»⁄… «·⁄„·«¡</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch64"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch64','tblBranch','64','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>„⁄«—÷</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch65"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch65','tblBranch','65','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>«·„—ﬂ“ «·—∆Ì”Ì</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch66"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch66','tblBranch','66','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·…  «Ê—“</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkBranch67"
+                                                                   type=checkbox onchange="OnCheckChanged('chkBranch67','tblBranch','67','BranchCheckedCol')" />
+                                                        </td>
+                                                        <td>”„ÊÕ…</td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <table width="267">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                &#1603;&#1608;&#1583;&nbsp; &#1575;&#1604;&#1608;&#1581;&#1583;&#1577;
+                                            </td>
+                                            <td width="169">
+                                                <input type="text" name="txtUnitCode" id="txtUnitCode" size="23">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleProject" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="ProjectCheckedCol" name="ProjectCheckedCol" value="" />
+                                                    <input style="width:195px" type="text"
+                                                           onchange="OnTxtFloorChanged('txtProjectFilter','tblProject','chkProject','ProjectCheckedCol');"
+                                                           id="txtProjectFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table style="height: 90%" id="tblProject" Runat="server" CheckedObjectCol="" ObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;BVT&quot;,&quot;Name&quot;:&quot;„œÌ‰… «·»«›«—ÌÂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;GRC&quot;,&quot;Name&quot;:&quot;«·Ã—«‰œ ”Ì Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;RHR&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ —ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;DGV&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;CRP&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ ﬂ—Ì” «· »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;MT&quot;,&quot;Name&quot;:&quot;«·‘»«»&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;OKN1&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ1&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;OKN2&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ2&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;HAM&quot;,&quot;Name&quot;:&quot;«·Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;NOR&quot;,&quot;Name&quot;:&quot;«·‰Ê—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;YAS&quot;,&quot;Name&quot;:&quot;«·Ì«”„Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;HAS&quot;,&quot;Name&quot;:&quot;«·Õ”‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;DGTO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;SAF&quot;,&quot;Name&quot;:&quot;«·’›«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;FAR&quot;,&quot;Name&quot;:&quot;«·›Ì—Ê“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;NAD&quot;,&quot;Name&quot;:&quot;«·‰œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;DGTH&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;DP&quot;,&quot;Name&quot;:&quot;œÃ·… »«·„“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;RAM&quot;,&quot;Name&quot;:&quot;»—Ã —«„«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;DGFO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;DGON&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;DG0&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «· Ã«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;PORT&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;RHP&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;VIL1&quot;,&quot;Name&quot;:&quot;›Ì·« «··«”·ﬂÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;GRCG&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;DT&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ DT&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;RA&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… «›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;LM&quot;,&quot;Name&quot;:&quot;œÃ·… ·«‰œ „«—ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;LF&quot;,&quot;Name&quot;:&quot;Lake Front&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;KG&quot;,&quot;Name&quot;:&quot;ﬁÿ«„Ì… ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;S&quot;,&quot;Name&quot;:&quot;Sky Line&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;EOI Zahra&quot;,&quot;Name&quot;:&quot;EOI Zahra&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;ZNC&quot;,&quot;Name&quot;:&quot;“Â—…&quot;,&quot;ForeignKey&quot;:0}]" SelectedObjectCol="[{&quot;ID&quot;:0,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;€Ì— „Õœœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:1,&quot;Code&quot;:&quot;BVT&quot;,&quot;Name&quot;:&quot;„œÌ‰… «·»«›«—ÌÂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;GRC&quot;,&quot;Name&quot;:&quot;«·Ã—«‰œ ”Ì Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;RHR&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ —ÌÕ«‰Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;DGV&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ œÃ·… ›ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;CRP&quot;,&quot;Name&quot;:&quot;quot;„‘—Ê⁄ ﬂ—Ì” «· »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;MT&quot;,&quot;Name&quot;:&quot;«·‘»«»&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;OKN1&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ1&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;OKN2&quot;,&quot;Name&quot;:&quot;Ê«‰ ﬁÿ«„Ì… ﬁ2&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;HAM&quot;,&quot;Name&quot;:&quot;«·Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;NOR&quot;,&quot;Name&quot;:&quot;«·‰Ê—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;YAS&quot;,&quot;Name&quot;:&quot;«·Ì«”„Ì‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;HAS&quot;,&quot;Name&quot;:&quot;«·Õ”‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;DGTO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;SAF&quot;,&quot;Name&quot;:&quot;«·’›«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;FAR&quot;,&quot;Name&quot;:&quot;«·›Ì—Ê“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;NAD&quot;,&quot;Name&quot;:&quot;«·‰œÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;DGTH&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;DP&quot;,&quot;Name&quot;:&quot;œÃ·… »«·„“&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;RAM&quot;,&quot;Name&quot;:&quot;»—Ã —«„«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;DGFO&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;DGON&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;DG0&quot;,&quot;Name&quot;:&quot;œÃ·… Ã«—œ‰“ «· Ã«—Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;PORT&quot;,&quot;Name&quot;:&quot;»Ê— ”⁄Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;RHP&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… »·«“«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;VIL1&quot;,&quot;Name&quot;:&quot;›Ì·« «··«”·ﬂÌ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;GRCG&quot;,&quot;Name&quot;:&quot;Ã—«‰œ ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;DT&quot;,&quot;Name&quot;:&quot;„‘—Ê⁄ DT&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;RA&quot;,&quot;Name&quot;:&quot;—ÌÕ«‰… «›Ì‰ÌÊ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;LM&quot;,&quot;Name&quot;:&quot;œÃ·… ·«‰œ „«—ﬂ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;LF&quot;,&quot;Name&quot;:&quot;Lake Front&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;KG&quot;,&quot;Name&quot;:&quot;ﬁÿ«„Ì… ÃÌ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;S&quot;,&quot;Name&quot;:&quot;Sky Line&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;EOI Zahra&quot;,&quot;Name&quot;:&quot;EOI Zahra&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;ZNC&quot;,&quot;Name&quot;:&quot;“Â—…&quot;,&quot;ForeignKey&quot;:0}]">
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject0"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject0','tblProject','0','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>€Ì— „Õœœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject1"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject1','tblProject','1','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>„œÌ‰… «·»«›«—ÌÂ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject2"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject2','tblProject','2','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·Ã—«‰œ ”Ì Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject3"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject3','tblProject','3','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>„‘—Ê⁄ —ÌÕ«‰Â</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject4"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject4','tblProject','4','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>„‘—Ê⁄ œÃ·… ›ÌÊ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject5"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject5','tblProject','5','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>„‘—Ê⁄ ﬂ—Ì” «· »·«“«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject6"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject6','tblProject','6','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·‘»«»</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject7"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject7','tblProject','7','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>Ê«‰ ﬁÿ«„Ì… ﬁ1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject8"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject8','tblProject','8','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>Ê«‰ ﬁÿ«„Ì… ﬁ2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject9"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject9','tblProject','9','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·Õ„œ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject10"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject10','tblProject','10','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·‰Ê—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject11"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject11','tblProject','11','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·Ì«”„Ì‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject12"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject12','tblProject','12','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·Õ”‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject13"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject13','tblProject','13','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«‰Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject15"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject15','tblProject','15','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·’›«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject16"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject16','tblProject','16','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·›Ì—Ê“</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject17"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject17','tblProject','17','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>«·‰œÏ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject18"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject18','tblProject','18','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·À«·À…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject19"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject19','tblProject','19','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… »«·„“</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject20"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject20','tblProject','20','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>»—Ã —«„«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject21"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject21','tblProject','21','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·—«»⁄…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject22"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject22','tblProject','22','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“ «·„—Õ·… «·«Ê·Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject23"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject23','tblProject','23','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… Ã«—œ‰“ «· Ã«—Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject24"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject24','tblProject','24','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>»Ê— ”⁄Ìœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject25"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject25','tblProject','25','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>—ÌÕ«‰… »·«“«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject26"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject26','tblProject','26','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>›Ì·« «··«”·ﬂÌ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject27"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject27','tblProject','27','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>Ã—«‰œ ÃÌ </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject28"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject28','tblProject','28','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>„‘—Ê⁄ DT</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject30"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject30','tblProject','30','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>—ÌÕ«‰… «›Ì‰ÌÊ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject31"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject31','tblProject','31','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>œÃ·… ·«‰œ „«—ﬂ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject32"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject32','tblProject','32','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>Lake Front</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject33"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject33','tblProject','33','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>ﬁÿ«„Ì… ÃÌ </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject34"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject34','tblProject','34','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>Sky Line</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject35"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject35','tblProject','35','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>EOI Zahra</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkProject36"
+                                                                   type=checkbox onchange="OnCheckChanged('chkProject36','tblProject','36','ProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>“Â—…</td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivMultipleResubmissionType" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>ResubmissionType</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1576;&#1610;&#1606;</span><input id="dtStartResubmission" name="dtStartResubmission" type='Date' />
+                                                            </td>
+                                                            <td><span>&#1608;</span><input id="dtEndResubmission" name="dtEndResubmission" type="date" /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="ResubmissionTypeCheckedCol" name="ResubmissionTypeCheckedCol" value="" />
+                                                    <input style="width:358; height:22" type="text"
+                                                           onchange="OnTxtFloorChanged('txtResubmissionTypeFilter','tblResubmissionType','chkResubmissionType','ResubmissionTypeCheckedCol');"
+                                                           id="txtResubmissionTypeFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table><br>
+                                        <div style="width: 368px; height: 274px;background-color:ghostwhite;overflow-x:auto" class="panel-body">
+
+                                            <table style="height: 90%" id="tblResubmissionType" Runat="server" CheckedObjectCol="" ObjectCol="[{&quot;ID&quot;:1,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— »«·›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ √Œ—« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ƒﬁ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄„·«¡  ÕÊÌ·«  &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄„·«¡ «·«·€«¡« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… ·ÕÌ‰ ”œ«œ ﬂ«„· «·À„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… „ «Œ—« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… «” ·«„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Êﬁ› „ƒﬁ  ﬁ«‰Ê‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï  ’«·Õ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï ›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï ”œ«œ «·À„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:14,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï «·€«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—›⁄ œ⁄ÊÏ „‰ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—›⁄ œ⁄ÊÏ ÷œ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— ÷œ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— ﬁ«‰Ê‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— Ã«—Ï «Ìœ«⁄Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; €ÌÌ— „”«Õ… ⁄‰œ «·›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; „  ⁄œÌ· «·„”«Õ… »„« ÌŒ«·› ⁄ﬁœ «·⁄„Ì·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘Ìﬂ«  ⁄»œ «·—Õ„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„⁄«—÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ —’Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„’ÿ›Ï ⁄»œ «·„ÃÌœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ  ÊﬁÌ⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ  ›ﬁÌÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ Õ”«» „€·ﬁ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:29,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ Œÿ√ »‰ﬂÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄»Ì—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ÊﬂÌ· ›÷Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„Õ„œ “ﬂ—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;≈‰–«— »«·«” ·«„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«Ìﬁ«› «·«Ã—«¡«  «·ﬁ«‰Ê‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«œ«—… „—«Ã⁄… «·„»Ì⁄« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; ﬂ·›… Ê«ÃÂ«  «·„Ê·« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:37,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«Õ„œ „«Â—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:38,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;·„ Ìﬁœ„ œ› — «·‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:39,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; „  ”·Ì„ «·‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:40,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;“Â—… Zone5&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:41,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘—Ì› «Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:42,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ﬂ—Ì„ ‘«ﬂ—&quot;,&quot;ForeignKey&quot;:0}]" SelectedObjectCol="[{&quot;ID&quot;:1,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:2,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— »«·›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:3,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ √Œ—« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:4,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ƒﬁ &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:5,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄„·«¡  ÕÊÌ·«  &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:6,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄„·«¡ «·«·€«¡« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:7,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… ·ÕÌ‰ ”œ«œ ﬂ«„· «·À„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:8,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… „ «Œ—« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:9,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„ «»⁄… «” ·«„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:10,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Êﬁ› „ƒﬁ  ﬁ«‰Ê‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:11,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï  ’«·Õ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:12,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï ›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:13,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï ”œ«œ «·À„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:14,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;Õ›Ÿ ‰Â«∆Ï «·€«¡&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:15,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—›⁄ œ⁄ÊÏ „‰ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:16,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;—›⁄ œ⁄ÊÏ ÷œ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:17,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— ÷œ «·‘—ﬂ…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:18,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— ﬁ«‰Ê‰Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:19,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«‰–«— Ã«—Ï «Ìœ«⁄Â&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:20,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; €ÌÌ— „”«Õ… ⁄‰œ «·›”Œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:21,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; „  ⁄œÌ· «·„”«Õ… »„« ÌŒ«·› ⁄ﬁœ «·⁄„Ì·&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:22,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘Ìﬂ«  ⁄»œ «·—Õ„‰&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:23,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„⁄«—÷&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:24,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ —’Ìœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:25,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„’ÿ›Ï ⁄»œ «·„ÃÌœ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:26,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ  ÊﬁÌ⁄&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:27,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ  ›ﬁÌÿ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:28,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ Õ”«» „€·ﬁ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:29,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„— œ Œÿ√ »‰ﬂÏ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:30,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;⁄»Ì—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:31,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ÊﬂÌ· ›÷Ê·Ï&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:32,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;„Õ„œ “ﬂ—Ì«&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:33,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;≈‰–«— »«·«” ·«„&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:34,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«Ìﬁ«› «·«Ã—«¡«  «·ﬁ«‰Ê‰Ì…&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:35,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«œ«—… „—«Ã⁄… «·„»Ì⁄« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:36,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; ﬂ·›… Ê«ÃÂ«  «·„Ê·« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:37,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;«Õ„œ „«Â—&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:38,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;·„ Ìﬁœ„ œ› — «·‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:39,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot; „  ”·Ì„ «·‘Ìﬂ« &quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:40,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;“Â—… Zone5&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:41,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;‘—Ì› «Õ„œ&quot;,&quot;ForeignKey&quot;:0},{&quot;ID&quot;:42,&quot;Code&quot;:&quot;&quot;,&quot;Name&quot;:&quot;ﬂ—Ì„ ‘«ﬂ—&quot;,&quot;ForeignKey&quot;:0}]" width="367">
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType1"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType1','tblResubmissionType','1','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>‘Ìﬂ« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType2"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType2','tblResubmissionType','2','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«‰–«— »«·›”Œ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType3"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType3','tblResubmissionType','3','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„ √Œ—« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType4"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType4','tblResubmissionType','4','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„ƒﬁ </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType5"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType5','tblResubmissionType','5','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>⁄„·«¡  ÕÊÌ·«  </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType6"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType6','tblResubmissionType','6','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>⁄„·«¡ «·«·€«¡« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType7"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType7','tblResubmissionType','7','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„ «»⁄… ·ÕÌ‰ ”œ«œ ﬂ«„· «·À„‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType8"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType8','tblResubmissionType','8','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„ «»⁄… „ «Œ—« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType9"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType9','tblResubmissionType','9','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„ «»⁄… «” ·«„</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType10"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType10','tblResubmissionType','10','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>Êﬁ› „ƒﬁ  ﬁ«‰Ê‰Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType11"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType11','tblResubmissionType','11','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>Õ›Ÿ ‰Â«∆Ï  ’«·Õ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType12"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType12','tblResubmissionType','12','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>Õ›Ÿ ‰Â«∆Ï ›”Œ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType13"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType13','tblResubmissionType','13','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>Õ›Ÿ ‰Â«∆Ï ”œ«œ «·À„‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType14"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType14','tblResubmissionType','14','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>Õ›Ÿ ‰Â«∆Ï «·€«¡</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType15"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType15','tblResubmissionType','15','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>—›⁄ œ⁄ÊÏ „‰ «·‘—ﬂ…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType16"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType16','tblResubmissionType','16','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>—›⁄ œ⁄ÊÏ ÷œ «·‘—ﬂ…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType17"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType17','tblResubmissionType','17','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«‰–«— ÷œ «·‘—ﬂ…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType18"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType18','tblResubmissionType','18','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«‰–«— ﬁ«‰Ê‰Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType19"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType19','tblResubmissionType','19','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«‰–«— Ã«—Ï «Ìœ«⁄Â</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType20"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType20','tblResubmissionType','20','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td> €ÌÌ— „”«Õ… ⁄‰œ «·›”Œ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType21"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType21','tblResubmissionType','21','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td> „  ⁄œÌ· «·„”«Õ… »„« ÌŒ«·› ⁄ﬁœ «·⁄„Ì·</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType22"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType22','tblResubmissionType','22','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>‘Ìﬂ«  ⁄»œ «·—Õ„‰</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType23"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType23','tblResubmissionType','23','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„⁄«—÷</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType24"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType24','tblResubmissionType','24','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„— œ —’Ìœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType25"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType25','tblResubmissionType','25','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„’ÿ›Ï ⁄»œ «·„ÃÌœ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType26"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType26','tblResubmissionType','26','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„— œ  ÊﬁÌ⁄</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType27"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType27','tblResubmissionType','27','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„— œ  ›ﬁÌÿ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType28"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType28','tblResubmissionType','28','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„— œ Õ”«» „€·ﬁ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType29"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType29','tblResubmissionType','29','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„— œ Œÿ√ »‰ﬂÏ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType30"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType30','tblResubmissionType','30','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>⁄»Ì—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType31"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType31','tblResubmissionType','31','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>ÊﬂÌ· ›÷Ê·Ï</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType32"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType32','tblResubmissionType','32','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>„Õ„œ “ﬂ—Ì«</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType33"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType33','tblResubmissionType','33','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>≈‰–«— »«·«” ·«„</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType34"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType34','tblResubmissionType','34','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«Ìﬁ«› «·«Ã—«¡«  «·ﬁ«‰Ê‰Ì…</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType35"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType35','tblResubmissionType','35','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«œ«—… „—«Ã⁄… «·„»Ì⁄« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType36"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType36','tblResubmissionType','36','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td> ﬂ·›… Ê«ÃÂ«  «·„Ê·« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType37"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType37','tblResubmissionType','37','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>«Õ„œ „«Â—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType38"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType38','tblResubmissionType','38','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>·„ Ìﬁœ„ œ› — «·‘Ìﬂ« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType39"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType39','tblResubmissionType','39','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td> „  ”·Ì„ «·‘Ìﬂ« </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType40"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType40','tblResubmissionType','40','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>“Â—… Zone5</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType41"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType41','tblResubmissionType','41','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>‘—Ì› «Õ„œ</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="chkResubmissionType42"
+                                                                   type=checkbox onchange="OnCheckChanged('chkResubmissionType42','tblResubmissionType','42','ResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>ﬂ—Ì„ ‘«ﬂ—</td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+</form>            <td>
+
+
+
+                <div dir="rtl" style="overflow: scroll;max-height:1500px ; width: 100%;">
+
+
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+
+</body>
+
+
+
+
+
+
+
+</html>
+
+    </div>
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="/assets/js/browser.min.js"></script>
+    <script src="/assets/js/breakpoints.min.js"></script>
+    <script src="/assets/js/transition.js"></script>
+    <script src="/assets/js/owl-carousel.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+
+    <script src="/Scripts/bootstrap.js"></script>
+<script src="/Scripts/respond.js"></script>
+
+  
+ 
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@using System.Web.Script.Serialization;
+@{
+    ViewBag.Title = "AHUC";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/COMMONGrade.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/Grade.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script type="text/javascript">
+    $(document).ready(FillSemesterCourse);
+
+
+</script>
+<h2>AHUC</h2>
+@{
+    StudentCol objStudentCol = new StudentCol(true,0);
+    List<LevelSimple> lstGrade = objStudentCol.LevelLst.Select(x => x.GetSimple()).ToList();
+    var serializer = new JavaScriptSerializer();
+    SemesterCol objSemesterCol = new SemesterCol(false);
+    //objSemesterCol.RemoveAt(0);
+    serializer.MaxJsonLength = int.MaxValue;
+
+
+
+    // Content = serializer.Serialize(resultData),
+    string strGrade = serializer.Serialize(lstGrade);
+
+    string strTitle = "";
+    int intIndex = 0;
+
+}
+<div class="form-row">
+    <div class="col-2">
+
+        <input type="text" id="txtName" class="form-control form-control-sm" placeholder="Student Code Or Name" />
+    </div>
+    <div class="col-2">
+
+        <input type="text" id="txtCourseName" class="form-control form-control-sm" placeholder="Course Code Or Name" />
+    </div>
+    <div class="col-3">
+
+        <select id="cmbSemester" class="form-control form-control-sm">
+            @{
+                intIndex = 0;
+            }
+            @foreach (SemesterBiz objSemester in objSemesterCol)
+            {
+                <option value="@objSemester.ID">@objSemester.Desc</option>
+                intIndex++;
+            }
+        </select>
+    </div>
+    <div class="col-2">
+        <input type="button" class="Button" value="Fill" onclick="return FillSemesterCourse();" />
+    </div>
+</div>
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">النتيجة</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-2">
+            <button onclick="printDiv('','dvCourse')">Print</button>
+        </div>
+       
+    </div>
+    <div class="card-body">
+        <div id="dvCourse" class="table-responsive table table-bordered table table-hover table-striped" style="max-height:90%;max-width:100%; text-align:center;scroll-behavior:auto;height:auto;">
+
+        </div>
+    </div>
+</div>
+
+<div id="myRegisterationModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="MeterMeasureClose" class="close" onclick="  document.getElementById('myRegisterationModal').style.display = 'none'">&times;</span>
+         <div class="form-row">
+            <div class="col" id="dvSemester" style="scroll-behavior:auto;">
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="myRegisterationEditModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="RegisterationEditClose" class="close" onclick="  document.getElementById('myRegisterationEditModal').style.display = 'none'">&times;</span>
+
+        <input type="hidden" id="lblRegistrationEdit" value="" />
+        <div class="table-responsive" id="dvStudentRegisteration">
+            <table class="table" id="tblRegisterationEdit">
+                <tr>
+                    <td>
+                        <label>Midterm</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtMidterm" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Semester Work</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtSemesterWork" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr id="trPractical">
+                    <td>
+                        <label>Practical</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtPractical" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr id="trOral">
+                    <td>
+                        <label>Oral</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtOral" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Final</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtFinal" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Bonus</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtBonus" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr id="trClinical">
+                    <td>
+                        <label>Clinical</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtClinical" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Note</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtNote" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        <input type="button" value="Save" id="btnEditRegistration" class="Button" onclick="UpladRegisteration()" />
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+
+    function printDiv(strHeaderDiv, strBodyDiv) {
+        var vrCSS = "<link href=\"~/wwwroot/css/bootstrap.min.css\" rel=\"stylesheet\" type = \"text/css\">";
+        vrCSS += "<link href=\"~/wwwroot/css/bootstrap_limitless.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href= \"~/css/layout.min.css\" rel = \"stylesheet\" type = \"text/css\" >" +
+            "<link href=\"~/wwwroot/css/components.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"~/css/colors.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"~/wwwroot/css/custom.css\" rel=\"stylesheet\" type=\"text/css\">";
+
+
+        vrCSS = " <link href=\"/wwwroot/css/bootstrap.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/bootstrap_limitless.min.ar.css\" rel =\"stylesheet\" type =\"text/css\" >" +
+            "<link href=\"/wwwroot/css/layout.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/components.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/css/colors.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/custom.ar.css\" rel=\"stylesheet\" type=\"text/css\">";
+        var divDvHeader = "";
+        if (document.getElementById(strHeaderDiv) != null)
+            document.getElementById(strHeaderDiv).innerHTML = document.getElementById(strHeaderDiv).innerHTML;
+        var divContents = "";
+        if (document.getElementById(strBodyDiv) != null) { divContents = document.getElementById(strBodyDiv).innerHTML; }
+
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write(vrCSS);
+        a.document.write('<html>');
+        a.document.write('<html>');
+
+
+        a.document.write('<body dir=\"rtl\">');
+        a.document.write(divDvHeader);
+        a.document.write(divContents);
+        a.document.write('</body></html>');
+
+
+    }
+
+
+  
+</script>

@@ -1,0 +1,396 @@
+﻿@using SharpVision.UMS.UMSBusiness;
+<script type="text/javascript">
+    
+
+    function FillEMployee() {
+        var vrEmployeeSector = 0;
+        var vrEmployeeSectorCmbName = "cmbEmployeeSectorLevel";
+        for (var vrIndex = 5; vrIndex >= 1; vrIndex--) {
+            if (document.getElementById(vrEmployeeSectorCmbName + vrIndex).value > 0) {
+                vrEmployeeSector = document.getElementById(vrEmployeeSectorCmbName + vrIndex).value;
+                break;
+            }
+        }
+       
+        var objDvEmployee = document.getElementById("dvEmployee");
+        objDvEmployee.innerHTML = "";
+        var strName = document.getElementById("txtEmployeeName").value;
+        var strCode = document.getElementById("txtEmployeeCode").value;
+
+        var objEmpSearch = { ID: 0, Code: strCode, Name: strName, Job: "", EmployeeSector: "" };
+        var vrEmpSearch = JSON.stringify(objEmpSearch);
+        var objEmp = { strEmpCode: strCode, strEmpName: strName };
+        //alert(JSON.stringify(objEmp));
+        var vrServiceUrl = "../api/EmployeeWebController/GetEmployee";
+        $.ajax({
+            type: 'GET',
+            url: vrServiceUrl,
+            contentType: 'application/json; charset=utf-8',
+
+            dataType: 'json',
+            data: { intSectorID:vrEmployeeSector,strEmpCode: strCode, strEmpName: strName },
+            success: successFunc,
+            error: errorFunc
+        });
+
+
+        function successFunc(data, status) {
+
+
+            var strDV = "<table class=\"table\">";
+            var vrEmployee;
+            var vrRdID;
+            var vrRdChecked;
+            var vrRdSpanClass;
+            var vrEmployeeID;
+            for (var vrIndex = 0; vrIndex < data.length; vrIndex++) {
+                strDV += "<tr>";
+                vrEmployee = data[vrIndex];
+                vrEmployeeID = "lblEmployee" + vrEmployee.ID;
+                vrRdID = "rdEmployee" + vrEmployee.ID;
+                vrRdChecked = "";
+                vrRdSpanClass = "";
+                if (vrIndex == 0) {
+                    vrRdChecked = " checked=\"\" ";
+                    vrRdSpanClass = " class=\"checked\"";
+                }
+                strDV += "<input type=\"hidden\" id=\"" + vrEmployeeID + "\" value='" + JSON.stringify(vrEmployee) + "'\>";
+                strDV += "<td>" + vrEmployee.Code + "</td>";
+
+
+
+                strDV += "<td>" + vrEmployee.Name + "</td>";
+
+
+                strDV += "<td>" + vrEmployee.Sector + "</td>";
+                strDV += "<td><input type=\"button\" value=\"تثبيت\" id=\"btnReturnEmployee" + vrEmployee.ID + "\"  onclick=\"return onReturnClick('" + vrEmployeeID + "')\" name=\"btnReturnEmployee" + vrEmployee.ID + "\" /></td>";
+                strDV += "</tr>";
+            }
+            strDV += "</table>"
+            //alert(strDV);
+            objDvEmployee.innerHTML = strDV;
+
+        }
+
+        function errorFunc(jqXHR, textStatus, errorThrown) {
+            alert("ErrorFunct :" + errorThrown);
+        }
+
+
+        return false;
+
+
+    }
+
+    function onReturnClick(vrLblName) {
+        
+        var vrLbl = document.getElementById(vrLblName).value;
+         
+        var vrEmployee = JSON.parse(vrLbl);
+       
+        //alert(document.getElementById("lblEmployee").innerText);
+        document.getElementById("lblEmployee").innerText = vrEmployee.Name;
+        document.getElementById("lblEmployeeValue").setAttribute("value", vrLbl);
+
+        var vrModal = document.getElementById("myEmployeeModal");
+        vrModal.style.display = "none";
+        return false;
+    }
+    function OldDiv() {
+        strDV += "<div class=\"form-group row\">";
+        vrEmployee = data[vrIndex];
+        vrRdID = "rdEmployee" + vrEmployee.ID;
+        vrRdChecked = "";
+        vrRdSpanClass = "";
+        if (vrIndex == 0) {
+            vrRdChecked = " checked=\"\" ";
+            vrRdSpanClass = " class=\"checked\" ";
+        }
+        strDV += "<div class=\"col-lg-2\">";
+
+        {
+
+            // strDV += "<div class=\"form group pt - 2\">";
+            strDV += "<div class=\"form-check\">";
+            strDV += "<div class=\"uniform-choice\">";
+            strDV += "<label class=\"form-check-label\">";
+            strDV += "<span " + vrRdSpanClass + ">";
+            strDV += "<input type=\"radio\" class=\"form-check-input-styled\" name=\"rdEmployee\"  id=" + vrRdID + " value=\"" + vrEmployee.ID + "\" " + vrRdChecked + " data-fouc=\"\" >";
+            strDV += " ";
+            strDV += "</span>";
+            strDV += "</label>";
+            strDV += "</div>";
+            strDV += "</div>";
+            //  strDV += "</div>";
+
+
+        }
+        //    strDV += "</div>";
+        strDV += "</div>";
+        strDV += "<div class=\"col-lg-3\">" + vrEmployee.Code + "</div>";
+
+
+
+        strDV += "<div class=\"col-lg-3\">" + vrEmployee.Name + "</div>";
+
+
+        strDV += "<div class=\"col-lg-4\">" + vrEmployee.EmployeeSector + "</div>";
+
+        strDV += "</div>";
+    }
+    function InitializeEmployeeModal()
+    {
+        var ModalEmployee = document.getElementById("myEmployeeModal");
+
+        // Get the button that opens the modal
+        var btnEmployee = document.getElementById("myEmployeeBtn");
+
+        // Get the <span> element that closes the modal
+        var spanEmployee = document.getElementById("EmployeeClose");
+
+        // When the user clicks on the button, open the modal
+        btnEmployee.onclick = function () {
+            ModalEmployee.style.display = "block";
+            return false;
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        spanEmployee.onclick = function () {
+            ModalEmployee.style.display = "none";
+
+
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            //if (event.target == modal) {
+            //    modal.style.display = "none";
+            //}
+
+        }
+    }
+    function FillEmployeeSectorCmb(Level) {
+        if (Level >= 5)
+            return;
+
+        var vrCmbName = "cmbEmployeeSectorLevel" + Level;
+        var vrValue = document.getElementById(vrCmbName).value;
+        var strEmployeeSector = document.getElementById
+            ("lblEmployeeSectorIDs").getAttribute("idValue");
+
+        var arrEmployeeSector = JSON.parse(strEmployeeSector);
+
+        var arrChildren = arrEmployeeSector.filter(function (x) { return x.ParentID == vrValue && x.ID != vrValue; });
+        // alert(arrChildren[0].Name);
+        var vrEmpty = "<option value=\"0\">غير محدد</option>";
+        var vrCmbOption;
+        if (Level < 5) {
+            vrCmbOption = "";
+            var vrNewLevel;
+            vrNewLevel = Level + 1;
+            vrCmbName = "cmbEmployeeSectorLevel" + vrNewLevel;
+            vrCmbOption = vrEmpty;
+            for (var vrIndex = 0; vrIndex < arrChildren.length; vrIndex++) {
+                vrCmbOption = vrCmbOption + " <option value=\"" + arrChildren[vrIndex].ID + "\">" + arrChildren[vrIndex].Name + "</option>";
+            }
+
+            document.getElementById(vrCmbName).innerHTML = vrCmbOption;
+
+        }
+        for (var vrIndex = Level + 2; vrIndex <= 5; vrIndex++) {
+            vrCmbName = "cmbEmployeeSectorLevel" + vrIndex;
+            document.getElementById(vrCmbName).innerHTML = vrEmpty;
+        }
+
+    }
+
+</script>
+<input type="hidden" id="lblSelectedEmployee" value="" />
+<div class="form-row">
+    <div class="col-2">
+        <button class="btn btn-dark" id="myEmployeeBtn" type="button">تحديد موظف</button>
+    </div>
+    <div class="col-8 offset-1">
+        @{
+            EmployeeSimple objSimple = new EmployeeSimple();
+            objSimple.Name = "";
+            string strEmployee = "";
+            if (ViewBag.CurrentEmployee != null)
+            {
+                objSimple = (EmployeeSimple)ViewBag.CurrentEmployee;
+                strEmployee = Newtonsoft.Json.JsonConvert.SerializeObject(objSimple);
+            }
+
+            List<SectorSimple> _EmployeeSectorLst = SectorSimple.SectorLst;
+            string strEmployeeSectorIDs = Json.Encode(_EmployeeSectorLst);
+            List<SectorSimple> _MainEmployeeSectorLst = (from objSector in _EmployeeSectorLst
+                                                             //where objSector.ID == objSector.ParentID
+                                                         where objSector.Level == 1
+                                                         select objSector).ToList();
+            List<SectorSimple> obj2ndEmployeeSectorLst = new List<SectorSimple>();
+            List<SectorSimple> obj3rdEmployeeSectorLst = new List<SectorSimple>();
+            List<SectorSimple> obj4rthEmployeeSectorLst = new List<SectorSimple>();
+            List<SectorSimple> obj5thEmployeeSectorLst = new List<SectorSimple>();
+            SectorSimple objSimpleEmployeeSector = new SectorSimple();
+            int intES1St = 0;
+            int intES2Nd = 0;
+            int intES3Rd = 0;
+            int intES4Th = 0;
+            int intES5th = 0;
+
+        }
+        <h4> <label id="lblEmployee" style="width:75% ;text-align:center;background-color:ghostwhite;font-size:larger;font-weight:bold;">@objSimple.Name</label></h4>
+      
+        <input type="hidden" id="lblEmployeeValue" value="@strEmployee" name="lblEmployeeValue" />
+    </div>
+    <div class="col">
+        <div id="myEmployeeModal" class="modal" tabindex="-1">
+            <div class="modal-content">
+                <span id="EmployeeClose" class="close">&times;</span>
+                <div class="form-row">
+                    <div class="col-6">
+                        <label class="text-black">
+                            القطاعات(EmployeeSector)
+                        </label>
+                    </div>
+                </div>
+                <div id="dvEmployeeSectorSearch" class="form-row">
+                    <input type="hidden" id="lblEmployeeSectorIDs" idValue="@strEmployeeSectorIDs" />
+
+                    <div class="col-2">
+
+                        <select class="form-control form-control-uniform" id="cmbEmployeeSectorLevel1" name="cmbEmployeeSectorLevel1" onchange="FillEmployeeSectorCmb(1)">
+                            <option value="0">
+                                المستوى الأول
+                            </option>
+                            @foreach (SectorSimple objEmployeeSector in _MainEmployeeSectorLst)
+                            {
+                                if (objSimpleEmployeeSector.ID != 0 && objEmployeeSector.ID == objSimpleEmployeeSector.Family)
+                                {
+                                    <option value="@objEmployeeSector.ID.ToString()" selected>
+                                        @objEmployeeSector.Name
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@objEmployeeSector.ID.ToString()">
+                                        @objEmployeeSector.Name
+                                    </option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+
+                        <select class="form-control form-control-uniform" id="cmbEmployeeSectorLevel2" name="cmbEmployeeSectorLevel2" onchange="FillEmployeeSectorCmb(2)">
+                            <option value="0">
+                                المستوى الثاني
+                            </option>
+                            @foreach (SectorSimple objSimpleSector in obj2ndEmployeeSectorLst)
+                            {
+                                if (intES2Nd != 0 && objSimpleSector.ID == intES2Nd)
+                                {
+                                    <option value="@objSimpleSector.ID" selected>@objSimpleSector.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@objSimpleSector.ID">@objSimpleSector.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+
+                        <select class="form-control form-control-uniform" id="cmbEmployeeSectorLevel3" name="cmbEmployeeSectorLevel3" onchange="FillEmployeeSectorCmb(3)">
+                            <option value="0">
+                                المستوى الثالث
+                            </option>
+                            @foreach (SectorSimple objSimpleSector in obj3rdEmployeeSectorLst)
+                            {
+                                if (intES3Rd != 0 && objSimpleSector.ID == intES3Rd)
+                                {
+                                    <option value="@objSimpleSector.ID" selected>@objSimpleSector.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@objSimpleSector.ID">@objSimpleSector.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <input type="hidden" id="lblEmployeeSectorLevel4" name="lblEmployeeSectorLevel4" idValue="" />
+                        <select class="form-control form-control-uniform" id="cmbEmployeeSectorLevel4" name="cmbEmployeeSectorLevel4" onchange="FillEmployeeSectorCmb(4)">
+                            <option value="0">
+                                المستوى الرابع
+                            </option>
+                            @foreach (SectorSimple objSimpleSector in obj4rthEmployeeSectorLst)
+                            {
+                                if (intES4Th != 0 && objSimpleSector.ID == intES4Th)
+                                {
+                                    <option value="@objSimpleSector.ID" selected>@objSimpleSector.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@objSimpleSector.ID">@objSimpleSector.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input type="hidden" id="lblEmployeeSectorLevel5" name="lblEmployeeSectorLevel5" idValue="" />
+                        <select class="form-control form-control-uniform" id="cmbEmployeeSectorLevel5" name="cmbEmployeeSectorLevel5" onchange="FillEmployeeSectorCmb(5)">
+                            <option value="0">
+                                المستوى الخامس
+                            </option>
+                            @foreach (SectorSimple objSimpleSector in obj4rthEmployeeSectorLst)
+                            {
+                                if (intES5th != 0 && objSimpleSector.ID == intES5th)
+                                {
+                                    <option value="@objSimpleSector.ID" selected>@objSimpleSector.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@objSimpleSector.ID">@objSimpleSector.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+               
+                
+                
+                <div class="form-row">
+                    <div class="col-2">
+                        كود
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="txtEmployeeCode" name="txtEmployeeCode" />
+                    </div>
+                    <div class="col-2">
+                        اسم
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="txtEmployeeName" name="txtEmployeeName" />
+                    </div>
+                    <div class="col-2">
+                        <input type="button" value="Search" onclick="return FillEMployee()" />
+                    </div>
+                </div>
+                <div class="table-responsive" id="dvEmployee">
+
+                </div>
+
+
+            </div>
+               
+            </div>
+        </div>
+</div>

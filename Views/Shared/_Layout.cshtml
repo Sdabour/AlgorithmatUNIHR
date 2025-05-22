@@ -1,0 +1,199 @@
+﻿@using System.Web.UI.HtmlControls;
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" runat="server" id="metaDesc" content="" />
+    <!--RedirectToASPX-->
+    <title>ALGORITHMAT</title>
+
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css" />
+    <link href='http://fonts.googleapis.com/css?family=Playfair+Display|Pontano+Sans' rel='stylesheet' type='text/css'>
+    <link rel="Shortcut Icon" href="../../images/ALG1.ico">
+    <asp:ContentPlaceHolder ID="scriptHolder" runat="server"></asp:ContentPlaceHolder>
+    <script type="text/javascript">
+      
+
+        function SubmitCustomer()
+        {
+             var strMail, strPass;
+             strMail = document.getElementById("txtMail").value;
+             strPass = document.getElementById("txtPass").value;
+             if (strMail == "")
+             {
+                 alert("please enter your mail address");
+                 return;
+
+             }
+            @* string strTemp = "@"*@;
+             string strTemp = "";
+             if (strMail.indexOf(strTemp, 0)==-1)
+             {
+                 alert("please enter your mail address in correct way");
+                 return;
+
+             }
+
+             var xmlHTTP;
+             if (window.XMLHttpRequest)
+             {
+                 xmlHTTP = new window.XMLHttpRequest;//For browsers other than ie
+             }
+             else
+             {
+                 try
+                 {
+                     xmlHTTP = new ActiveXObject("MSXML2.XMLHTTP.3.0"); //for ie
+                 }
+                 catch (ex)
+                 {
+
+                 }
+             }
+             var strParam = "strMail=" + encodeURIComponent(strMail) + "&strPass=" + encodeURIComponent(strPass);
+
+             xmlHTTP.open("POST", "http://localhost:12093/AlgorithmatOnlineService.asmx/RegisterCustomer", true);//?strMail=" + strMail + "&strPass=" + strPass, true);
+             xmlHTTP.onreadystatechange = function () {
+                 if (xmlHTTP.readyState == 4) {
+
+                     if (xmlHTTP.status == 200) {
+                         //Retrieve some value
+                     } else {
+                         alert("Error Occurred! \n\n" + fault);
+                     }
+                 }
+             }
+             //End of function
+             xmlHTTP.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+             xmlHTTP.send(strParam);
+         }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="header-wrapper">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <h1>algorithmat</h1>
+                        <p>&nbsp;</p>
+                    </div>
+
+                    <div class="menu">
+                   
+                        @{
+                            int intOrder = 1;
+                            int intCntID, intPageID;
+                            intCntID = 0;
+                            intPageID = 0;
+                            if (Request["cnt"] != null)
+                            {
+                                int.TryParse(Request["cnt"].ToString(), out intCntID);
+                            }
+                            if (Request["pg"] != null)
+                            { int.TryParse(Request["pg"].ToString(), out intPageID); }
+                            if (intPageID == 1)
+                            { intOrder = 1; }
+                            if (intCntID > 0)
+                            { intOrder = intCntID + 1; }
+                            //int.TryParse( idMenuOrder.InnerText,out intOrder);
+                            int intTempCntID = 0;
+                            int intTempPgID = 0;
+                            string[] AClass = new string[5];
+                            for (int intIndex = 0; intIndex < AClass.Length; intIndex++)
+                            {
+                                AClass[intIndex] = "";
+                            }
+                            switch (intOrder)
+                            {
+
+                                case 1: AClass[0] = "active"; break;
+                                case 2: AClass[1] = "active"; break;
+                                case 3: AClass[2] = "active"; break;
+                                case 4: AClass[3] = "active"; break;
+                                case 5: AClass[4] = "active"; break;
+                            }
+
+                            string strMainUrl = "";
+
+                            if (System.Configuration.ConfigurationManager.AppSettings["MainURL"] != null)
+                            { strMainUrl = System.Configuration.ConfigurationManager.AppSettings["MainURL"]; }
+                            if (strMainUrl != "")
+                            { strMainUrl += "/"; }
+                            //AHref = strMainUrl;
+                            string [] AHref = new string[5];
+                            AHref[0] = strMainUrl + "index.aspx";
+
+                            AHref[1] = strMainUrl + "displaycontent.aspx?cnt=1";
+                            AHref[2] = strMainUrl + "displaycontent.aspx?cnt=2";
+                            AHref[3] = strMainUrl + "displaycontent.aspx?cnt=3";
+                            AHref[4] = strMainUrl + "displaycontent.aspx?cnt=4";
+
+                        }
+                        <ul runat="server" id="MainUL">
+                            <li><a id="a1" runat="server" cntID="0" class=@AClass[0] pgID="1" href=@AHref[0]>Home</a></li>
+                            <li><a id="a2" runat="server" cntID="1" class=@AClass[1]  pgID="0" href=@AHref[1] >About Us</a></li>
+                            <li><a id="a3" runat="server" cntID="2" class=@AClass[2]  pgID="0" href=@AHref[2] >Services</a></li>
+                            <li><a id="a4" runat="server" cntID="3" class=@AClass[3]  pgID="0" href=@AHref[3] >Solutions</a></li>
+                            <li><a id="a5" runat="server" cntID="4" class=@AClass[4]  pgID="0" href=@AHref[4] >ALGORITMAT</a></li>
+                            <li><a id="a6" runat="server" pgID="0" href="IndexAr.aspx">عربى</a></li>
+                            
+                          
+                        </ul>
+                     
+                    </div>
+                </div>
+                <asp:ContentPlaceHolder ID="headerHolder" runat="server"></asp:ContentPlaceHolder>
+            </div>
+            <div runat="server" class="HiddenDiv" id="idMenuOrder">1</div>
+        </div>
+        <div>
+          
+            <asp:ContentPlaceHolder ID="bodyHolder" runat="server">
+                @RenderBody()
+
+                @RenderSection("scripts", required: false)
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clearing"></div>
+        <div class="footer-wrapper">
+            <div class="footer">
+                <div class="footer-panel marRight">
+
+                </div>
+
+                <div class="footer-panel marRight">
+
+                </div>
+
+                <div class="newsletter">
+
+
+                    <h1>Newsletter</h1>
+                    <h2>sign up </h2>
+                    <ul>
+                        <li><input name="" type="email" class="newsletter-input" id="txtMail" /></li>
+                        <li><input name="" type="password" pattern="****" class="newsletter-input1" id="txtPass" /></li>
+                        <li><a class="submit" onclick="SubmitCustomer()">Submit</a></li>
+
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--- footer-wrapper div end -->
+        <div class="clearing"></div>
+        <div class="footer-strip-wrapper">
+            <div class="footer-strip">
+                <p>Copyright (c) ALGORITHMAT. All rights reserved.<a class="footerlink" href="http://www.algorithmat.com"> ALGORITHMAT </a> <a class="footerlink" href="http://www.algorithmat.com/sitemap.aspx"> Site Map </a> </p>
+            </div>
+
+          
+        </div>
+    </form>
+</body>
+</html>

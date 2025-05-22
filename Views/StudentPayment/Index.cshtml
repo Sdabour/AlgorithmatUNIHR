@@ -1,0 +1,227 @@
+﻿
+
+
+@using AlgorithmatMVC.UNI.UNIBusiness;
+@using SharpVision.Base.BaseBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@{
+    ViewBag.Title = "StudentPayment";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+@{
+    StudentSimple objStudent = new StudentSimple();
+    string strTemp = "";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/Scripts/CRM/PaymentSimple.js"></script>
+<script src="~/Scripts/CRM/PaymentSimpleJ.js"></script>
+<script src="~/Scripts/CRM/MulctDiscount.js"></script>
+<script src="~/Scripts/CRM/MulctDiscountJ.js"></script>
+<script src="~/Scripts/ControlScript.js"></script>
+<script src="~/Scripts/CRM/SerializableSimple.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+
+<script src="~/Scripts/CRM/InstallmentSimple.js"></script>
+<script src="~/Scripts/CRM/DiscountSimple.js"></script>
+<script src="~/Scripts/CRM/CheckSimple.js"></script>
+<script src="~/Scripts/CRM/CheckSimpleJS.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitializeStudentModal();
+
+    }
+
+    );
+
+</script>
+<div class="card" style="max-height:500px;scroll-behavior:auto;">
+
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">بيانات اساسية</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="form-row" id="rowSemester">
+            <div class="col-6">
+                @{
+                    SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+                     strTemp = Json.Encode(objSemester);
+                    string strAllCoursesAuthorized = UserBiz.CurrentUser.UserFunctionInstantCol.GetIndex(ExamBiz.UMSAllCourses) != -1 ? "1" : "0";
+                    string strAllExamTypeAuthorized = UserBiz.CurrentUser.UserFunctionInstantCol.GetIndex(ExamBiz.UMSAllExamType) != -1 ? "1" : "0";
+                    int intFaculty = 0;
+                    string strFaculty = "";
+                    FacultySimple objFaculty = new FacultySimple();
+                    if (Session["CurrentFaculty"] != null)
+                    {
+                        strFaculty = Session["CurrentFaculty"].ToString();
+                        objFaculty = Json.Decode<FacultySimple>(strFaculty);
+                    }
+
+                    intFaculty = objFaculty.ID;
+
+                    string strAsignedCourseCode = "ExamCourseFaculty" + intFaculty.ToString();
+                    string strAssignedCourse, strAssignedType;
+                    AssignmentObjectBiz objAssignmentBiz = new AssignmentObjectBiz(strAsignedCourseCode);
+                    UserObjectAssignmentCol objAssignedCol = objAssignmentBiz.GetAllAssignedObjectCol(UserBiz.CurrentUser);
+                    List<int> lstIDs = objAssignedCol.Cast<UserObjectAssignmentBiz>().Select(x => x.ObjectValue).ToList();
+                    strAssignedCourse = Json.Encode(lstIDs);
+
+                    objAssignmentBiz = new AssignmentObjectBiz("ExamType");
+                    objAssignedCol = objAssignmentBiz.GetAllAssignedObjectCol(UserBiz.CurrentUser);
+                    lstIDs = objAssignedCol.Cast<UserObjectAssignmentBiz>().Select(x => x.ObjectValue).ToList();
+                    strAssignedType = Json.Encode(lstIDs);
+                }
+                <input type="hidden" id="lblSemester" value=" @strTemp" />
+                <input type="hidden" id="lblAllExamAuthorized" value=" @strAllExamTypeAuthorized" />
+                <input type="hidden" id="lblAllCoursesAuthorized" value=" @strAllCoursesAuthorized" />
+                <input type="hidden" id="lblAssignedCourse" value=" @strAssignedCourse" />
+                <input type="hidden" id="lblAssignedType" value=" @strAssignedType" />
+                <label style="background-color:azure;text-align:center;font-size:large;">@objSemester.Desc</label>
+            </div>
+            
+        </div>
+        <br />
+        <div class="form-row">
+            <div class="col">
+                @{ Html.RenderPartial("../UNI/StudentSimpleSearch");}
+
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-row">
+            <div class="col">
+                <form action="/Student/Download_UnitPDF" method="post">
+                    <input type="hidden" id="lblGridCheckedIDs" name="lblGridCheckedIDs" value="5" />
+                    <input type="submit" value="طباعة" />
+                </form>
+            </div>
+            <div class="col-1"><button value="Receipt" onclick="return OnReceiptPrintClick();">Receipt</button></div>
+        </div>
+    </div>
+</div>
+<div class="card" style="scroll-behavior:auto;">
+
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">الاقساط</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    @{
+        ///UMS
+        int intChangePaymentDateAuthorized = 1;//PaymentSimple.UMSChangePaymentDateAuthorised ? 1 : 0;
+        int intAcceptMulctDiscountAuthorized = 0;//MulctDiscountBiz.UMSAcceptMulctDiscountAuthorized ? 1 : 0;
+    }
+    <input type="hidden" id="lblPaymentType" value="Installment" />
+    <div class="card-body" style="max-height:6000px;">
+        <input type="hidden" id="lblChangeDateAuthorized" value="@intChangePaymentDateAuthorized" />
+        <input type="hidden" id="lblAcceptMulctDiscountAuthorized" value="@intAcceptMulctDiscountAuthorized" />
+        <div class="table-responsive" id="dvInstallment">
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<div class="content">
+    <div id="myDiscountModal" class="modal" tabindex="-1">
+        <input type="hidden" id="lblCurrentInstallment" value="" />
+        <div class="modal-content">
+            <span id="DiscountClose" class="close" onclick="return CloseDiscountModal();">&times;</span>
+            @{
+                List<SerializableBiz> objDiscountTypeCol = new DiscountTypeCol(false).Cast<DiscountTypeBiz>().Select(x => new SerializableBiz() { ID = x.ID, Name = x.Name }).ToList();
+
+
+            }
+            <input type="hidden" id="lblDiscountType" value="@Json.Encode(objDiscountTypeCol)" />
+
+
+
+            <div class="content" id="dvDiscount">
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <div id="myMulctModal" class="modal" tabindex="-1">
+        <input type="hidden" id="lblCurrentInstallment" value="" />
+        <div class="modal-content">
+            <span id="MulctClose" class="close" onclick="document.getElementById('myMulctModal').style.display='none'">&times;</span>
+
+            <div class="form-row">
+                <input type="hidden" id="lblMulctInstallment" value="" />
+                <div class="col-1"><label style="text-align:center;background-color:aliceblue" id="lblMulctInstallmentDesc"></label></div>
+                <div class="col-2">تاريخ استحقاق</div>
+                <div class="col-2"><label style="text-align:center;background-color:aliceblue" id="lblMulctInstallmentDueDate"></label></div>
+
+                <div class="col-2">قيمة القسط</div>
+                <div class="col-1"><label style="text-align:center;background-color:aliceblue" id="lblMulctInstallmentValue"></label></div>
+                <div class="col-1">قيمة الغرامة</div>
+                <div class="col-1"><label style="text-align:center;background-color:aliceblue" id="lblMulctInstallmentDueMulct"></label></div>
+            </div>
+            <div class="form-row">
+                <div class="col-1">قيمة الخصم</div>
+                <div class="col-2"><input type="number" class="form-control" id="txtMulctDiscountValue" /></div>
+                <div class="col-1">وصف الخصم</div>
+                <div class="col-2"><input type="text" class="form-control" id="txtMulctDiscountDesc" /></div>
+                <div class="col-2">
+                    <input type="button" id="btnDiscountMulct" value="خصم" onclick="return UploadMulctDiscount()" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-2">
+
+                    <input type="button" id="btnPayMulct" value="سداد" onclick="return UploadMulctPayment()" />
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="card" style="max-height:500px;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">سداد المدفوعات</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+
+        <input type="hidden" id="lblPaymentType" value="Temp" />
+        @{
+
+            Html.RenderPartial("../Payment/Payment");
+        }
+
+
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+﻿
+
+<script src="~/Scripts/CRM/CheckSimple.js"></script>
+<script src="~/Scripts/CRM/CheckSimpleJS.js"></script>
+
+<script src="~/Scripts/CRM/PaymentSimple.js"></script>
+<script src="~/Scripts/CRM/PaymentSimpleJ.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<div class="content" id="dvPaymentTemp">
+
+
+</div>
+<div class="form-row">
+    <div class="col-1"><button value="Receipt" onclick="return GetReceiptHTML();">Receipt</button></div>
+</div>
+<div class="content" id="dvPayment">
+
+</div>
+
+<div class="content">
+
+    <div id="myCheckModal" class="modal" tabindex="-1">
+        <input type="hidden" id="lblAllCheck" value="" />
+        <input type="hidden" id="lblCurrentCheck" value="" />
+
+
+
+        <div class="modal-content">
+            <span id="CheckClose" class="close" onclick="return CloseCheckModal();">&times;</span>
+
+
+
+
+            <div class="content" id="dvCheck">
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

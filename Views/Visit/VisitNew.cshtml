@@ -1,0 +1,85 @@
+﻿@using SharpVision.CRM.CRMBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@using SharpVision.SystemBase;
+@using System.Linq;
+@using AlgorithmatMVC.Controllers.CRMController;
+@{
+    Layout = null;
+}
+@{
+
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strBranchID = System.Configuration.ConfigurationManager.AppSettings["CurrentBranch"];
+
+
+
+
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+    SysData.Language = intLanguage;
+
+    #endregion
+    #region Fill Objects ObjTypeCol and Others
+    VisitTypeCol objTypeCol = new VisitTypeCol();
+    IEnumerable<SingleVisitType> objCol = from objTypeBiz in objTypeCol.Cast<VisitTypeBiz>()
+                                          where objTypeBiz.WorkGroupBiz.ID != 0
+                                          select new SingleVisitType() { ID = objTypeBiz.ID, Name = objTypeBiz.Name, WorkGroup = objTypeBiz.WorkGroupBiz.ID };
+
+    string strVisitType = Json.Encode(objCol);
+    //objTypeCol = new VisitTypeCol(true);
+    //foreach (VisitTypeBiz objTypeBiz in objCol)
+    //{
+    //    objTypeCol.Add(objTypeBiz);
+    //}
+    #endregion  
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/VisitControlScript.js"></script>
+    
+    <script type="text/javascript">
+         $(document).ready(function () {
+             $('#btnSave').click(SaveNewVisit);
+         })
+    </script>
+    <title>VisitNew</title>
+</head>
+<body>
+    <input type="text" hidden id="txtBranchID" value="@strBranchID" />
+
+    <div dir="rtl">
+        <table  align=center border="1" style="width:100%">
+            <tr>
+                <td width="272">&#1587;&#1576;&#1576; &#1575;&#1604;&#1586;&#1610;&#1575;&#1585;&#1577;</td>
+                <td>
+                    <select id="cmbVisitType" name="cmbVisitType" workGroupValue="@strVisitType">
+                        @foreach (SingleVisitType objBiz in objCol)
+                        {
+                        <option value="@objBiz.ID.ToString()" groupValue="@objBiz.WorkGroup" >@objBiz.Name</option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td width="272">&#1585;&#1602;&#1605; &#1575;&#1604;&#1578;&#1604;&#1610;&#1601;&#1608;&#1606;</td>
+                <td><input type=text id="txtPhoneNo" name="txtPhoneNo"></td>
+            </tr>
+            <tr>
+                <td width="272">&nbsp;</td>
+                <td><input type=button id="btnSave"  name="btnSave" value="&#1581;&#1601;&#1592;"></td>
+            </tr>
+
+        </table>
+    </div>
+</body>
+</html>

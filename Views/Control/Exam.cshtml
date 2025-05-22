@@ -1,0 +1,199 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@{
+    ViewBag.Title = "Exam";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/TeacherType.js"></script>
+<script src="~/Scripts/UNI/Teacher.js"></script>
+<script src="~/Scripts/UNI/TeacherJ.js"></script>
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/Group.js"></script>
+<script src="~/Scripts/UNI/GroupJS.js"></script>
+
+<script src="~/Scripts/UNI/LectureType.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/Applicant.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UNI/Exam.js"></script>
+<script src="~/Scripts/UNI/ExamGroup.js"></script>
+<script src="~/Scripts/UNI/RegisterationExamJS.js"></script>
+<script src="~/Scripts/UNI/Hall.js"></script>
+<script src="~/Scripts/UNI/HallJS.js"></script>
+<div class="form-row" id="row_Semester">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strSemester = Json.Encode(objSemester);
+        }
+        <input type="hidden" id="lblSemester" value="@strSemester" />
+        <label id="lblSemesterDesc" style="background-color:honeydew">@objSemester.Desc</label>
+    </div>
+</div>
+<div class="form-row">
+
+    <div class="col">
+
+        @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+    </div>
+</div>
+
+<br />
+<div class="form-row">
+    <div class="col-1">
+        <input type="button" value="Exam" onclick="ShowExamModal()" />
+    </div>
+    <div class="col-2">
+        <input type="hidden" id="lblSelectedExam" value="" />
+        <label id="lblSelectedExamCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-4">
+
+        <label id="lblSelectedExamCourseName" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamDate" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamDesc" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedExamGrade" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+</div>
+<div class="form-row" id="ExamTypeRow">
+    <div class="col-1">Not Specified</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeNotSpecified" value="0" checked />
+
+    </div>
+    <div class="col-1">MidTerm</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeMidterm" value="1" />
+
+    </div>
+    <div class="col-1">Semester Work</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeSemesterWork" value="2" />
+
+    </div>
+    <div class="col-1">Oral</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeOral" value="3" />
+
+    </div>
+    <div class="col-1">Practical</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypePractical" value="4" />
+
+    </div>
+    <div class="col-1">Final</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeFinal" value="5" />
+
+    </div>
+    <div class="col-1">Clinical</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeClinical" value="6" />
+
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="date" id="dtExamDate" class="form-control form-control-sm" />
+    </div>
+    <div class="col-2">
+
+
+        <input type="time" class="form-control form-control-sm" id="dtStartTime" />
+    </div>
+    <div class="col-2">
+        <input type="time" class="form-control form-control-sm" id="dtEndTime" />
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="text" id="txtExamDesc" class="form-control" placeholder="Desc" />
+    </div>
+    <div class="col-2">
+        <input type="button" id="btnSaveExam" value="Save" class="form-control" onclick="SaveExam()" />
+    </div>
+</div>
+<br />
+<div class="form-row">
+    <div class="col-1">
+        <button onclick="SearchRegisterationGroup(); ShowGroupModal();" class="form-control form-control-sm">لجان </button>
+    </div>
+</div>
+
+<div class="table-responsive" id="tblExamGrroup">
+
+</div>
+<div id="myExamModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="ExamClose" class="close" onclick="  document.getElementById('myExamModal').style.display = 'none'">&times;</span>
+
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchExam()" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive" id="tblExam">
+
+        </div>
+
+    </div>
+
+</div>
+<div id="myRegisterationGroupModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="RegisterationGroupClose" class="close" onclick="  document.getElementById('myRegisterationGroupModal').style.display = 'none'">&times;</span>
+
+        <div class="table-responsive" id="tblRegisterationGroup">
+
+        </div>
+
+    </div>
+
+</div>
+<div id="myHallModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="HallClose" class="close" onclick="  document.getElementById('myHallModal').style.display = 'none'">&times;</span>
+        <input type="hidden" id="lblHallGroup" value="0" />
+        <div class="form-row">
+            <div class="col-4">
+
+            </div>
+            <div class="col-2">
+                <input type="button" value="Search" onclick="SearchHall()" />
+            </div>
+        </div>
+        <div class="table-responsive" id="tblHall">
+
+        </div>
+
+    </div>
+
+</div>
+

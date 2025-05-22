@@ -1,0 +1,258 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@using System.Web.Script.Serialization;
+@{
+    ViewBag.Title = "AHUC";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+
+
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/UNI/COMMONLevel.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/Level.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script type="text/javascript">
+    $(document).ready(FillLevel);
+
+
+</script>
+<h2>AHUC</h2>
+@{
+    string strFaculty = "";
+    int intFaculty = 1;
+    if (Session["CurrentFaculty"] != null)
+    {
+        strFaculty = Session["CurrentFaculty"].ToString();
+        intFaculty = Json.Decode<FacultySimple>(strFaculty).ID;
+    }
+    StudentCol objStudentCol = new StudentCol(false,intFaculty);
+    List<LevelSimple> lstLevel = objStudentCol.PostedLevelLst.Select(x => x.GetSimple()).ToList();
+    var serializer = new JavaScriptSerializer();
+
+
+    serializer.MaxJsonLength = int.MaxValue;
+
+
+
+    // Content = serializer.Serialize(resultData),
+    string strLevel = serializer.Serialize(lstLevel);
+
+    string strTitle = "";
+    int intIndex = 0;
+
+}
+<div class="form-row">
+    <div class="col-2">
+        <input type="hidden" id="lblLevel" value='@strLevel' />
+        <input type="text" id="txtName" class="form-control form-control-sm" placeholder="Code Or Name" />
+    </div>
+    <div class="col-3">
+
+        <select id="cmbLevel" class="form-control form-control-sm">
+            @{
+                intIndex = 0;
+            }
+            @foreach (LevelSimple objLevel in lstLevel)
+            {
+                <option value="@intIndex">@objLevel.LevelDesc</option>
+                intIndex++;
+            }
+        </select>
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Fill" onclick="return FillLevel()" />
+    </div>
+
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Print" onclick="printDiv('','dvLevel','dvLevelFooter')" />
+    </div>
+</div>
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">النتيجة</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div id="dvLevel" class="table-responsive table table-bordered table table-hover table-striped" style="max-height:90%;max-width:100%; text-align:center;scroll-behavior:auto;height:auto;">
+
+        </div>  <br />
+                <div class="content" id="dvLevelFooter">
+                    <div class="form-row">
+                        <div class="col-3" style="font:bold;">
+                            رئيس الكنترول
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3" style="font:bold;">
+                            عميد الكلية
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3" style="font:bold;">
+                            رئيس الجامعة
+                        </div>
+                    </div><br />
+                    <div class="form-row">
+                        <div class="col-3">
+                           
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3">
+                           
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3">
+                            
+                        </div>
+                    </div>
+
+</div>                <br />
+    </div>
+</div>
+
+<div id="myRegisterationModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="MeterMeasureClose" class="close" onclick="  document.getElementById('myRegisterationModal').style.display = 'none'">&times;</span>
+         <div class="form-row">
+            <div class="col" id="dvOldSemester" style="scroll-behavior:auto;">
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div id="myRegisterationEditModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="RegisterationEditClose" class="close" onclick="  document.getElementById('myRegisterationEditModal').style.display = 'none'">&times;</span>
+
+        <input type="hidden" id="lblRegistrationEdit" value="" />
+        <div class="table-responsive" id="dvStudentRegisteration">
+            <table class="table" id="tblRegisterationEdit">
+                <tr>
+                    <td>
+                        <label>Midterm</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtMidterm" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Semester Work</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtSemesterWork" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Practical</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtPractical" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Oral</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtOral" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Final</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtFinal" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Bonus</label>
+                    </td>
+                    <td>
+                        <input type="number" id="txtBonus" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Note</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtNote" class="form-control form-control-sm" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label></label>
+                    </td>
+                    <td>
+                        <input type="button" value="Save" id="btnEditRegistration" class="Button" onclick="UpladRegisteration()" />
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+<script type="text/javascript">
+
+
+    function printDiv(strHeaderDiv, strBodyDiv,strFooterDiv) {
+        var vrCSS = "<link href=\"~/wwwroot/css/bootstrap.min.css\" rel=\"stylesheet\" type = \"text/css\">";
+        vrCSS += "<link href=\"~/wwwroot/css/bootstrap_limitless.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href= \"~/css/layout.min.css\" rel = \"stylesheet\" type = \"text/css\" >" +
+            "<link href=\"~/wwwroot/css/components.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"~/css/colors.min.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"~/wwwroot/css/custom.css\" rel=\"stylesheet\" type=\"text/css\">";
+
+
+        vrCSS = " <link href=\"/wwwroot/css/bootstrap.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/bootstrap_limitless.min.ar.css\" rel =\"stylesheet\" type =\"text/css\" >" +
+            "<link href=\"/wwwroot/css/layout.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/components.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/css/colors.min.ar.css\" rel=\"stylesheet\" type=\"text/css\">" +
+            "<link href=\"/wwwroot/css/custom.ar.css\" rel=\"stylesheet\" type=\"text/css\">";
+        var divDvHeader = "";
+        if (document.getElementById(strHeaderDiv) != null)
+            document.getElementById(strHeaderDiv).innerHTML = document.getElementById(strHeaderDiv).innerHTML;
+        var divContents = "";
+        if (document.getElementById(strBodyDiv) != null) { divContents = document.getElementById(strBodyDiv).innerHTML; }
+        var divFooter = "";
+        if (document.getElementById(strFooterDiv) != null) { divFooter = document.getElementById(strFooterDiv).innerHTML; }
+
+        var a = window.open('', '', 'height=500, width=500');
+        a.document.write(vrCSS);
+        a.document.write('<html>');
+        a.document.write('<html>');
+
+
+        a.document.write('<body dir=\"rtl\">');
+        a.document.write(divDvHeader);
+        a.document.write(divContents);
+        a.document.write(divFooter);
+        a.document.write('</body></html>');
+
+
+    }
+
+
+
+</script>

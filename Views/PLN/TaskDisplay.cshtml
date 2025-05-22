@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+@using SharpVision.HR.HRBusiness;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TaskDisplay</title>
+</head>
+<body>
+    @{ 
+        TaskCol _TaskCol = new TaskCol();
+
+    }
+    <div> 
+        <div id="dvMainTask" class="container">
+             @foreach (TaskBiz objTaskBiz in _TaskCol)
+             {
+            <div class="row">
+                <div class="col-md-1">
+                    @objTaskBiz.Date.ToString("yyyy-MM-dd");
+                </div>
+                <div class="col-md-3">
+                    @objTaskBiz.ShortDesc;
+                </div>
+                <div class="col-md-1">
+                    @objTaskBiz.IterationTypeStr;
+                </div>
+                <div class="col-md-3">
+                    @objTaskBiz.EmployeeCreator.Name;
+                </div>
+                <div class="col-md-3">
+                    @objTaskBiz.EmployeeAssigned.Name;
+                </div>
+                <div class="col-md-1">
+                    @objTaskBiz.StatusStr;
+                </div>
+
+
+            </div>
+             }
+        </div>
+    </div>
+</body>
+</html>

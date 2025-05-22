@@ -1,0 +1,288 @@
+﻿@using SharpVision.CRM.CRMBusiness;
+@using SharpVision.SystemBase
+@using SharpVision.UMS.UMSBusiness
+@using System.Web.Script.Serialization
+@using SharpVision.Base.BaseBusiness;
+@using System.Linq;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReservationSub</title>
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/ControlScript.js"></script>
+    <script type="text/javascript">
+        $(document).ready(
+            function () {
+                $("#btnGetReservation").click("OnReservation");
+            }
+        )
+    </script>
+    @{
+
+        #region IntializeConnection
+        int intLanguage = 0;
+        string strLang = Request["Lang"];
+        string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+        string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+        SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+        UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+        SysData.Language = intLanguage;
+        #endregion
+        #region
+       
+
+        
+        
+        string _TempName;
+        
+
+        ResubmissionTypeCol _ResubmissionTypeCol = new ResubmissionTypeCol();
+        SharpVision.HR.HRBusiness.BranchCol _BranchCol = new SharpVision.HR.HRBusiness.BranchCol();
+        ProjectCol _ProjectCol = new ProjectCol(false);
+        IEnumerable<SerializableBiz> objProjectCol = from objBiz in _ProjectCol.Cast<ProjectBiz>()
+                                                     select objBiz.SerializableObject;
+
+        IEnumerable<SerializableBiz> objBranchCol = from objBiz in _BranchCol.Cast<BranchBiz>()
+                                                    select objBiz.SerializableObject;
+        IEnumerable<SerializableBiz> objResubmissionCol = from objBiz in _ResubmissionTypeCol.Cast<ResubmissionTypeBiz>()
+                                                          select objBiz.SerializableObject;
+
+        string strSerializeProject = Json.Encode(objProjectCol);
+        string strSerializeBranch = Json.Encode(objBranchCol);
+        string strSerializeResubmissionType = Json.Encode(objResubmissionCol);
+        string strCheck;
+        bool _SelectEnabled = true;
+        #endregion
+
+
+    }
+
+    @{
+      
+    }
+</head>
+<body dir="rtl">
+    <script src="~/Scripts/ControlScript.js"></script>
+    <table>
+        <tr>
+
+            <td>
+
+
+                <div id=dvContract>
+
+
+
+                    <div id="dvReservation">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1578;&#1593;&#1575;&#1602;&#1583; &#1605;&#1606; </span>
+                                    <input type=date id="dtSUBRESContractFrom" name="dtSUBRESContractFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtSUBRESContractTo" name="dtSUBRESContractTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1575;&#1604;&#1581;&#1580;&#1586; &#1605;&#1606;</span>
+                                    <input type=date id="dtSUBRESReservationFrom" name="dtSUBRESReservationFrom" />
+
+                                </td>
+                                <td>
+                                    <span>&#1575;&#1604;&#1609; </span>
+                                    <input type=date id="dtSUBRESReservationTo" name="dtSUBRESReservationTo" />
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivSUBRESMultipleBranch" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>&#1601;&#1585;&#1593;</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="SUBRESBranchCheckedCol" name="SUBRESBranchCheckedCol" value="" />
+                                                    <input style="width:195px" type="text"
+                                                           onchange="OnTxtFloorChanged('txtSUBRESBranchFilter','tblSUBRESBranch','chkSUBRESBranch','SUBRESBranchCheckedCol');"
+                                                           id="txtSUBRESBranchFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table style="height: 90%" id="tblBranch" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeBranch" SelectedObjectCol="@strSerializeBranch" width="202">
+                                                @foreach (BranchBiz objBranch in _BranchCol)
+                                                {
+                                                    _TempName = "chkSUBRESBranch" + objBranch.ID.ToString();
+                                                    <tr>
+                                                        <td>
+                                                            <input id="@_TempName"
+                                                                   type=checkbox onchange="OnCheckChanged('@_TempName','tblSUBRESBranch','@objBranch.ID','SUBRESBranchCheckedCol')" />
+                                                        </td>
+                                                        <td>@objBranch.Name</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                        <table width="267">
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                &#1603;&#1608;&#1583;&nbsp; &#1575;&#1604;&#1608;&#1581;&#1583;&#1577;
+                                            </td>
+                                            <td width="169">
+                                                <input type="text" name="txtSUBRESUnitCode" id="txtSUBRESUnitCode" size="23">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div id="DivSUBRESMultipleProject" class="DivMultipleChecked" style="">
+
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="SUBRESProjectCheckedCol" name="SUBRESProjectCheckedCol" value="" />
+                                                    <input style="width:195px" type="text"
+                                                           onchange="OnTxtFloorChanged('txtSUBRESProjectFilter','tblSUBRESProject','chkSUBRESProject','SUBRESProjectCheckedCol');"
+                                                           id="txtSUBRESProjectFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div style="width: 200px; height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                                            <table style="height: 90%" id="tblSUBRESProject" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeProject" SelectedObjectCol="@strSerializeProject">
+                                                @foreach (ProjectBiz objProject in _ProjectCol)
+                                                {
+                                                    _TempName = "chkSUBRESProject" + objProject.ID.ToString();
+                                                    <tr>
+                                                        <td>
+                                                            <input id="@_TempName"
+                                                                   type=checkbox onchange="OnCheckChanged('@_TempName','tblSUBRESProject','@objProject.ID','SUBRESProjectCheckedCol')" />
+                                                        </td>
+                                                        <td>@objProject.Name</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="DivSUBRESMultipleResubmissionType" class="DivSUBRESMultipleChecked" style="">
+
+                                        <table>
+                                            <tr><td>ResubmissionType</td></tr>
+                                            <tr>
+                                                <td>
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <span>&#1578;&#1575;&#1585;&#1610;&#1582; &#1576;&#1610;&#1606;</span><input id="dtSUBRESStartResubmission" name="dtSUBRESStartResubmission" type='Date' />
+                                                            </td>
+                                                            <td><span>&#1608;</span><input id="dtSUBRESEndResubmission" name="dtSUBRESEndResubmission" type="date" /></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" id="SUBRESResubmissionTypeCheckedCol" name="SUBRESResubmissionTypeCheckedCol" value="" />
+                                                    <input style="width:358; height:22" type="text"
+                                                           onchange="OnTxtFloorChanged('txtSUBRESResubmissionTypeFilter','tblSUBRESResubmissionType','chkSUBRESResubmissionType','SUBRESResubmissionTypeCheckedCol');"
+                                                           id="txtSUBRESResubmissionTypeFilter" onkeyup="this.onchange();"
+                                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                                </td>
+                                            </tr>
+                                        </table><br>
+                                        <div style="width: 368px; height: 274px;background-color:ghostwhite;overflow-x:auto" class="panel-body">
+
+                                            <table style="height: 90%" id="tblSUBRESResubmissionType" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeResubmissionType" SelectedObjectCol="@strSerializeResubmissionType" width="367">
+                                                @foreach (ResubmissionTypeBiz objResubmissionType in _ResubmissionTypeCol)
+                                                {
+                                                    _TempName = "chkSUBRESResubmissionType" + objResubmissionType.ID.ToString();
+                                                    <tr>
+                                                        <td>
+                                                            <input id="@_TempName"
+                                                                   type=checkbox onchange="OnCheckChanged('@_TempName','tblSUBRESResubmissionType','@objResubmissionType.ID','SUBRESResubmissionTypeCheckedCol')" />
+                                                        </td>
+                                                        <td>@objResubmissionType.Name</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+            </td>
+
+            <td width="519">
+                <table id="tblSUBRESReservationDisplay" border="1" align="right" dir="rtl" height="54" width="519">
+                    <tr height=10>
+                        <th width="23">
+                            <input type=checkbox id="chkSUBRESAllReservation" name="chkSUBRESAllReservation" onchange="ChkChanged('chkSUBRESAllReservation', 'chkSUBRESReservation', 'SUBRESReservationCheckCol')">
+                        </th>
+                        <th width="38"><span lang="ar-eg">&#1603;&#1608;&#1583;</span></th>
+                        <th width="193"><span lang="ar-eg">&#1575;&#1587;&#1605;</span></th>
+                        <th width="86"><span lang="ar-eg">&#1605;&#1588;&#1585;&#1608;&#1593;</span></th>
+                        <th dir="ltr"><span lang="ar-eg">&#1608;&#1581;&#1583;&#1577;</span></th>
+                    </tr>
+
+                    <tr>
+                        <td width="23">
+                            <input type=checkbox id="chkSUBRESReservation" name="chkSUBRESReservation">
+                        </td>
+                        <td width="38">&nbsp;</td>
+                        <td width="193">&nbsp;</td>
+                        <td width="86">&nbsp;</td>
+                        <td dir="ltr">&nbsp;</td>
+                    </tr>
+
+
+                </table>
+                <input type="hidden" id="SUBRESReservationCheckCol" name="SUBRESReservationCheckCol" value="" />
+                <input type="hidden" id="SUBRESReservationCol" name="SUBRESReservationCol" value="" />
+
+            </td>
+        </tr>
+    </table>
+
+
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewData["Title"] = "Maintainance";
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+
+}
+<!DOCTYPE html>
+@using AlgorithmatMN.MN.MNBiz;
+@using SharpVision.CRM.CRMBusiness;
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ProjectYear</title>
+</head>
+<body>
+    @using (Html.BeginForm("Search", "Maintainance", FormMethod.Post))
+    {
+        <div>
+            <div class="row form-group">
+                @{ 
+                    ProjectCol objProjectCol = new ProjectCol(false);
+                }
+                <div class="col-md-3 mt-1">
+                    <select class="form-control form-control-uniform multiselect-filter" name="cmbProject" id="cmbProject">
+                        @foreach(ProjectBiz objProject in objProjectCol)
+                {
+                    <option value="@objProject.Code">@objProject.Name</option>
+                }
+                        </select>
+                </div>
+
+                <div class="col-md-3 mt-1">
+                    <input type="text" class="form-control" id="txtTower" name="txtTower" placeholder="برج" />
+                </div>
+
+                <div class="col-md-3 mt-1">
+                    <input type="text" id="txtRO" class="form-control" name="txtRO" placeholder="وحدة" />
+                </div>
+                <div class="col-md-1 mt-1"></div>
+                <div class="col mt-1">
+                    <input type="submit" class="form-control btn" value="Search" />
+                </div>
+            </div>
+
+
+            <div class="row form-row">
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="0" class="form-check-input-styled" name="rdDebitCredit" id="rdDebitCreditAll" checked data-fouc>
+                        كل
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="1" class="form-check-input-styled" name="rdDebitCredit" id="rdDebitCreditDebit" data-fouc>
+                        مدين
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="2" class="form-check-input-styled" name="rdDebitCredit" id="rdDebitCreditCredit" data-fouc>
+                        دائن
+                    </label>
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+            <div class="row form-row">
+
+
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="0" class="form-check-input-styled" name="rdType" id="rdTypeAll" checked data-fouc>
+                        كل
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="1" class="form-check-input-styled" name="rdType" id="rdTypeRes" ata-fouc>
+                        سكنى
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="2" class="form-check-input-styled" name="rdType" id="rdTypeComm" ata-fouc>
+                        تجارى
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="4" class="form-check-input-styled" name="rdType" id="rdTypeAdmin" ata-fouc>
+                        ادارى
+                    </label>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="row form-row">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="0" class="form-check-input-styled" name="rdCredited" id="rdCreditedAll" checked data-fouc>
+                        كل
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="1" class="form-check-input-styled" name="rdCredited" id="rdCreditedPlusMore" data-fouc>
+                        موجب +
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="2" class="form-check-input-styled" name="rdCredited" id="rdCreditedPlusLess" data-fouc>
+                        موجب -
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="3" class="form-check-input-styled" name="rdCredited" id="rdCreditedMinus" data-fouc>
+                        سالب
+                    </label>
+                </div>
+
+
+
+            </div>
+            @{
+
+                string strTable = "";
+                ROCol objRoCol = new ROCol(true);
+                if (ViewBag.ROCol != null)
+                { objRoCol = (ROCol)ViewBag.ROCol; }
+                strTable = SharpVision.SystemBase.SysUtility.GetHTMLTableFromDataTable(objRoCol.GetPivotTable());
+
+                string strTitle = "مصاريف الصيانة";
+                if (objRoCol.MainCount > 0)
+                {
+                    strTitle += "-" + objRoCol.Count.ToString() + "من  " + objRoCol.MainCount.ToString();
+                }
+            }
+            <br />
+            <div class="row form-row">
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="0" class="form-check-input-styled" name="rdReportType" id="rdReportTypeRo" checked data-fouc>
+                        طباعة الارصدة
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="1" class="form-check-input-styled" name="rdReportType" id="rdReportTypeROCredit" data-fouc>
+                        طباعة الارصدة بالسنين
+                    </label>
+                </div>
+
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="2" class="form-check-input-styled" name="rdReportType" id="rdReportTypeROLastCredit" data-fouc>
+                        موقف السنة الاخيرة
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="3" class="form-check-input-styled" name="rdReportType" id="rdReportTypeRProject" data-fouc>
+                        المشاريع
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="4" class="form-check-input-styled" name="rdReportType" id="rdReportTypeProjectTower" data-fouc>
+                        الابراج
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="5" class="form-check-input-styled" name="rdReportType" id="rdReportTypeProjectCredited" data-fouc>
+                        ارصدة وتكملة الصيانة للمشاريع
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" value="6" class="form-check-input-styled" name="rdReportType" id="rdReportTypeProjectTowerCredited" data-fouc>
+                        ارصدة وتكملة الصيانة للابراج
+                    </label>
+                </div>
+
+
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col">
+                    <input class="btn btn-success" type="submit" value="طباعة" formaction="/Maintainance/Download_CreditPDF" formmethod="post" />
+                </div>
+            </div>
+            <br />
+
+            <div class="card">
+                <div class="card-header bg-teal-400 text-white header-elements-inline">
+                    <h6 class="card-title">@strTitle</h6>
+                    <div class="header-elements">
+                        <div class="list-icons">
+                            <a class="list-icons-item" data-action="collapse"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table-scrollable" style="text-align:center">
+
+                        @(new HtmlString(strTable))
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+</body>
+</html>

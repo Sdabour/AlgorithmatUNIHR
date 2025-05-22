@@ -1,0 +1,89 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+    
+
+@{
+    ViewBag.Title = "StudentResultSearch";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+
+<h2>StudentResultSearch</h2>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UNI/StudentResult.js"></script>
+<script src="~/Scripts/UNI/StudentResultJS.js"></script>
+<div class="form-row">
+    <div class="col">
+        @{
+            ResultStatementSimple objStatement = ResultStatementBiz.LastStatementBiz.GetSimple();
+            string strStatement = Json.Encode(objStatement);
+        }
+        <input type="hidden" id="lblStatement" value='@strStatement' />
+        <label style="background-color:aliceblue;align-content:center;">@objStatement.Desc</label>
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-2">
+
+        <input type="text" id="txtName" class="form-control form-control-sm" placeholder="Code Or Name" />
+    </div>
+    <div class="col-3">
+
+        <select id="cmbLevel" class="form-control form-control-sm">
+            @{
+                int intIndex = 0;
+                int intFaculty = 0;
+                string strFaculty = "";
+                if (Session["CurrentFaculty"] != null)
+                {
+                    strFaculty = Session["CurrentFaculty"].ToString();
+                    if(strFaculty!= null &&  strFaculty!="")
+                    {
+                        intFaculty = Json.Decode<FacultySimple>(strFaculty).ID;
+                    }
+                }
+                LevelCol objLevelCol = new LevelCol(false,intFaculty);
+            }
+            @foreach (LevelBiz objLevel in objLevelCol)
+            {
+                <option value="@objLevel.ID">@objLevel.LevelDesc</option>
+                intIndex++;
+            }
+        </select>
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchStudentResult()" />
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Print" onclick="return OnResultSearchDownloadClick(0)" />
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Print Details" onclick="return OnResultSearchDownloadClick(1)" />
+    </div>
+</div><br />
+<div class="form-row">
+    <div class="col-1">all</div>
+    <div class="col-1"><input type="radio" name="rdStopped" id="rdStoppedAll" checked /></div>
+    <div class="col-1">Not Stopped</div>
+    <div class="col-1"><input type="radio" name="rdStopped" id="rdStoppedNotStopped" /></div>
+    <div class="col-1">Stopped</div>
+    <div class="col-1"><input type="radio" name="rdStopped" id="rdStoppedStopped" /></div>
+</div>
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">النتيجة</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div id="dvStudentResult" class="table-responsive table table-bordered table table-hover table-striped" style="max-height:90%;max-width:100%; text-align:center;scroll-behavior:auto;height:auto;">
+
+        </div>
+    </div>
+</div>
+
+

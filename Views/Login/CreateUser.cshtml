@@ -1,0 +1,174 @@
+﻿
+@{
+    Layout = Url.Content("~/Views/Shared/_LayoutYoussef.cshtml");
+}
+@using SharpVision.HR.HRBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@using System.Linq;
+@using AlgorithmatMVC.Controllers.HRController;
+@using System.Collections;
+@using SharpVision.Base.BaseBusiness;
+@using SharpVision.SystemBase;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CreateUser</title>
+    <link href="~/Content/Modal.css" rel="stylesheet" />
+
+     
+    <script src="~/Scripts/JqueryLatest.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/ApplicantControl.js"></script>
+    <script src="~/Scripts/ControlScript.js"></script>
+    <script src="~/Scripts/Applicant.js"></script>
+
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+
+        function OnCheckAllChanged1(strCheckAllName, strCheckPrefix, strIDsName) {
+            var objCheckAll = document.getElementById(strCheckAllName);
+            var strCheckName;
+            var objIDCol = [];
+            var strIDs = document.getElementById(strIDsName).value;
+            if (strIDs != null && strIDs != "") {
+                objIDCol = JSON.parse(strIDs);
+            }
+            var blChecked = document.getElementById(strCheckAllName).checked;
+            for (var intIndex = 0; intIndex < objIDCol.length; intIndex++) {
+                strCheckName = strCheckPrefix + objIDCol[intIndex];
+                document.getElementById(strCheckName).checked = blChecked;
+
+            }
+
+
+        }
+    </script>
+</head>
+<body>
+    @{ 
+        ApplicantWorkerBiz objApp = ViewBag.ApplicantWorker;
+        string strSerializeGroup = "";
+        GroupCol _GroupCol = new GroupCol();
+        IEnumerable<SerializableBiz> objGrupCol = from objBiz in _GroupCol.Cast<GroupBiz>()
+                                                  select new SerializableBiz() { ID = objBiz.ID, Code = objBiz.Code, Name = objBiz.Name };
+        strSerializeGroup = Json.Encode(objGrupCol);
+        string _TempName = "";
+        FunctionCol objFunctionCol1 = new FunctionCol(SysData.SysID);
+
+
+        IEnumerable<FunctionSimple> objFunctionCol = from objFunction in objFunctionCol1.Cast<FunctionBiz>()
+                                                     select new FunctionSimple() { ID = objFunction.ID, Name = objFunction.Name, Parent = objFunction.ParentID };
+        string strTxtID = "";
+        UserBiz objUserBiz = objApp.UserBiz;
+       
+        }
+    <div>
+
+        <div class="row">
+            <div class="col">
+                <label style="align-content:center;background-color:azure">@objApp.Code</label>
+            </div>
+            <div class="col">
+                <label style="align-content:center;background-color:azure">@objApp.Name</label>
+            </div>
+
+        </div>
+
+        <form action="/Login/SaveUser" method="post">
+            <input type="hidden" id="lblUser" name="lblUser" value="@objUserBiz.ID" />
+            <input type="hidden" id="lblApp" name="lblApp" value="@objApp.ID" />
+            <div class="row">
+                <div class="col">
+                    <label>Name:</label>
+                    <input type="text" dir="ltr" id="Name" name="Name" class="form-control" value="@objUserBiz.Name" placeholder="UserName">
+                </div>
+                <div class="col">
+                    <label>PassWord:</label>
+                    <input type="password" dir="ltr" id="Password" name="Password" class="form-control" value="@objUserBiz.Password" placeholder="PassWord">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+
+                    <div id="DivMultipleGroup" class="DivMultipleChecked" style="">
+
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="GroupCheckedCol" name="GroupCheckedCol" value="" />
+                                    <input style="width:100%" type="text"
+                                           onchange="OnTxtFilterChanged('txtGroupFilter','tblGroup','chkGroup','GroupCheckedCol');"
+                                           id="txtGroupFilter" onkeyup="this.onchange();"
+                                           onpaste="this.onchange();" oninput="this.onchange();" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="height: 174px;background-color:ghostwhite;overflow-x:auto;" class="panel-body">
+
+                            <table style="height: 90%" id="tblGroup" Runat="server" CheckedObjectCol="" ObjectCol="@strSerializeGroup" SelectedObjectCol="@strSerializeGroup">
+                                @foreach (GroupBiz objGroup in _GroupCol)
+                                {
+                                    _TempName = "chkGroup" + objGroup.ID.ToString();
+                                    <tr>
+                                        <td>
+
+                                            <label>
+                                                <input id="@_TempName"
+                                                       type=checkbox onchange="OnCheckChanged('@_TempName','tblGroup','@objGroup.ID','GroupCheckedCol')" />
+                                                @objGroup.Name
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+           
+                <div class="form-group">
+            
+                </div>
+         
+
+
+                <div class="form-group">
+                    <input type="hidden" id="lblSelectedFunction" value="" />
+                    <input type="hidden" id="lblFunction" value="" />
+                    <div class="table-responsive" style="max-height:150px;">
+                        <table id="tblFunction">
+                            @foreach (FunctionBiz objFunctionBiz in objFunctionCol1)
+                            {
+                                <tr>
+                                    <td>
+                                        @{strTxtID = "chkFunction";}
+                                        <div class="form-check form-check-inline form-check-right"><input type="checkbox" id="@strTxtID" name="@strTxtID" class="form-check-input" /></div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        @objFunctionBiz.Name
+                                    </td>
+
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+
+
+                    <input type="submit" value="Save" onclick="return CheckFormValidation();" class="btn btn-outline-primary" formmethod="post">
+                </div>
+
+        </form>
+    </div>
+</body>
+</html>

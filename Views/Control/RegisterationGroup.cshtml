@@ -1,0 +1,207 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/TeacherType.js"></script>
+<script src="~/Scripts/UNI/Teacher.js"></script>
+<script src="~/Scripts/UNI/TeacherJ.js"></script>
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/wwwroot/js/main/jquery.min.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+
+<script src="~/Scripts/UNI/Group.js"></script>
+<script src="~/Scripts/UNI/GroupJS.js"></script>
+<script src="~/Scripts/UNI/LectureType.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/Applicant.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UNI/Exam.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+
+
+    });
+</script>
+
+<div class="form-row" id="rowSemester">
+    <div class="col">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strTemp = Json.Encode(objSemester);
+        }
+        @{
+
+            string strAllCoursesAuthorized = "0";
+
+
+            int intFaculty = 0;
+            string strFaculty = "";
+            FacultySimple objFaculty = new FacultySimple();
+            if (Session["CurrentFaculty"] != null)
+            {
+                strFaculty = Session["CurrentFaculty"].ToString();
+                objFaculty = Json.Decode<FacultySimple>(strFaculty);
+            }
+
+            intFaculty = objFaculty.ID;
+            CourseCol objRegisterationCouseCol = CourseCol.GetRegisteredCourseCol(objSemester.ID, intFaculty);
+
+            List<int> lstIDs = objRegisterationCouseCol.Cast<CourseBiz>().Select(x => x.ID).ToList();
+            string strAssignedCourse = Json.Encode(lstIDs);
+
+
+        }
+        <input type="hidden" id="lblAllCoursesAuthorized" value=" @strAllCoursesAuthorized" />
+        <input type="hidden" id="lblAssignedCourse" value=" @strAssignedCourse" />
+        <input type="hidden" id="lblSemester" value=" @strTemp" />
+        <label style="background-color:azure;text-align:center;">@objSemester.Desc</label>
+    </div>
+</div>
+<div class="row pt-1" id="rowDescData">
+    <div class="col-2">
+        وصف المجموعة
+    </div>
+    <div class="col-3">
+        @{ 
+            LectureTypeCol objTypeCol = new LectureTypeCol(false);
+        }
+        <input type="text" id="txtRegisterationGroupNameA" class="form-control form-control-sm" />
+    </div>
+    <div class="col-1">نوع</div>
+    <div class="col-3">
+        <select class="form-control form-control-sm" id="cmbLectureType">
+            @foreach(LectureTypeBiz objTypeBiz in objTypeCol)
+            {
+                <option value="@objTypeBiz.ID">@objTypeBiz.NameA</option>
+            }
+        </select>
+    </div>
+</div><br />
+<div class="form-row" id="ExamTypeRow">
+    <div class="col-1">Not Specified</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeNotSpecified" value="0" checked />
+
+    </div>
+    <div class="col-1">MidTerm</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeMidterm" value="1" />
+
+    </div>
+    <div class="col-1">Semester Work</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeSemesterWork" value="2" />
+
+    </div>
+    <div class="col-1">Oral</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeOral" value="3" />
+
+    </div>
+    <div class="col-1">Practical</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypePractical" value="4" />
+
+    </div>
+    <div class="col-1">Final</div>
+    <div class="col-1">
+        <input type="radio" name="rdExamType" id="rdExamTypeFinal" value="5" />
+
+    </div>
+</div>
+
+ <br />
+ <div class="form-row">
+     <div class="col-8">
+         @{ Html.RenderPartial("../control/CourseSimpleSearch");}
+     </div>
+     <div class="col-1"><button onclick="ClearCurrentCourse()" class="form-control form-control-sm">Clear </button></div>
+     <div class="col-1"><button onclick="SaveRegisterationGroup()" class="form-control form-control-sm">Save</button></div>
+ </div>
+ <div class="form-row">
+     <div class="col-1">
+     <button onclick="SearchRegisterationGroup(); ShowGroupModal();" class="form-control form-control-sm">Section </button></div>
+ </div>
+<input type="hidden" id="lblRegIDs" value="[]">
+<input type="hidden" id="lblSelectedRegIDs" value="[]">
+
+<div class="form-row">
+    <input type="hidden" id="lblSelectedGroup" />
+    <div class="col-2">
+        <label id="lblSelectedGroupCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-2">
+        <label id="lblSelectedGroupCourseNameA" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-2">
+        <label id="lblSelectedGroupCourseNameE" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-2">
+        <label id="lblSelectedGroupNameA" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+</div>
+<div class="form-row">
+
+    <div class="col-2">
+        <input type="checkbox" id="chkSelectAll" class="checkbox" onchange="CheckAllRegisteration();" />
+        check All
+    </div>
+    <div class="col-1">عدد</div>
+    <div class="col-1"><input type="number" class="form-control form-control-sm" id="txtSelectNo" /></div>
+    <div class="col-2"><button class="form-control form-control-sm" onclick="return UploadGroupStudent();">ربط الطلبة</button></div>
+    <div class="col-2"><button class="form-control form-control-sm" onclick="return ClearGroupStudent();">فك الارتباط</button></div>
+</div>
+<div class="form-row" id="GenderRow">
+    <div class="col-1">Not Specified</div>
+    <div class="col-1">
+        <input type="radio" name="rdGender" id="rdGenderNotSpecified" value="0" checked />
+
+    </div>
+    <div class="col-1">Male</div>
+    <div class="col-1">
+        <input type="radio" name="rdGender" id="rdGenderMale" value="1" />
+
+    </div>
+    <div class="col-1">Female</div>
+    <div class="col-1">
+        <input type="radio" name="rdGender" id="rdGenderFemale" value="2" />
+
+    </div>
+    
+</div>
+<div class="table-responsive" id="tblGroupReg">
+
+</div>
+<div id="myRegisterationGroupModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="RegisterationGroupClose" class="close" onclick="  document.getElementById('myRegisterationGroupModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col-2">
+
+                <input type="text" id="txtRegisterationGroupName" class="form-control form-control-sm" placeholder="RegisterationGroup Code Or Name" />
+            </div>
+            
+
+        </div>
+        <div class="table-responsive" id="tblRegisterationGroup">
+
+        </div>
+
+    </div>
+
+</div>

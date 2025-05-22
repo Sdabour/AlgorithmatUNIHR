@@ -1,0 +1,184 @@
+﻿@using AlgorithmatMVC.UNI.UNIBusiness;
+@using SharpVision.UMS.UMSBusiness;
+@{
+    ViewBag.Title = "RegisterationSearch";
+    Layout = "~/Views/Shared/_LayoutS.cshtml";
+}
+
+<h2>تعديل</h2>
+<link href="~/Content/Modal.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/UNI/Student.js"></script>
+<script src="~/Scripts/UNI/Semester.js"></script>
+<script src="~/Scripts/UNI/StudentJS.js"></script>
+<script src="~/Scripts/UNI/Course.js"></script>
+<script src="~/Scripts/UNI/CourseJS.js"></script>
+<script src="~/Scripts/UNI/Regestration.js"></script>
+<script src="~/Scripts/UNI/RegisterationJS.js"></script>
+<script src="~/Scripts/UMS/User.js"></script>
+<script src="~/Scripts/UNI/Exam.js"></script>
+<script src="~/Scripts/UNI/RegisterationExam.js"></script>
+<script src="~/Scripts/UNI/RegisterationExamJS.js"></script>
+<style>
+    .dropbtn {
+        background-color: #ddd;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #ddd;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+            /* Change color of dropdown links on hover */
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    /* Change the background color of the dropdown button when the dropdown content is shown */
+    .dropdown:hover .dropbtn {
+        background-color: #ddd;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number]{
+         
+     display:block;
+     width:60px;
+    }
+</style>
+<div class="form-row" id="rowSemester">
+    <div class="col-6">
+        @{
+            SemesterSimple objSemester = SemesterBiz.LastSemesterBiz.GetSimple();
+            string strTemp = Json.Encode(objSemester);
+            string strAllCoursesAuthorized = UserBiz.CurrentUser.UserFunctionInstantCol.GetIndex(ExamBiz.UMSAllCourses) != -1 ? "1" : "0";
+            string strAllExamTypeAuthorized = UserBiz.CurrentUser.UserFunctionInstantCol.GetIndex(ExamBiz.UMSAllExamType) != -1 ? "1" : "0";
+            int intFaculty = 0;
+            string strFaculty = "";
+            FacultySimple objFaculty = new FacultySimple();
+            if (Session["CurrentFaculty"] != null)
+            {
+                strFaculty = Session["CurrentFaculty"].ToString();
+                objFaculty = Json.Decode<FacultySimple>(strFaculty);
+            }
+
+            intFaculty = objFaculty.ID;
+
+            string strAsignedCourseCode = "ExamCourseFaculty" + intFaculty.ToString();
+            string strAssignedCourse, strAssignedType;
+            AssignmentObjectBiz objAssignmentBiz = new AssignmentObjectBiz(strAsignedCourseCode);
+            UserObjectAssignmentCol objAssignedCol = objAssignmentBiz.GetAllAssignedObjectCol(UserBiz.CurrentUser);
+            List<int> lstIDs = objAssignedCol.Cast<UserObjectAssignmentBiz>().Select(x => x.ObjectValue).ToList();
+            strAssignedCourse = Json.Encode(lstIDs);
+
+            objAssignmentBiz = new AssignmentObjectBiz("ExamType");
+            objAssignedCol = objAssignmentBiz.GetAllAssignedObjectCol(UserBiz.CurrentUser);
+            lstIDs = objAssignedCol.Cast<UserObjectAssignmentBiz>().Select(x => x.ObjectValue).ToList();
+            strAssignedType = Json.Encode(lstIDs);
+        }
+        <input type="hidden" id="lblSemester" value=" @strTemp" />
+        <input type="hidden" id="lblAllExamAuthorized" value=" @strAllExamTypeAuthorized" />
+        <input type="hidden" id="lblAllCoursesAuthorized" value=" @strAllCoursesAuthorized" />
+        <input type="hidden" id="lblAssignedCourse" value=" @strAssignedCourse" />
+        <input type="hidden" id="lblAssignedType" value=" @strAssignedType" />
+        <label style="background-color:azure;text-align:center;font-size:large;">@objSemester.Desc</label>
+    </div>
+    <div class="col-2">
+        <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchRegisterationEdit()" />
+    </div>
+</div>
+<br />
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../UNI/StudentSimpleSearch");}
+
+    </div>
+</div><br />
+<div class="form-row">
+    <div class="col">
+        @{ Html.RenderPartial("../Control/CourseSimpleSearch");}
+         
+    </div>
+</div><br />
+<div class="card" style="max-height:auto;scroll-behavior:auto;">
+    <div class="card-header bg-teal-400 text-white header-elements-inline">
+        <h6 class="card-title">التسجيل</h6>
+        <div class="header-elements">
+            <div class="list-icons">
+                <a class="list-icons-item" data-action="collapse"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="form-row">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="return false"></button>
+                <div class="dropdown-content">
+                    <input type="button" class="dropbtn" value="طباعة" onclick="OnRegisterationSearchDownloadClick(0)" /><br />
+                    <input type="button" class="dropbtn" value="طباعة بالكورس" onclick="OnRegisterationSearchDownloadClick(2)" /><br />
+                    <input type="button" class="dropbtn" value="اضافة التعليق" onclick="return ShowCommentModal()" /><br />
+                </div>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <input type="hidden" id="lblIDs" />
+            <div class="col-1">
+                <br />
+                <input type="button" id="btnSaveAll" value="Save All" onclick="SaveRegisterationCol()" />
+            </div>
+        </div>
+        <div id="dvRegisteration" class="table-responsive table table-bordered table table-hover table-striped" style="max-height:90%;max-width:100%; text-align:center;scroll-behavior:auto;height:auto;">
+
+        </div>
+    </div>
+</div>
+<div id="myRegExamModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="ExamClose" class="close" onclick="  document.getElementById('myRegExamModal').style.display = 'none'">&times;</span>
+        <input type="hidden" id="lblCurrentRegisteration" />
+        <input type="hidden" id="lblExamIDs" value="[]">
+       
+        <div class="form-row">
+            <div class="col-2">
+
+                <input type="button" id="btnSaveAll" class="success" value="Save All" onclick="SaveRegisterationExamCol(); return false;" />
+            </div>
+        </div>
+    <div class="table-responsive" id="tblRegExam">
+
+        </div>
+    </div></div>
+

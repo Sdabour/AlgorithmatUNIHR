@@ -1,0 +1,45 @@
+﻿
+
+<div id="myCourseModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="CourseClose" class="close" onclick="  document.getElementById('myCourseModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+
+            <div class="col-2">
+
+                <input type="text" id="txtCourseName" class="form-control form-control-sm" placeholder="Course Code Or Name" />
+            </div>
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchCourse()" />
+            </div>
+
+
+        </div>
+        <div class="form-row">
+            <div class="col-2">
+                <input type="button" class="form-control form-control-sm" value="Select All" onclick="return SelectAllCourse()" />
+            </div>
+        </div>
+        <div class="form-row">
+            <input type="hidden" id="lblCourse" value="" />
+            <div class="col">
+                <div class="table-responsive" id="tblCourse">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="form-row">
+    <div class="col-2">
+        <input type="button" class="Button" value="كورسات" onclick="  document.getElementById('myCourseModal').style.display = 'block'" />
+
+    </div>
+</div>
+<input type="hidden" id="lblSelectedCourse" value="" />
+<div class="table-responsive" id="tblSelectedCourse" style="max-height:90%;scroll-behavior:auto;">
+
+
+</div>

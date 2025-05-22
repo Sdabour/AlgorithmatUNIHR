@@ -1,0 +1,45 @@
+﻿<div class="form-row">
+    <div class="col-1">
+        <input type="button" value="Course" onclick="ShowCourseModal()" />
+    </div>
+    <div class="col-2">
+        <input type="hidden" id="lblSelectedCourse" value="" />
+        <label id="lblSelectedCourseCode" style="background-color:gainsboro;align-content:center;"></label>
+    </div>
+    <div class="col-4">
+
+        <label id="lblSelectedCourseName" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedCourseCH" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+    <div class="col-2">
+
+        <label id="lblSelectedCourseFinalDegree" style="background-color:gainsboro;align-content:center;"></label>
+
+    </div>
+</div>
+<div id="myCourseModal" class="modal" tabindex="-1">
+    <div class="modal-content">
+        <span id="CourseClose" class="close" onclick="  document.getElementById('myCourseModal').style.display = 'none'">&times;</span>
+        <div class="form-row">
+            
+                <div class="col-2">
+
+                    <input type="text" id="txtCourseName" class="form-control form-control-sm" placeholder="Course Code Or Name" />
+                </div>
+                <div class="col-2">
+                    <input type="button" class="form-control form-control-sm" value="Fill" onclick="return SearchCourse()" />
+                </div>
+             
+        </div>
+        <div class="table-responsive" id="tblCourse">
+
+        </div>
+
+    </div>
+
+</div>

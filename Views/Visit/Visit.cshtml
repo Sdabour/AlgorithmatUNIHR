@@ -1,0 +1,236 @@
+﻿@using SharpVision.UMS.UMSBusiness;
+@using SharpVision.SystemBase;
+
+@{
+    Layout = null;
+}
+@{
+
+    #region IntializeConnection
+    int intLanguage = 0;
+    string strLang = Request["Lang"];
+    string strConnection = System.Configuration.ConfigurationManager.AppSettings["SVDBCon"];
+    string strBranchID = System.Configuration.ConfigurationManager.AppSettings["CurrentBranch"];
+
+
+
+
+    string strImage = System.Configuration.ConfigurationManager.AppSettings["ImageURL"];
+    SysData.SharpVisionBaseDb = new SharpVision.Base.BaseDataBase.BaseDb(strConnection);
+    UserBiz.SetUmsBaseConnection(strConnection, 6, 0, "");
+    SysData.Language = intLanguage;
+    UMSBranchBiz objBranchBiz = new UMSBranchBiz();
+    UMSBranchCol objBranchCol = new UMSBranchCol();
+    Session["BranchCol"] = objBranchCol;
+
+    objBranchBiz = ((UMSBranchCol)Session["BranchCol"])[strBranchID];
+    Session["Branch"] = objBranchBiz;
+    #endregion
+
+
+
+}
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style>
+
+    table {
+        border-collapse: collapse;
+        direction: rtl;
+        align-content : center;
+        text-align:center;
+       
+        width: 100%;
+    }
+
+    tr {
+        border: hidden;
+
+    }
+
+    th {
+        direction: rtl;
+        text-align:center;
+        align-content:center;
+        height: 30px;
+        background-color:ActiveCaption;
+    }
+
+    td {
+        height: 30px;
+        direction: rtl;
+        text-align: center;
+        align-content: center;
+       
+    }
+    .trWhite tr {
+        background-color : whitesmoke;
+    }
+    .trSilver tr {
+        background-color:whitesmoke;
+    }
+    label {
+        background-color: lightgrey;
+        direction: ltr;
+        font-size: 16px;
+        width: 100%;
+    }
+   
+</style>
+
+<html>
+
+<head>
+   
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/VisitControlScript.js"></script>
+    <script type="text/javascript">
+        setTimeout(OnVisit , 5000);
+     
+    </script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    
+</head>
+@{
+
+}
+<body>
+    
+    <div class="container"> 
+        <div class="pre-scrollable" style="height:500px">
+            <input type="hidden" id="lblBranchID" name="lblBranchID" value="@strBranchID" />
+            <table class="table">
+                <tr>
+                    <td>
+                        <label id="lblBranch">@(((UMSBranchBiz)Session["Branch"]).Name)</label>
+                    </td>
+                   
+                
+                    <td>
+                        <label id="lblClock">@DateTime.Now.ToString("HHH:mm:ss")</label>
+                    </td>
+                    <td style="width:1px">
+                        <audio hidden id="objAudioCustomer" src="">
+                            </audio>
+                        <audio hidden id="objAudioCustomerNo" src=""></audio>
+                        <audio hidden id="objAudioWindow" src=""></audio>
+                        <audio hidden id="objAudioWindowNo" src=""></audio>
+                    </td>
+                </tr>
+                </table>
+                <table>
+                <tr dir=ltr>
+                    <td>
+                        <label>Picked Not Served </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="dvPickedNotServed" name="dvPickedNotServed" class="row" >
+                            <table  id="tblPickedVisitDisplay" style="background-color:aliceblue;height:50px;" class="table-bordered">
+                                <tr>
+                                    <th>&#1578;&#1608;&#1602;&#1610;&#1578;</th>
+                                    <th>رقم</th>
+                                    <th>&#1593;&#1605;&#1610;&#1604;</th>
+                                    <th>&#1605;&#1580;&#1605;&#1608;&#1593;&#1577;</th>
+                                    <th width="80">
+                                        &#1605;&#1608;&#1592;&#1601;
+                                    </th>
+                                    <th>
+                                        &#1578;&#1608;&#1602;&#1610;&#1578;
+                                    </th>
+                                    <th>
+                                        &#1581;&#1575;&#1604;&#1577;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="80"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pre-scrollable" style="height:500px" >
+
+
+            <table>
+                <tr>
+                    <td style="width:50%">
+                        <video controls style="width:500px;height:500px;">
+
+
+                       
+
+                            Sorry, your browser doesn't support embedded videos.
+                        </video>
+
+                    </td>
+                <td>
+            <table style="width:100%">
+                <tr>
+                   
+                    <td>
+                        <label style="width:100%" >
+                            Free
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div  id="dvFree" name="dvFree" class="container" >
+                            <table id="tblFreeVisitDisplay"   class="table-bordered" >
+                                <tr>
+                                    <th>&#1578;&#1608;&#1602;&#1610;&#1578;</th>
+                                    <th>&#1593;&#1605;&#1610;&#1604;</th>
+                                    <th>&#1575;&#1604;&#1608;&#1581;&#1583;&#1577;</th>
+                                    <th width="80">
+                                        &#1605;&#1580;&#1605;&#1608;&#1593;&#1577;
+                                    </th>
+                                    <th>
+                                        &#1605;&#1587;&#1574;&#1608;&#1604;
+                                    </th>
+                                    <th>
+                                        &#1608;&#1589;&#1601;
+                                    </th>
+                                    <th>
+                                        <span lang="ar-eg">&#1606;&#1608;&#1593;</span>
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td width="80"></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+               
+                    </td>
+                </tr>
+                    </table>
+       
+        </div>
+    </div>
+</body>
+</html>

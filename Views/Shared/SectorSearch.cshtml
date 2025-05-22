@@ -1,0 +1,274 @@
+﻿
+
+@using SharpVision.HR.HRBusiness;
+@using System.Web.Helpers;
+ 
+@{
+    List<SectorSimple> _SectorLst = SectorSimple.SectorLst;
+    string strSectorIDs = Json.Encode(_SectorLst);
+    List<SectorSimple> _MainLst = (from objSector in _SectorLst
+                                       //where objSector.ID == objSector.ParentID
+                                   where objSector.Level == 1
+                                   select objSector).ToList();
+    List<SectorSimple> obj2ndLst = new List<SectorSimple>();
+    List<SectorSimple> obj3rdLst = new List<SectorSimple>();
+    List<SectorSimple> obj4rthLst = new List<SectorSimple>();
+    List<SectorSimple> obj5thLst = new List<SectorSimple>();
+    SectorSimple objSimpleSector = new SectorSimple();
+    int int1St = 0;
+    int int2Nd = 0;
+    int int3Rd = 0;
+    int int4Th = 0;
+    int int5th = 0;
+    if (ViewBag.CurrentSector != null)
+    {
+
+        objSimpleSector = (SectorSimple)ViewBag.CurrentSector;
+        int1St = objSimpleSector.Family;
+        obj2ndLst = (from objSector in _SectorLst
+                     where objSector.ParentID == int1St
+                     && objSector.ID != objSector.ParentID
+                     select objSector).ToList();
+        if (objSimpleSector.Level > 1)
+        {
+            if (objSimpleSector.Level == 5)
+            {
+                var vrParent = (from objSector in _SectorLst
+                                where objSector.ID == objSimpleSector.ParentID
+
+                                select objSector).ToList();
+
+                SectorSimple objParent = vrParent.First<SectorSimple>();
+                int5th = objSimpleSector.ID;
+                obj5thLst = (from objSector in _SectorLst
+                             where objSector.ParentID == objSimpleSector.ParentID
+
+                             select objSector).ToList();
+
+                vrParent = (from objSector in _SectorLst
+                            where objSector.ID == objParent.ParentID
+
+                            select objSector).ToList();
+
+                objParent = vrParent.First<SectorSimple>();
+
+                obj4rthLst = (from objSector in _SectorLst
+                             where objSector.ParentID == objParent.ID
+
+                             select objSector).ToList();
+                int4Th = objParent.ID;
+
+                obj3rdLst = (from objSector in _SectorLst
+                             where objSector.ParentID == objParent.ParentID
+
+                             select objSector).ToList();
+                int3Rd = objParent.ID;
+                int2Nd = objParent.ParentID;
+
+
+
+            }
+            else if (objSimpleSector.Level == 4)
+            {
+                var vrParent = (from objSector in _SectorLst
+                                where objSector.ID == objSimpleSector.ParentID
+
+                                select objSector).ToList();
+
+                SectorSimple objParent = vrParent.First<SectorSimple>();
+                int4Th = objSimpleSector.ID;
+                obj4rthLst = (from objSector in _SectorLst
+                              where objSector.ParentID == objSimpleSector.ParentID
+
+                              select objSector).ToList();
+                obj3rdLst = (from objSector in _SectorLst
+                             where objSector.ParentID == objParent.ParentID
+
+                             select objSector).ToList();
+                int3Rd = objSimpleSector.ParentID;
+                int2Nd = objParent.ParentID;
+
+
+
+            }
+            else if (objSimpleSector.Level == 3)
+            {
+                int2Nd = objSimpleSector.ParentID;
+                int3Rd = objSimpleSector.ID;
+                obj3rdLst = (from objSector in _SectorLst
+                             where objSector.ParentID == objSimpleSector.ParentID
+
+                             select objSector).ToList();
+            }
+            else if (objSimpleSector.Level == 2)
+            {
+                //int2Nd = objSimpleSector.ParentID;
+                int2Nd = objSimpleSector.ID;
+
+            }
+
+
+
+
+        }
+
+    }
+
+
+}
+<script type="text/javascript">
+    function FillSectorCmb(Level)
+    {
+        if (Level >= 5)
+            return;
+
+        var vrCmbName = "cmbSectorLevel" + Level;
+        var vrValue = document.getElementById(vrCmbName).value;
+        var strSector = document.getElementById
+            ("lblSectorIDs").getAttribute("idValue");
+
+        var arrSector = JSON.parse(strSector);
+
+        var arrChildren = arrSector.filter(function (x) { return x.ParentID == vrValue && x.ID!=vrValue; });
+       // alert(arrChildren[0].Name);
+        var vrEmpty = "<option value=\"0\">غير محدد</option>";
+        var vrCmbOption;
+        if (Level < 5)
+        {
+            vrCmbOption = "";
+            var vrNewLevel;
+            vrNewLevel = Level + 1;
+            vrCmbName = "cmbSectorLevel" + vrNewLevel;
+            vrCmbOption = vrEmpty;
+            for (var vrIndex = 0; vrIndex < arrChildren.length; vrIndex++)
+            {
+                vrCmbOption = vrCmbOption + " <option value=\""+ arrChildren[vrIndex].ID +"\">"+arrChildren[vrIndex].Name+"</option>";
+            }
+
+            document.getElementById(vrCmbName).innerHTML= vrCmbOption;
+
+        }
+        for (var vrIndex = Level + 2; vrIndex <= 5; vrIndex++) {
+            vrCmbName = "cmbSectorLevel" + vrIndex;
+            document.getElementById(vrCmbName).innerHTML = vrEmpty;
+        }
+
+    }
+</script>
+<div class="form-row">
+    <div class="col-6">
+        <label class="text-black">
+           القطاعات(Sector)
+        </label>
+    </div>
+</div>
+<div id="dvSectorSearch" class="form-row">
+    <input type="hidden" id="lblSectorIDs" idValue="@strSectorIDs" />
+
+    <div class="col-2">
+
+        <select class="form-control form-control-uniform" id="cmbSectorLevel1" name="cmbSectorLevel1" onchange="FillSectorCmb(1)">
+            <option value="0">
+                المستوى الأول
+            </option>
+            @foreach (SectorSimple objSector in _MainLst)
+            {
+                if (objSimpleSector.ID != 0 && objSector.ID == objSimpleSector.Family)
+                {
+                    <option value="@objSector.ID.ToString()" selected>
+                        @objSector.Name
+                    </option>
+                }
+                else
+                {
+                    <option value="@objSector.ID.ToString()">
+                        @objSector.Name
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-2">
+
+        <select class="form-control form-control-uniform" id="cmbSectorLevel2" name="cmbSectorLevel2" onchange="FillSectorCmb(2)">
+            <option value="0">
+                المستوى الثاني
+            </option>
+            @foreach (SectorSimple objSimple in obj2ndLst)
+            {
+                if (int2Nd != 0 && objSimple.ID == int2Nd)
+                {
+                    <option value="@objSimple.ID" selected>@objSimple.Name</option>
+
+                }
+                else
+                {
+                    <option value="@objSimple.ID">@objSimple.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-2">
+
+        <select class="form-control form-control-uniform" id="cmbSectorLevel3" name="cmbSectorLevel3" onchange="FillSectorCmb(3)">
+            <option value="0">
+                المستوى الثالث
+            </option>
+            @foreach (SectorSimple objSimple in obj3rdLst)
+            {
+                if (int3Rd != 0 && objSimple.ID == int3Rd)
+                {
+                    <option value="@objSimple.ID" selected>@objSimple.Name</option>
+
+                }
+                else
+                {
+                    <option value="@objSimple.ID">@objSimple.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-2">
+        <input type="hidden" id="lblSectorLevel4" name="lblSectorLevel4" idValue="" />
+        <select class="form-control form-control-uniform" id="cmbSectorLevel4" name="cmbSectorLevel4" onchange="FillSectorCmb(4)">
+            <option value="0">
+                المستوى الرابع
+            </option>
+            @foreach (SectorSimple objSimple in obj4rthLst)
+            {
+                if (int4Th != 0 && objSimple.ID == int4Th)
+                {
+                    <option value="@objSimple.ID" selected>@objSimple.Name</option>
+
+                }
+                else
+                {
+                    <option value="@objSimple.ID">@objSimple.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-4">
+        <input type="hidden" id="lblSectorLevel5" name="lblSectorLevel5" idValue="" />
+        <select class="form-control form-control-uniform" id="cmbSectorLevel5" name="cmbSectorLevel5" onchange="FillSectorCmb(5)">
+            <option value="0">
+                المستوى الخامس
+            </option>
+            @foreach (SectorSimple objSimple in obj4rthLst)
+            {
+                if (int5th != 0 && objSimple.ID == int5th)
+                {
+                    <option value="@objSimple.ID" selected>@objSimple.Name</option>
+
+                }
+                else
+                {
+                    <option value="@objSimple.ID">@objSimple.Name</option>
+                }
+            }
+        </select>
+    </div>
+</div>
